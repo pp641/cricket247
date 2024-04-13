@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <meta http-equiv="cache-control" content="max-age=0">
+      <meta http-equiv="cache-control" content="no-cache">
+      <meta http-equiv="expires" content="-1">
+      <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
+      <meta http-equiv="pragma" content="no-cache">
+      <title>Cricket247Online</title>
+      
+      <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+      <!-- Bootstrap core CSS -->
+      <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      
+      <!-- Custom styles for this template -->
+      <link href="/css/blog-post.css" rel="stylesheet">
+      <link href="/css/reset.css" rel="stylesheet">
+      <link href="/css/style.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+      <style>
+         /* info (hed, dek, source, credit) */
+         .rg-container {
+         font-size: 16px;
+         line-height: 1.4;
+         margin: 0;
+         padding: 0px;
+         color: #222;
+         }
+         .rg-header {
+         margin-bottom: 1em;
+         text-align: left;
+         }
+         .rg-header > * {
+         display: block;
+         }
+         .rg-hed {
+         font-weight: bold;
+         font-size: 1.4em;
+         }
+         .rg-dek {
+         font-size: 1em;
+         }
+         .rg-source {
+         margin: 0;
+         font-size: 0.75em;
+         text-align: right;
+         }
+         .rg-source .pre-colon {
+         text-transform: uppercase;
+         }
+         .rg-source .post-colon {
+         font-weight: bold;
+         }
+         /* table */
+         table.rg-table {
+         width: 100%;
+         margin-bottom: 0.5em;
+         font-size: 1em;
+         border-collapse: collapse;
+         border-spacing: 0;
+         }
+         table.rg-table tr {
+         -moz-box-sizing: border-box;
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+         border: 0;
+         font-size: 100%;
+         font: inherit;
+         vertical-align: baseline;
+         text-align: left;
+         color: #333;
+         }
+         table.rg-table thead {
+         border-bottom: 3px solid #ddd;
+         }
+         table.rg-table tr {
+         border-bottom: 1px solid #ddd;
+         color: #222;
+         }
+         table.rg-table tr.highlight {
+         background-color: #dcf1f0 !important;
+         }
+         table.rg-table.zebra tr:nth-child(even) {
+         background-color: #f6f6f6;
+         }
+         table.rg-table th {
+         font-weight: bold;
+         padding: 0.35em;
+         font-size: 0.9em;
+         }
+         table.rg-table td {
+         padding: 0.35em;
+         font-size: 0.9em;
+         }
+         table.rg-table .highlight td {
+         font-weight: bold;
+         }
+         table.rg-table th.number,
+         td.number {
+         text-align: right;
+         }
+         /* media queries */
+         @media screen and (max-width: 0px) {
+         .rg-container {
+         max-width: 600px;
+         margin: 0 auto;
+         }
+         table.rg-table {
+         width: 100%;
+         }
+         table.rg-table tr.hide-mobile,
+         table.rg-table th.hide-mobile,
+         table.rg-table td.hide-mobile {
+         display: none;
+         }
+         table.rg-table thead {
+         display: none;
+         }
+         table.rg-table tbody {
+         width: 100%;
+         }
+         table.rg-table tr,
+         table.rg-table th,
+         table.rg-table td {
+         display: block;
+         padding: 0;
+         }
+         table.rg-table tr {
+         border-bottom: none;
+         margin: 0 0 1em 0;
+         padding: 0.5em;
+         }
+         table.rg-table tr.highlight {
+         background-color: inherit !important;
+         }
+         table.rg-table.zebra tr:nth-child(even) {
+         background-color: transparent;
+         }
+         table.rg-table.zebra td:nth-child(even) {
+         background-color: #f6f6f6;
+         }
+         table.rg-table tr:nth-child(even) {
+         background-color: transparent;
+         }
+         table.rg-table td {
+         padding: 0.5em 0 0.25em 0;
+         border-bottom: 1px dotted #ccc;
+         text-align: right;
+         }
+         table.rg-table td[data-title]:before {
+         content: attr(data-title);
+         font-weight: bold;
+         display: inline-block;
+         content: attr(data-title);
+         float: left;
+         margin-right: 0.5em;
+         font-size: 0.95em;
+         }
+         table.rg-table td:last-child {
+         padding-right: 0;
+         border-bottom: 2px solid #ccc;
+         }
+         table.rg-table td:empty {
+         display: none;
+         }
+         table.rg-table .highlight td {
+         background-color: inherit;
+         font-weight: normal;
+         }
+         }
+         .current_match {
+         font-weight: bold;
+         font-size:18px;
+         }
+         /*----------*/
+         .sespend-cell {
+         background:   #F44336; 
+         color: #fff; 
+         font-weight: bold; 
+         }
+         .active-cell {
+         background: #4DD0E1; 
+         color: #fff; 
+         font-weight: bold; 
+         }
+         .text-cell-sespend 
+         {
+         font-weight: bold; 
+         text-decoration:   line-through;  
+         text-decoration-style: solid; 
+         color:#e4e4e454; 
+         text-decoration-color: #000;
+         }
+         .yes-no-sespend
+         {
+         background: #ff4447;
+         }
+         .lay-common-bg 
+         {
+         background-color: #FF4081;
+         font-weight: bold;
+         }
+         .back-common-bg {
+         background-color: #0D47A1;
+         font-weight: bold;
+         }
+         .no-common-bg {
+         background-color: #1A237E;
+         font-weight: bold; 
+         }
+         .yes-common-bg {
+         background-color: #8BC34A;
+         font-weight: bold; 
+         }
+         .cell-text-color {
+         color: #fff;
+         font-weight: bold; 
+         }
+         .cell-name {
+         font-weight: bold;
+         }
+         .back-update {
+         background-color:  #aedea4;
+         font-weight: bold;
+         }
+         .lay-update {
+         background-color: #73a8a0;
+         font-weight: bold;
+         }
+         .no-update {
+         background-color:  #ffe200;
+         font-weight: bold;
+         }
+         .yes-update {
+         background-color: #002852;
+         font-weight: bold;
+         }
+         .blink {
+    animation: blinker 3s ease infinite
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0
+    }
+}
+.label {
+  padding : 5px;
+  font-size:15px;
+}
+.pull-right{
+  float:right;
+}
+.label.label-danger {
+    background: #dc3545;
+    border-radius: 5px;
+    color: #fff;
+}
+#currentBowl {
+    border: 2px solid #4cae4c;
+    font-size: 16px;
+    color: #fff !important;
+    background-color: #5cb85c;
+}
+.padding-no{
+  padding:0px;
+}
+      </style>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script type="text/JavaScript">
+let user_id = "<%=userdata._id;%>";
+function updateusertime(){
+  $.post("/api/update_user_log",{user_id : user_id},function(data){
+      
+  });
+};
+setInterval(function(){
+  updateusertime();
+},1000);
+
+updateusertime();
+
+</script>
+   </head>
+   <body>
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+         <div class="container">
+            <a class="navbar-brand" href="#">Cricket247Online</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                     <li>
+                     <a class="nav-link" href="#"><%-userdata.username%></a>
+                     </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <!-- Page Content -->
+      <div class="container-fluid content-div">
+      <div class="row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+               <ul class="cd-accordion-menu animated">
+               <% navigator.forEach(row => { %>
+                  <li class="has-children">
+                     <input type="checkbox" name ="group-<%=row.game._id%>" id="group-<%=row.game._id%>" >
+                     <label for="group-<%=row.game._id%>"><%=row.game.game_name%></label>
+                     <ul>
+                     <% row.data.forEach(row2 => { %>
+                        <li class="has-children">
+                           <input type="checkbox" name ="sub-group-<%=row2.mevent._id%>" id="sub-group-<%=row2.mevent._id%>">
+                           <label for="sub-group-<%=row2.mevent._id%>">[<%=row2.mevent.event_team_a;%> vs <%=row2.mevent.event_team_b;%>]</label>
+                           <ul>
+                           <% row2.dt.forEach(row3 => { %>
+                              <li class="has-children">
+                                 <input type="checkbox" name ="sub-group-level-<%=row3.mdate._id%>" id="sub-group-level-<%=row3.mdate._id%>">
+                                 <label for="sub-group-level-<%=row3.mdate._id%>">[<%=moment(row3.mdate.event_date).format("DD-MMM-YYYY")%>]</label>
+                                 <ul>
+                                 <% row3.dt2.forEach(row4 => { %>
+                                    <li class="has-children">
+                                       <input type="checkbox" name ="sub-group-level-level-<%=row4.mlive._id%>" id="sub-group-level-level-<%=row4.mlive._id%>">
+                                       <label for="sub-group-level-level-<%=row4.mlive._id%>">[<%=row4.mlive.live_game_name%>]</label>
+                                       <ul>
+                                        <% row4.dt3.forEach(row5 => { %>
+                                          <li><a href="/user_dashboard/<%=row5.genMatch._id%>">Match_Odds</a></li>
+                                        <% }); %>
+                                       </ul>
+                                    </li>
+                                    <% }); %>
+                                 </ul>
+                              </li>
+                              <% }); %>
+                           </ul>
+                        </li>
+                        <% }); %>
+                     </ul>
+                  </li>
+                  <% }); %>
+                </ul>
+               <!-- cd-accordion-menu -->
+            </div>
+            <!-- Post Content Column -->
+            <div class="col-lg-6">
+               <!-- Date/Time -->
+               <div class='row'>
+                  <div class="col-md-12">
+                    <h1 >Selected Match Not Found</h1>
+                    <h3 >Please! Select another Match.</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- /.row -->
+      </div>
+      <!-- /.container -->
+      <!-- Footer -->
+      <footer class="py-5 bg-dark">
+         <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; cricket247online 2018</p>
+         </div>
+         <!-- /.container -->
+      </footer>
+      <!-- Bootstrap core JavaScript -->
+      
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="/plugins/socket.js"></script>
+      <script src="/plugins/moment.min.js"></script>
+      <!-- The Modal -->
+
+   </body>
+
+   
+</html>

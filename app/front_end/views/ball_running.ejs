@@ -1,0 +1,513 @@
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+    <title> &nbsp; </title>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <!-- Bootstrap core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/blog-post.css" rel="stylesheet">
+      <link href="/css/reset.css" rel="stylesheet">
+      <link href="/css/style.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <style>
+            /* info (hed, dek, source, credit) */
+            .rg-container {
+            font-size: 16px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0px;
+            color: #222;
+            }
+            .rg-header {
+            margin-bottom: 1em;
+            text-align: left;
+            }
+            .rg-header > * {
+            display: block;
+            }
+            .rg-hed {
+            font-weight: bold;
+            font-size: 1.4em;
+            }
+            .rg-dek {
+            font-size: 1em;
+            }
+            .rg-source {
+            margin: 0;
+            font-size: 0.75em;
+            text-align: right;
+            }
+            .rg-source .pre-colon {
+            text-transform: uppercase;
+            }
+            .rg-source .post-colon {
+            font-weight: bold;
+            }
+            /* table */
+            table.rg-table {
+            width: 100%;
+            margin-bottom: 0.5em;
+            font-size: 1em;
+            border-collapse: collapse;
+            border-spacing: 0;
+            }
+            table.rg-table tr {
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            text-align: left;
+            color: #333;
+            }
+            table.rg-table thead {
+            border-bottom: 3px solid #ddd;
+            }
+            table.rg-table tr {
+            border-bottom: 1px solid #ddd;
+            color: #222;
+            }
+            table.rg-table tr.highlight {
+            background-color: #dcf1f0 !important;
+            }
+            table.rg-table.zebra tr:nth-child(even) {
+            background-color: #f6f6f6;
+            }
+            table.rg-table th {
+            font-weight: bold;
+            padding: 0.35em;
+            font-size: 0.9em;
+            }
+            table.rg-table td {
+            padding: 0.35em;
+            font-size: 0.9em;
+            }
+            table.rg-table .highlight td {
+            font-weight: bold;
+            }
+            table.rg-table th.number,
+            td.number {
+            text-align: right;
+            }
+            /* media queries */
+            @media screen and (max-width: 0px) {
+            .rg-container {
+            max-width: 600px;
+            margin: 0 auto;
+            }
+            table.rg-table {
+            width: 100%;
+            }
+            table.rg-table tr.hide-mobile,
+            table.rg-table th.hide-mobile,
+            table.rg-table td.hide-mobile {
+            display: none;
+            }
+            table.rg-table thead {
+            display: none;
+            }
+            table.rg-table tbody {
+            width: 100%;
+            }
+            table.rg-table tr,
+            table.rg-table th,
+            table.rg-table td {
+            display: block;
+            padding: 0;
+            }
+            table.rg-table tr {
+            border-bottom: none;
+            margin: 0 0 1em 0;
+            padding: 0.5em;
+            }
+            table.rg-table tr.highlight {
+            background-color: inherit !important;
+            }
+            table.rg-table.zebra tr:nth-child(even) {
+            background-color: transparent;
+            }
+            table.rg-table.zebra td:nth-child(even) {
+            background-color: #f6f6f6;
+            }
+            table.rg-table tr:nth-child(even) {
+            background-color: transparent;
+            }
+            table.rg-table td {
+            padding: 0.5em 0 0.25em 0;
+            border-bottom: 1px dotted #ccc;
+            text-align: right;
+            }
+            table.rg-table td[data-title]:before {
+            content: attr(data-title);
+            font-weight: bold;
+            display: inline-block;
+            content: attr(data-title);
+            float: left;
+            margin-right: 0.5em;
+            font-size: 0.95em;
+            }
+            table.rg-table td:last-child {
+            padding-right: 0;
+            border-bottom: 2px solid #ccc;
+            }
+            table.rg-table td:empty {
+            display: none;
+            }
+            table.rg-table .highlight td {
+            background-color: inherit;
+            font-weight: normal;
+            }
+            }
+            .current_match {
+            font-weight: bold;
+            font-size:18px;
+            }
+            /*----------*/
+            .sespend-cell {
+            background:   #F44336; 
+            color: #fff; 
+            font-weight: bold; 
+            }
+            .active-cell {
+            background: #4DD0E1; 
+            color: #fff; 
+            font-weight: bold; 
+            }
+            .text-cell-sespend 
+            {
+            font-weight: bold; 
+            text-decoration:   line-through;  
+            text-decoration-style: solid; 
+            color:#e4e4e454; 
+            text-decoration-color: #000;
+            }
+            .yes-no-sespend
+            {
+            background: #ff4447;
+            }
+            .lay-common-bg 
+            {
+            background-color: #FF4081;
+            font-weight: bold;
+            }
+            .back-common-bg {
+            background-color: #0D47A1;
+            font-weight: bold;
+            }
+            .no-common-bg {
+            background-color: #1A237E;
+            font-weight: bold; 
+            }
+            .yes-common-bg {
+            background-color: #8BC34A;
+            font-weight: bold; 
+            }
+            .cell-text-color {
+            color: #fff;
+            font-weight: bold; 
+            }
+            .cell-name {
+            font-weight: bold;
+            }
+            .back-update {
+            background-color:  #aedea4;
+            font-weight: bold;
+            }
+            .lay-update {
+            background-color: #73a8a0;
+            font-weight: bold;
+            }
+            .no-update {
+            background-color:  #ffe200;
+            font-weight: bold;
+            }
+            .yes-update {
+            background-color: #002852;
+            font-weight: bold;
+            }
+            .blink {
+       animation: blinker 3s ease infinite
+   }
+   
+   @keyframes blinker {
+       50% {
+           opacity: 0
+       }
+   }
+   .label {
+     padding : 5px;
+     font-size:15px;
+   }
+   .pull-right{
+     float:right;
+   }
+   .label.label-danger {
+       background: #dc3545;
+       border-radius: 5px;
+       color: #fff;
+   }
+   #currentBowl {
+       border: 2px solid #4cae4c;
+       font-size: 16px;
+       color: #fff !important;
+       background-color: #5cb85c;
+   }
+   .padding-no{
+     padding:0px;
+   }
+         </style>
+    </head>
+    <body>
+       <div class="container-fluid">
+          <div class="row">
+          <div class="col-md-6" id="ballingSection2">
+          <div class="rg-container">
+              <table class="rg-table" summary="Hed">
+                  <caption class="rg-header"> </caption>
+                  <thead>
+                      <tr  class="row">
+                          <th class="text  col-md-4">Ball</th>
+                          <th class="text  col-md-4">Result</th>
+                          <th class="text  col-md-4">TimeStamp</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="col-md-6" >
+          <div class="row" id="showOversRuns">
+          </div>
+      </div>
+          </div>
+       </div>
+        
+        <script src="/vendor/jquery/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/plugins/socket.js"></script>
+        <script src="/plugins/moment.min.js"></script>
+        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+        <script>
+        var socket1 = io.connect('http://cricket247online.com:85/');
+      //var socket1 = io.connect(window.location.origin+'/admin_panel');
+              socket1.on('error', (err) => {
+                  console.log('Error connecting to server', err);
+              });
+  
+              socket1.on('disconnect', () => {
+                  console.log('Disconnect from server');
+              });
+  
+              socket1.on('reconnect', (number) => {
+                  console.log('Reconnected to server', number);
+              });
+  
+              socket1.on('reconnect_attempt', () => {
+                  console.log('Reconnect Attempt');
+              });
+  
+              socket1.on('reconnecting', (number) => {
+                  console.log('Reconnecting to server', number);
+              });
+  
+              socket1.on('reconnect_error', (err) => {
+                  console.log('Reconnect Error', err);
+              });
+  
+              socket1.on('reconnect_failed', () => {
+                  console.log('Reconnect failed');
+              });
+  
+              socket1.on('connect_error', () => {
+                  console.log('connect_error');
+              });
+              const match_id = '<%=match_id%>';
+              var oldback_lay = [];
+             var oldmatch_odds = [];
+             var old_ball_running = [];
+             function check_data( Old_data, New_data)
+             {
+             
+               check = false;
+               if(Old_data.length == New_data.length)
+               {
+               // White
+                 var Old_length = Old_data.length;
+                 var New_length = New_data.length;
+                 
+                 // alert(' Old : '+ Old_length+ ' New : '+New_length)
+                 if(Old_length != New_length)
+                 {
+                   check = true;
+                 }
+                 else
+                 {
+                 for(i = 0;i <New_length;i++)
+                 {
+                   // alert(old_data.matchLayJson[i]);
+                   if(checkJsons(Old_data[i],New_data[i]))
+                   {
+             
+                   }
+                   else
+                   {
+                     check = true;    
+                   }
+                 }
+                 }
+               }
+               else
+               {
+                 check = true;
+               }
+               return check;
+             }
+             
+             function checkJsons( otherJson, newJson)
+             {
+             
+             
+                 var sameJson = true;
+                 $.each(newJson, function(key, value){
+                     if(otherJson[key] != newJson[key]) 
+                     {
+                         sameJson=false;
+                     } 
+                     
+                 });
+                 return sameJson;
+             }
+             let old2 = [];
+        function getBallRunning(match_id){
+          $.post('/api/getBallRunning2',{match_id : match_id},function(data){
+            
+            let jobj = JSON.parse(JSON.stringify(data));
+
+            let chk = check_data(old_ball_running, jobj)
+            if(chk){
+              old_ball_running = jobj;
+              let layout = getballrunninglayout(jobj);
+            
+              $("#ballingSection2").html(layout);
+            }
+            
+          });
+         }
+        function getOversRuns(match_id){
+          $.post('/api/getOversRuns',{match_id : match_id},function(data){
+            let obj = JSON.parse(data);
+            let chk = check_data(old2, obj)
+            if(chk){
+              old2 = obj;
+              let html = '';
+            obj.forEach(function(row){
+              html += layout1(row);
+            });
+            $('#showOversRuns').html(html);
+            }
+            
+          }); 
+        }
+        
+        function layout1(array){
+        let html =  '<div class="col-md-6 pull-left"><hr>'+
+       '<p>Inning '+array.inning+' :</p>'+
+       '<hr>'+
+              '<table class="table table-dark" summary="Hed">'+
+                  '<thead>'+
+                      '<tr >'+
+                          '<th>Over</th>'+
+                          '<th>Runs</th>'+
+                      '</tr>'+
+                  '</thead>'+
+                  '<tbody>';
+        array.overs.forEach(function(row){
+            html += '<tr>'+
+                    '<td>'+row.overs+'</td>'+
+                    '<td>'+row.over_runs+'</td>'+
+                    '</tr>';
+        });
+        html += '</tbody>'+
+              '</table></div>';
+          return html;
+        }
+         function getballrunninglayout(array){
+           let html = '<div class="rg-container">'
+        +'<table class="rg-table" summary="Hed">'
+            +'<caption class="rg-header"> </caption>'
+            +'<thead>'
+                +'<tr>'
+                    +'<th class="text ">Ball</th>'
+                    +'<th class="text ">Result</th>'
+                    +'<th class="text ">TimeStamp</th>'
+                +'</tr>'
+            +'</thead>'
+            +'<tbody>';
+           array.forEach(row => {
+             let res = row.result;
+             let id= "";
+             let style = "";
+             let style2 = "";
+             let update = "";
+             if(row.result == '#'){
+               res = "Ball Running";
+               id = "currentBowl";
+               style = 'style="color:#fff; font-weight:bold;"';
+               style2 = 'style="color:#fff; font-weight:bold;"';
+             }
+             else if(row.result == 6){
+               style = 'style="color:#00675d; font-weight:bold; font-size: 28px;"';
+               style2 = 'style="color:#000;font-weight:bold; "';
+             }
+             else if(row.result == 4){
+               style = 'style="color:#0017ff; font-weight:bold; font-size: 28px"';
+               style2 = 'style="color:#000;font-weight:bold; "';
+             }else if(row.result == "Out"){
+               style = 'style="color:#ff0000; font-weight:bold; font-size: 28px;"';
+               style2 = 'style="color:#000;font-weight:bold; "';
+             }else if(row.result == "Wicket"){
+              style = 'style="color:#ff0000; font-weight:bold; font-size: 28px;"';
+              style2 = 'style="color:#000;font-weight:bold; "';
+            }else {
+              style = 'style="color:#000; font-weight:bold;"';
+              style2 = 'style="color:#000;font-weight:bold; "';
+            }
+             if(row.if_update == 1){
+               update = '<span class="label label-danger blink pull-right"> Updated </span>';
+             }
+              html += '<tr id="'+id+'">'
+              +'<td class="text " data-title="Ball" '+style2+'>'+row.bal_no+'</td>'
+              +'<td class="text " data-title="Result" '+style+'>'+res+' '+update+'</td>'
+              +'<td class="text " data-title="Result" style="font-size:13px;font-weight:bold">'+moment(row.last_update_time).format("DD-MMM-YY h:mm:ss A")+'</td>'
+              +'</tr>';
+           });
+           html += '</tbody></table></div>';
+           return html;
+         }
+         setInterval(
+            function(){
+              getBallRunning(match_id);
+            },720
+           );
+           setInterval(
+            function(){
+              getOversRuns(match_id);
+            },820
+           );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('inc/meta_head.ejs') %>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+    <%-include('inc/header.ejs') %>
+       
+
+    <!--News Gallery Start-->
+        <div class="news-section-wrapper news-gallery no-margin">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-title">Edit Event</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                       
+
+                       <div class="col-md-12">
+                        <div class="schedule-tab">
+                            
+
+                            <!-- Nav tabs -->
+                            <ul class="nav" role="tablist">
+                                <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="true">Edit</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="add">
+                                    <!-- <h6>Add</h6> -->
+
+                                    <form method="post" action="/admin_panel/edit_manage_event/<%=event_id%>">
+                                      
+                                      <div class="form-group">
+                                        <label for="">Select Game</label>
+                                        <select required name="game_name" class="form-control" id="">
+                                        <option value="">--Select--</option>
+                                        <% GamesList.forEach(function(row){ %>
+                                            <% if(eventData.game_id == row._id){ %>
+                                            <option selected value="<%=row._id;%>"><%=row.game_name;%></option>
+                                            <% } else {%>
+                                            <option value="<%=row._id;%>"><%=row.game_name;%></option>
+                                            <% } %>
+                                        <% }); %>
+                                        </select>
+                                      </div>
+
+                                      <div class="row">
+
+                                          <div class="col-sm-5">
+                                            <div class="form-group">
+                                              <label for="">Team A</label>
+                                              <input name="team_a" value="<%=eventData.event_team_a%>" type="text" class="form-control" required>
+                                          </div>
+                                          </div>
+                                          <div class="col-sm-2">VS</div>
+                                          <div class="col-sm-5">
+                                            <div class="form-group">
+                                              <label for="">Team B</label>
+                                              <input name="team_b" value="<%=eventData.event_team_b%>" type="text" class="form-control" required>
+                                          </div>
+                                          </div>
+                                      </div>
+                                      
+                                      <button type="submit" class="btn btn-warning">Submit</button>
+
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>     
+                         
+                       
+
+
+
+
+                    </div>
+                </div>
+                <!-- <div class="row text-center">  </div> -->
+            </div>
+        </div>
+        <!--News Gallery End-->
+       
+    
+        <%-include('inc/footer.ejs') %>
+        </body>
+</html>

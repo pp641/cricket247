@@ -1,0 +1,92 @@
+<footer class="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        
+                        <div class="col-md-3 col-sm-4">
+                            <div class="footer-widget">
+                                <h4>Login Info :-</h4>
+                                <ul class='list-group'>
+                                    <li class='list-group-item'><b>Username :-</b> <%=userData.username %></li>  
+                                    <% if(userData.admin_type == 1){ %>
+                                    <li class='list-group-item'><b>Admin Type :-</b> Super Admin</li>
+                                    <% } else if(userData.admin_type == 0){ %>
+                                    <li class='list-group-item'><b>Admin Type :-</b> Mini Admin</li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4">
+                            <div class="footer-widget">
+                                <h4>Users</h4>
+                                <ul class="footer-nav">
+                                <% if(userData.admin_type == 1){ %>
+                                <li><a href="/admin_panel/admin_online_users">Online Admin</a></li>
+                                <% } %>
+                                <li><a href="/admin_panel/online_users">Online User</a></li>
+                                    
+                                </ul>
+                                <br>
+                                <h4></h4>
+                                <ul class="footer-nav">
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4">
+                            <div class="footer-widget">
+                                <h4>Admin Management</h4>
+                                <ul class="footer-nav">
+                                
+                                <% if(userData.admin_type == 1){ %>
+                                    <li><a href="/admin_panel/manage_admin">Manage Admin</a></li>
+                                <% } %>
+                                <li><a href="/admin_panel/manage_registered_member">Register Member</a></li>
+                                </ul>
+                                <br>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4">
+                            <div class="footer-widget">
+                                <h4>Quick Links</h4>
+                                <ul class="footer-nav">
+                                    <li><a href="/admin_panel">Dashboard </a></li>
+                                    <li><a href="/">Visit Website</a></li>
+                                    <li><a href="/admin_panel/match_odds_selection">Manage Match Odds</a></li>
+                                    
+                                    <li><a href="/admin_panel/logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="col-md-4 col-sm-4 text-left">
+                        <p>© Copyright 2018-2020 Cricket247Online.com</p>
+                    </div>
+                    <div class="col-md-4 col-sm-4 text-center">
+                        <p>---</p>
+                    </div>
+                    <div class="col-md-4 col-sm-4 text-right">
+                        <p>Version : 1.4 Date : 17-Mar-2020</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!--Wrapper Div End-->
+
+    <!--Js Files Start-->
+    <script src="/admin_panel/js/jquery.min.js"></script>
+    <script src="/admin_panel/js/jquery-migrate-1.4.1.min.js"></script>
+    <script src="/admin_panel/js/jquery.prettyPhoto.js"></script>
+    <script src="/admin_panel/js/bootstrap.min.js"></script>
+    <script src="/admin_panel/js/jquery.ticker.js"></script>
+    <script src="/admin_panel/js/owl.carousel.min.js"></script>
+    <script src="/admin_panel/js/custom.js"></script>
+    <script>
+        let user_id2="<%=userData._id;%>";function updateusertime(){$.post("/admin_panel/update_user_log",{user_id:user_id2},function(){})}setInterval(function(){updateusertime()},2e3),updateusertime();
+    </script>

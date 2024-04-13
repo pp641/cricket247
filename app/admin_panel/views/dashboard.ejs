@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('inc/meta_head.ejs') %>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+        <%-include('inc/header.ejs') %>
+        <!--Featured News Area Start-->
+        <section class="news-section-wrapper">
+            <div class="featured-news-block">
+                <div class="container-fluid">
+                
+                    <div class="row rowflex">
+                        <div class="col-md-6 p3r">
+                            <div class="match_list">
+                            <%
+                            generatedList.forEach(row => {
+                            %>
+                                <% if(typeof row.EventDate !== 'undefined' && row.EventDate){ %>
+                                    <% if(typeof row.Event !== 'undefined' && row.Event){ %>
+                                <div class="item">
+                                    <div class="fnews-thumb">
+                                        <div class="fnews-txt"> 
+                                            <% if(userData.admin_type == 1){ %>
+                                                <% if(typeof row.Event !== 'undefined' && row.Event){ %>
+                                                    <h3> 
+                                                        <a href="/admin_panel/manage_match_odds/<%=row.row._id%>">
+                                                            <%=(row.Event.event_team_a ? row.Event.event_team_a : '' )%> Vs <%=(row.Event.event_team_b ? row.Event.event_team_b : '' )%>
+                                                        </a> 
+                                                    </h3>
+                                                <% } %>
+                                            <% } else { %>
+                                                <% if(typeof row.Event !== 'undefined' && row.Event){ %>
+                                                    <h3>
+                                                        <a href="/admin_panel/manage_match_odds_user/<%=row.row._id%>"><%=(row.Event.event_team_a ? row.Event.event_team_a : '' )%> Vs <%=(row.Event.event_team_b ? row.Event.event_team_b : '' )%></a>
+                                                    </h3>
+                                                <% } %>
+                                            <% } %>
+                                            <span class="gtag mt-2">Date: <%=moment(row.EventDate.event_date).format("DD-MMM-YYYY")%></span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <% } %>
+                                <% } %>
+                            <% }) %>
+
+                                
+                         </div>   
+                        </div>
+                        <div class="col-md-3 col-sm-6 p3">
+                            <div class="fnews-thumb mb6">
+                                <div class="fnews-txt"> <span class="gtag c3">2.</span>
+                                    <h3> <a href="/admin_panel/manage_game_event">Manage Game Event</a> </h3>
+                                </div>
+                                <img src="/admin_panel/images/h2-f2.jpg" alt=""> </div>
+                            <div class="fnews-thumb">
+                                <div class="fnews-txt"> <span class="gtag c4">4.</span>
+                                    <h3> <a href="/admin_panel/manage_live_game">Manage Live Game</a> </h3>
+                                </div>
+                                <img src="/admin_panel/images/h2-f3.jpg" alt=""> </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 p3">
+                            <div class="fnews-thumb mb6">
+                                <div class="fnews-txt"> <span class="gtag c3">3.</span>
+                                    <h3> <a href="/admin_panel/manage_game_date">Manage Game Date</a> </h3>
+                                </div>
+                                <img src="/admin_panel/images/h2-f2.jpg" alt=""> </div>
+                            <div class="fnews-thumb">
+                                <div class="fnews-txt"> <span class="gtag c4">5.</span>
+                                    <h3> <a href="/admin_panel/create_matchodds">Match Analysis</a> </h3>
+                                </div>
+                                <img src="/admin_panel/images/h2-f3.jpg" alt=""> </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 card ">
+                        <form method="post" class=" card-body" id="form-news">
+                            <div class="form-group">
+                                <label> Main News </label>
+                                <input type="Text" name="news" value="<%-news_text%>" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn w-100 btn-dark" type="submit">Update News</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Featured News Area End-->
+
+        
+
+        <%-include('inc/footer.ejs') %>
+        <script>
+            $("#form-news").on("submit",function(e){
+                e.preventDefault();
+                let news = this.news.value;
+                $.post("/admin_panel/api/updateMainNews",{news : news},function(data){
+                    alert('Done');
+                });
+            });
+        </script>
+</body>
+</html>

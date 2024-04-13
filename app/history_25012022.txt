@@ -1,0 +1,832 @@
+    1  sudo chown -R nginx:nginx /home/cricket247online/tmp_file
+    2  service nginx restart
+    3  pm2 rstart
+    4  pm2 restart
+    5  pm2 restart all
+    6  pm2 list
+    7  pm2 monit
+    8  mongo
+    9  service mongod restart
+   10  mongo
+   11  service mongod restart
+   12  mongo
+   13  ulimit -u -S
+   14  ulimit -u -H
+   15  mongo
+   16  reboot
+   17  mongo
+   18  service mongod restart
+   19  service mongod start
+   20  rm  /var/run/mongodb/mongod.pid
+   21  service mongod start
+   22  service mongod restart
+   23  rm  /var/run/mongodb/mongod.pid
+   24  service mongod restart
+   25  rm  /var/run/mongodb/mongod.pid
+   26  service mongod stop
+   27  service mongod start
+   28  service mongod stop
+   29  sudo lsof -iTCP -sTCP:LISTEN -n -P
+   30  yum install lsof
+   31  sudo lsof -iTCP -sTCP:LISTEN -n -P
+   32  kill mongod
+   33  kill 7373
+   34  service mongod start
+   35  rm  /var/run/mongodb/mongod.pid
+   36  service mongod start
+   37  pm2 restart all
+   38  mongo
+   39  pm2 resurrect
+   40  pm2 startup
+   41  pm2 save
+   42  pm2 restart all
+   43  service nginx restart
+   44  sudo iptables -A INPUT -p tcp -m tcp --dport 85 -j ACCEPT
+   45  sudo iptables -A INPUT -p tcp -m tcp --dport 3025 -j ACCEPT
+   46  sudo /etc/init.d/iptables save
+   47  pm2 restart all
+   48  pm2 list
+   49  pm2 minit
+   50  pm2 monit
+   51  cd /home/cricket247online/app/front_end
+   52  npm install 
+   53  npm audit
+   54  npm audit fix
+   55  cd ..
+   56  cd admin_panel
+   57  npm install
+   58  pm2 restart all
+   59  pm2 list
+   60  cd ..
+   61  rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+   62  yum install redis
+   63  chkconfig redis on
+   64  service redis restart
+   65  pm2 restart all
+   66  ~redis-cli
+   67  redis-cli
+   68  service redis start
+   69  service redis restart
+   70  pm2 restart all
+   71  service nginx restart
+   72  setsebool httpd_can_network_connect on
+   73  setsebool httpd_can_network_connect on -P
+   74  getsebool -a | grep httpd
+   75  service nginx restart
+   76  mongo
+   77  service mongod restart
+   78  pm2 restart all
+   79  service mongod restart
+   80  sudo iptables -A INPUT -p tcp -m tcp --dport 27017 -j ACCEPT
+   81  sudo /etc/init.d/iptables save
+   82  service mongod restart
+   83  pm2 restart
+   84  pm2 restart all
+   85  pm2 list
+   86  pm2 show 0
+   87  cd /home/cricket247online/app/front_end
+   88  npm install http-error
+   89  npm install http-errors
+   90  cd ..
+   91  cd admin_panel
+   92  npm install http-errors
+   93  pm2 restart all
+   94  mongo
+   95  mongo -u mongo-admin
+   96  mongo -u mongo-admin --authenticationDatabase admin
+   97  mongo --uri "mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin"
+   98  mongo --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin"
+   99  mongo mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin
+  100  pm2 restart all
+  101  service mongod restart
+  102  db.createUser(
+  103    {     user: "useradmin",;     pwd: "thepianohasbeendrinking",;     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ];   }
+  104  )mongo
+  105  mongo
+  106  service mongod restart
+  107  pm2 restart all
+  108  pm2 monit
+  109  pm2 restart all
+  110  pm2 monit
+  111  pm2 restart all
+  112  pm2 monit
+  113  pm2 restart all
+  114  pm2 monit
+  115  pm2 watch FrontEnd
+  116  pm2 FrontEnd watch
+  117  pm2 FrontEnd --watch restart
+  118  pm2 restart FrontEnd --watch
+  119  pm2 monit
+  120  pm2 restart FrontEnd --watch
+  121  pm2 restart FrontEnd 
+  122  pm2 restart all
+  123  npm update
+  124  cd ..
+  125  cd front_end
+  126  npm update
+  127  pm2 restart all
+  128  mongo
+  129  service mongod restart
+  130  mongo
+  131  pm2 restart all
+  132  service mongod restart
+  133  service nginx restart
+  134  exit
+  135  service nginx restart
+  136  pm2 restart all
+  137  pm2 monit
+  138  pm2 restart all
+  139  cd /home/cricket247online/app/front_end
+  140  npm install compression
+  141  cd ..
+  142  cd admin_panel
+  143  npm install compression
+  144  pm2 restart all
+  145  pm2 show 0
+  146  pm2 restart all
+  147  pm2 env 0
+  148  NODE_ENV = production
+  149  set NODE_ENV = production
+  150  NODE_ENV
+  151  get NODE_ENV
+  152  pm2 restart all
+  153  pm2 show 0
+  154  echo $NODE_ENV
+  155  set NODE_ENV=production
+  156  echo $NODE_ENV
+  157  process.env.NODE_ENV
+  158  process.env
+  159  npm install --production
+  160  set NODE_ENV=production
+  161  export NODE_ENV=production
+  162  echo $NODE_ENV
+  163  pm2 restart all
+  164  cd ..
+  165  cd app
+  166  cd front_end
+  167  npm install --production
+  168  pm2 restart all
+  169  pm2 list
+  170  cd ..
+  171  pm2 list
+  172  mongotop
+  173  mongotop -u mongo-admin
+  174  mongotop -u mongo-admin --authenticateDatabase admin
+  175  mongotop --help
+  176  mongotop -u mongo-admin--authenticationDatabase
+  177  mongotop -u mongo-admin--authenticationDatabase admin
+  178  mongotop -u mongo-admin--authenticationDatabase=admin
+  179  mongotop -u mongo-admin --authenticationDatabase=admin
+  180  mongotop -u mongo-admin --authenticationDatabase=admin --authenticationMechanism=MONGODB-X509
+  181  mongotop --user mongo-admin --authenticationDatabase=admin --authenticationMechanism=MONGODB-X509
+  182  mongotop --u mongo-admin --authenticationDatabase=admin --authenticationMechanism=MONGODB-X509
+  183  mongotop -u mongo-admin --authenticationDatabase=admin --authenticationMechanism=MONGODB-X509
+  184  mongotop --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin"
+  185  mongotop --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin" --authenticationMechanism=MONGODB-X509
+  186  mongotop --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin
+  187  "
+  188  mongotop --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin"
+  189  mongotop --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online"
+  190  mongo --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online"
+  191  mongo  -u mongo-admin --authenticationDatabase=admin
+  192  mongo  -u mongo-admin --authenticationDatabase=admin -p ogen98971
+  193  mongo  -u mongo-admin --authenticationDatabase=admin -p ogen98971 --port 27017
+  194  mongo --uri="mongodb://mongoadmin:ogen98971@103.39.135.122:27017/cricket247online?w=1"
+  195  mongo --help
+  196  cls
+  197  clear
+  198  mongo --help
+  199  monog
+  200  mongo
+  201  mongo --port 27017 --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  202  mongotop --port 27017 --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  203  mongo --port 27017 --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  204  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  205  mongo --port 27017 --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  206  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  207  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971 -db cricket247online
+  208  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971 -d cricket247online
+  209  mongotop
+  210  mongotop --help
+  211  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971 -d cricket247online
+  212  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  213  clear
+  214  exit
+  215  pm2 restart admin_panel
+  216  pm2 restart Admin_panel
+  217  pm2 restart Admin_Panel
+  218  pm2 list
+  219  pm2 restart AdminPanel
+  220  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  221  top
+  222  mongo --port 27017 --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  223  top
+  224  pm2 list
+  225  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  226  pm2 restart all
+  227  pm2 restart FrontEnd
+  228  cd ~
+  229  cd /home
+  230  cd cricket247online
+  231  cd app
+  232  cd front_end
+  233  npm install http2
+  234  npm remove http2
+  235  pm2 restart FrontEnd
+  236  pm2 list
+  237  openssl req -x509 -newkey rsa:2048 -nodes -sha256 -keyout privateKey.key -out certificate.crt
+  238  pm2 restart FrontEnd
+  239  pm2 list
+  240  pm2 restart FrontEnd
+  241  openssl req -x509 -newkey rsa:2048 -nodes -sha256 -keyout privateKey.key -out certificate.crtopenssl req -x509 -newkey rsa:2048 -nodes -sha256 -keyout privateKey.key -out certificate.crt
+  242  monog
+  243  mongo
+  244  mongotop --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  245  mongo --authenticationDatabase=admin -u mongoadmin -p ogen98971
+  246  pm2 restart AdminPanel
+  247  pm2 list
+  248  pm2 restart AdminPanel
+  249  pm2 list
+  250  pm2 restart AdminPanel
+  251  pm2 list
+  252  pm2 restart AdminPanel
+  253  pm2 list
+  254  pm2 restart AdminPanel
+  255  pm2 list
+  256  pm2 restart AdminPanel
+  257  pm2 list
+  258  pm2 restart AdminPanel
+  259  top
+  260  iotop
+  261  top
+  262  mongoexport --uri "mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" /home/c
+  263  mongoexport --uri "mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" /home/cricket247online/c
+  264  mongoexport -help
+  265  mongoexport --help
+  266  mongoexport --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" /home/cricket247online/c
+  267  mongoexport --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" -o /home/cricket247online/c
+  268  mongodump --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" -o /home/cricket247online/c
+  269  mongodump --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" /home/cricket247online/c
+  270  mongodump --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?ssl=false&authSource=admin" -o /home/cricket247online/c
+  271  mongodump --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin" -o /home/cricket247online/c
+  272  mongodump --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin" --authenticationMechanism SCRAM-SHA-1 -out /home/cricket247online/c
+  273  mongodump --uri="mongodb://mongo-admin:ogen98971@103.39.135.122:27017/cricket247online?authSource=admin" --authenticationMechanism SCRAM-SHA-1 -o /home/cricket247online/c
+  274  mongodump --authenticationDatabase admin --authenticationMechanism SCRAM-SHA-1 -o /home/cricket247online/c
+  275  mongodump -u mongoadmin -p ogen98971 --authenticationDatabase admin --authenticationMechanism SCRAM-SHA-1 -o /home/cricket247online/c
+  276  vi /etc/ssh/sshd_config 
+  277  time
+  278  systime
+  279  date
+  280  timedatectl
+  281  hwclock
+  282  hwclock -r
+  283  cp /etc/localtime /root/old.timezone
+  284  rm /etc/localtime 
+  285  ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
+  286  cat /etc/localtime 
+  287  vi /etc/localtime 
+  288  cat /etc/localtime 
+  289  hwclock -r
+  290  hwclock
+  291  vi /etc/localtime 
+  292  hwclock
+  293  date
+  294  ls -l /etc/localtime 
+  295  timedatectl
+  296  ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+  297  date
+  298  vi /etc/localtime 
+  299  vi /etc/sysconfig/clock 
+  300  hwclock --systohc --localtime
+  301  hwclock
+  302  system-config-date
+  303  date
+  304  mv /etc/localtime /etc/localtime.backup
+  305  ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+  306  vi /etc/sysconfig/clock 
+  307  date
+  308  ip a
+  309  reboot 
+  310  reboot
+  311  date
+  312  hwclock
+  313  vi /etc/sysconfig/clock 
+  314  vi /etc/localtime
+  315  hwclock
+  316  vi /etc/localtime
+  317  vi /etc/sysconfig/clock 
+  318  hwclock
+  319  vi /etc/localtime
+  320  hwclock
+  321  vi /etc/localtime
+  322  hwclock
+  323  vi /etc/localtime
+  324  hwclock
+  325  date
+  326  hwclock 
+  327  date
+  328  history
+  329  pm2 restart AdminPanel
+  330   pm2 restart FrontEnd
+  331  pm2 restart AdminPanel
+  332  timedatectl
+  333  timedate
+  334  date
+  335  time
+  336  ,
+  337  pm2 restart all
+  338  date
+  339  pm2 restart forntEnd
+  340  pm2 restart fornt_end
+  341  pm2 list
+  342  pm2 restart FrontEnd
+  343  pm2 list
+  344  date
+  345  note
+  346  node
+  347  reboot
+  348  date
+  349  vi /etc/sysconfig/clock
+  350  date
+  351  node
+  352  hwclock --systohc --localtime
+  353  date
+  354  hwclock --systohc --localtime
+  355  date
+  356  ntpd --version
+  357  yum -y install gcc libcap-devel
+  358  date
+  359  yum install ntp
+  360  chkconfig --list ntpd
+  361  chkconfig ntpd on
+  362  chkconfig --list ntpd
+  363  ntpdate be.pool.ntp.org
+  364  /etc/init.d/ntpd start
+  365  date
+  366  pm2 list
+  367  free -h
+  368  lsblk
+  369  df -h
+  370  top
+  371  cat /etc/os
+  372  cat /etc/centos-release 
+  373  uptime 
+  374  history 
+  375  free -h
+  376  ip a
+  377  df -h
+  378  lsblk
+  379  history 
+  380  ip a
+  381  w
+  382  who
+  383  top
+  384  free -h
+  385  exit
+  386  top
+  387  echo 3 > /proc/sys/vm/drop_caches
+  388  echo 2 > /proc/sys/vm/drop_caches
+  389  echo 1 > /proc/sys/vm/drop_caches
+  390  sync; echo 3 > /proc/sys/vm/drop_caches
+  391  free-m
+  392  free -m
+  393  free -h
+  394  ip a
+  395  free -h
+  396  df -h
+  397  lsblk
+  398  top
+  399  ls
+  400  ll
+  401  cat /etc/ssh/sshd_config
+  402  free-m
+  403  free m
+  404  echo 1 > /proc/sys/vm/drop_caches
+  405  echo 2 > /proc/sys/vm/drop_caches
+  406  echo 3 > /proc/sys/vm/drop_caches 
+  407  echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'
+  408  free m
+  409  free h
+  410  reboot
+  411  free -h
+  412  df -h
+  413  top 
+  414  exit
+  415  reboot
+  416  history 
+  417  ls
+  418  clear
+  419  ip add
+  420  free -h
+  421  top
+  422  history 
+  423  uname -a
+  424  cat /etc/centos-release 
+  425  clear
+  426  service mongod status
+  427  clear
+  428  free -h
+  429  clear
+  430  df -h
+  431  clear
+  432  df -i
+  433  clear
+  434  top
+  435  clear
+  436  vi /etc/security/limits.conf 
+  437  service mongod restart
+  438  clear
+  439  service mongod status
+  440  vi /etc/security/limits.conf 
+  441  top
+  442  free -h
+  443  w
+  444  free -h
+  445  df -h
+  446  free -h
+  447  ip a
+  448  ip a | grep 122
+  449  df -h
+  450  free -h
+  451  tailf /var/log/messages
+  452  tail -500 /var/log/messages
+  453  tail -500 /var/log/messages-20210530 
+  454  uptime 
+  455  top
+  456  ping google.com
+  457  ip a
+  458  uname -r
+  459  uname -a
+  460  cat /etc/centos-release 
+  461  clear
+  462  service iptables status
+  463  service iptables stop
+  464  service iptables start
+  465  ip a
+  466  service mongodb status
+  467  service mongod status
+  468  service nginx status
+  469  free -h
+  470  df -h
+  471  dmesg 
+  472  mount -a
+  473  lsblk
+  474  df -h
+  475  /etc/init.d/nginx status
+  476  cd /var/log/
+  477  cd mongodb/
+  478  ls
+  479  tailf mongod.log 
+  480  du -sh *
+  481  tail -100 mongod.log 
+  482  cd
+  483  cd /var/log/
+  484  ll
+  485  cd nginx/
+  486  ls
+  487  tailf error.log
+  488  tail -100 error.log
+  489  tail -100 error.log-20210602 
+  490  cd
+  491  df -h
+  492  ionice --help
+  493  lspci -nn | grep -i net
+  494  exit
+  495  top -c
+  496  free -h
+  497  df -h
+  498  reboot
+  499  mongod
+  500  service mongod status
+  501  exit
+  502  /usr/local/cpanel/scripts/restart
+  503  history 
+  504  df -h
+  505  service nginx status
+  506  service mongod status
+  507  service mongod start
+  508  clear
+  509  service mongod status
+  510  service mongod start
+  511  tail /var/run/mongodb/mongod.pid 
+  512  history 
+  513  service mongod status
+  514  cd /var/run/mongodb/
+  515  ls
+  516  cp mongod.pidbk
+  517  cp mongod.pid mongod.pidbk
+  518  rm -rf mongod.pid
+  519  service mongod start
+  520  service mongod status
+  521  service mongod start
+  522  ls
+  523  reboot
+  524  service httpd status
+  525  service apache2 status
+  526  service nginx status
+  527  service mysqld status
+  528  service mysql status
+  529  df -h
+  530  service mongodb status
+  531  /etc/init.d/mongod status
+  532  /etc/init.d/mongod start
+  533  /etc/init.d/mongod status
+  534  tail -f /var/log/mongodb/mongod.log 
+  535  service firewalld status
+  536  getenforce 
+  537  setenforce 0
+  538  tail -f /var/log/mongodb/mongod.log 
+  539  /etc/init.d/mongod restart
+  540  tail -f /var/log/mongodb/mongod.log 
+  541  ps -aux | grep mongo
+  542  /etc/init.d/mongod restart
+  543  /etc/init.d/mongod status
+  544  /etc/init.d/mongod restart
+  545  /etc/init.d/mongod status
+  546  vi /etc/mongod.conf 
+  547  mongo
+  548  service redis status
+  549  npm -v
+  550  nvm ls
+  551  clear
+  552  node --version
+  553  node
+  554  clear
+  555  service mongod status
+  556  service mongod staart
+  557  service mongod start
+  558  service mongod status
+  559  tail /tmp/mongodb-27017.sock 
+  560  chkconfig mongod on
+  561  service mongod start
+  562  sudo mv /tmp/mongodb-27017.sock /tmp/mongodb-27017.sock2
+  563  sudo rm /var/run/mongodb/mongod.pid
+  564  service mongod start
+  565  clear
+  566  service nginx status
+  567  service mongod status
+  568  free -h
+  569  df -h
+  570  df -i
+  571  service nginx restart
+  572  service mongod restart
+  573  reboot 
+  574  who
+  575  sudo systemctl restart mongod
+  576  sudo systemctl reload mongod
+  577  sudo systemctl restart mongod
+  578  mangodb
+  579  sudo systemctl start mongod
+  580  sudo systemctl status mongod
+  581  systemctl restart mongod
+  582  nodejs
+  583  node –version
+  584  service nginx status
+  585  service mongod status
+  586  sync; echo 1 > /proc/sys/vm/drop_caches
+  587  sync; echo 2 > /proc/sys/vm/drop_caches
+  588  sync; echo 3 > /proc/sys/vm/drop_caches 
+  589  free-h
+  590  free - h
+  591  reboot
+  592  free - h
+  593  echo 1 > /proc/sys/vm/drop_caches
+  594  sync; echo 2 > /proc/sys/vm/drop_caches
+  595  sync; echo 3 > /proc/sys/vm/drop_caches 
+  596  free - h
+  597  reboot
+  598  sync; echo 1 > /proc/sys/vm/drop_caches
+  599  sync; echo 2 > /proc/sys/vm/drop_caches
+  600  sync; echo 3 > /proc/sys/vm/drop_caches 
+  601  reboot
+  602  sync; echo 1 > /proc/sys/vm/drop_caches
+  603  sync; echo 2 > /proc/sys/vm/drop_caches
+  604  sync; echo 3 > /proc/sys/vm/drop_caches 
+  605  free-h
+  606  free -h
+  607  reboot
+  608  free -h
+  609  sync; echo 1 > /proc/sys/vm/drop_caches
+  610  sync; echo 2 > /proc/sys/vm/drop_caches
+  611  sync; echo 3 > /proc/sys/vm/drop_caches 
+  612  free - h
+  613  free -h
+  614  reboot
+  615  free -h
+  616  df -g
+  617  df -h
+  618  lsblk
+  619  reboot
+  620  ls
+  621  history 
+  622  vi /etc/ssh/sshd_config 
+  623  iptables -I INPUT -m tcp -p tcp --dport 42426 -j ACCEPT
+  624  iptables-save
+  625  service ssh restart
+  626  service sshd restart
+  627  passwd root
+  628  who
+  629  exit
+  630  sync; echo 1 > /proc/sys/vm/drop_caches
+  631  sync; echo 2 > /proc/sys/vm/drop_caches
+  632  sync; echo 3 > /proc/sys/vm/drop_caches 
+  633  free -h
+  634  reboot
+  635  sync; echo 1 > /proc/sys/vm/drop_caches
+  636  sync; echo 2 > /proc/sys/vm/drop_caches
+  637  sync; echo 3 > /proc/sys/vm/drop_caches 
+  638  free - h
+  639  reboot
+  640  free - h
+  641  sync; echo 3 | sudo tee /proc/sys/vm/drop_caches 
+  642  sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
+  643  free - h
+  644  sync; echo 2 | sudo tee /proc/sys/vm/drop_caches
+  645  sync; echo 1 | sudo tee /proc/sys/vm/drop_caches
+  646  free - h
+  647  reboot
+  648  free - h
+  649  sync; echo 1 > /proc/sys/vm/drop_caches
+  650  sync; echo 2 > /proc/sys/vm/drop_caches
+  651  sync; echo 3 > /proc/sys/vm/drop_caches 
+  652  free -h
+  653  reboot
+  654  top
+  655  cat /proc/cpuinfo
+  656  top
+  657  tmux
+  658  ls
+  659  ls /home/cric
+  660  ls /
+  661  ls /home
+  662  ls /home/cricket247online/
+  663  ls /home/cricket247online//c
+  664  ls /home/cricket247online/c
+  665  ls /home/cricket247online/
+  666  ls /home/cricket247online/app
+  667  history
+  668  ls
+  669  ls /home/cricket247online/
+  670  cat /etc/os-release
+  671  hostnamectl
+  672  ls /etc
+  673  ls /etc/redhat-release
+  674  cat /etc/redhat-release
+  675  exit
+  676  top
+  677  exit
+  678  top
+  679  ps aux | grep node
+  680  pm2 list
+  681  history | grep pm2
+  682  pm2 list
+  683  pm2 monit
+  684  pm2 list
+  685  pm2 dash
+  686  pm2 describe
+  687  pm2 list
+  688  pm2 -h
+  689  pm2 slist
+  690  pm2 desc AdminPanel
+  691  l
+  692  ls
+  693  cd /home/
+  694  ls
+  695  cd cricket247online/
+  696  ls
+  697  ls app
+  698  ls /root/.pm2
+  699  cd /root/.pm2
+  700  ls
+  701  cat module_conf.json 
+  702  ls module
+  703  ls modules
+  704  history | grep pm2 | grep start
+  705  cd /home/cricket247online/
+  706  ls
+  707  cd app
+  708  ls
+  709  ls admin_panel/
+  710  ls /var
+  711  ls /etc
+  712  find /home/cricket247online/
+  713  find /home/cricket247online/ | grep eco
+  714  pm2 monit
+  715  pm1 liar
+  716  pm2 list
+  717  pm2 startup
+  718  pm2 monit
+  719  pm2 list
+  720  ls /etc/init.d/pm2-root 
+  721  cd /etc/init.d/pm2-root 
+  722  cat /etc/init.d/pm2-root 
+  723  pm2 list
+  724  top
+  725  netstat
+  726  cat /etc/nginx/nginx.conf 
+  727  ls /etc/nginx/conf.d/
+  728  cat /etc/nginx/conf.d/default.conf 
+  729  top
+  730  netstat
+  731  cat /etc/nginx/conf.d/default.conf 
+  732  netstat command 
+  733  netstat -l
+  734  ls /etc/pm
+  735  ls /etc/pm/config.d
+  736  fuser
+  737  fuser -l
+  738  netstat -tulpn
+  739  top
+  740  pm2 list
+  741  history | grep pm2
+  742  pm2 monit
+  743  l
+  744  ls
+  745  cd /home/cricket247online/
+  746  l
+  747  ls
+  748  ls c
+  749  ls app
+  750  ls -alsh app
+  751  ls -alsh c
+  752  ls admin
+  753  ls
+  754  ls app/admin_panel/
+  755  ls /var/pm2-config
+  756  ls /var
+  757  ls /etc
+  758  ls /etc/pm
+  759  cat /etc/pm/config.d/*
+  760  pm2 monit
+  761  pm2 logs
+  762  history
+  763  history | grep pm2
+  764  pm2 list
+  765  history | head -n 10
+  766  pm2 help
+  767  pm2 -h
+  768  pm2 dash
+  769  exit
+  770  pm2 dash
+  771  pm2 -h
+  772  top
+  773  exit
+  774  ls
+  775  cd /home
+  776  ls
+  777  cd cricket247online/
+  778  ls
+  779  cd app/
+  780  ls
+  781  cd front_end/
+  782  ls
+  783  pm2 monit
+  784  history
+  785  history | grep pm2
+  786  cat /etc/nginx/conf.d/default.conf 
+  787  cd /etc/nginx/
+  788  ls
+  789  ls conf.d/
+  790  cd /home
+  791  ls
+  792  cd cricket247online/
+  793  ls
+  794  ls -alsh
+  795  cd .pm2
+  796  pm2 log
+  797  l
+  798  cd
+  799  find / | grep .pm2
+  800  cd /root/.pm2
+  801  ls
+  802  cat dump.pm2
+  803  ls -lash
+  804  vi dump.pm2
+  805  export
+  806  pm2 monit
+  807  vi /etc/nginx/conf.d/
+  808  cd /etc/nginx/conf.d/
+  809  ls
+  810  cat default.conf 
+  811  ls
+  812  cd ..
+  813  ls
+  814  exit
+  815  pm2 monit
+  816  pm2 log
+  817  cd .pm2
+  818  cd logs
+  819  ls
+  820  wc -l *.log
+  821  head -n 1 FrontEnd-error.log 
+  822  head -n 10 FrontEnd-error.log 
+  823  ls -0alsh
+  824  ls -alsh
+  825  pwd
+  826  exit
+  827  vi ~/.ssh/authorized_keys 
+  828  exit
+  829  history
+  830  vi /etc/security/limits.conf
+  831  history | head
+  832  history > /tmp/history

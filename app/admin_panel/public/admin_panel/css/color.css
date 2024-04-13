@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+/* Background Color Start */
+
+
+.match-fixture-thumb li.team-names span, .match-fixture-thumb .t-vs span,
+.news-block:hover .news-txt a.rm,  .event-txt-wrap:hover .event-box-footer a.detail-btn, .points-listing tr.first:hover,
+.sidenews-slider .owl-theme .owl-nav [class*=owl-]:hover, .schedule-box:hover  .sdate, .news-thumb a, .fl-pagination .pagination>li>a:active, .fl-pagination .pagination>li>a:focus, .fl-pagination .pagination>li>a:hover, .fl-pagination .pagination>.active>a, .fl-pagination .pagination>.active>a:focus, .fl-pagination .pagination>.active>a:hover, .fl-pagination .pagination>.active>span, .fl-pagination .pagination>.active>span:focus, .fl-pagination .pagination>.active>span:hover, a.load-more:hover, ul.footer-add .fa, .footer-social a:hover, .match-fixture-inner:before,
+.review-form input[type="submit"],  .pro-thumb .tag.c1, .qty a.add2cart, .pro-tabs .nav-tabs > li.active > a, .pro-tabs .nav-tabs > li.active > a:focus, .pro-tabs .nav-tabs > li.active > a:hover, .pro-tabs .nav > li > a:focus, .pro-tabs .nav > li > a:hover, .header.color-2 .logo-nav, ul.sub-menu li a:hover, span.team-name, .main-banner #slides-thumnail .slick-slide.slick-current:after, .main-banner #slides-thumnail .slick-slide i, .color-option-2 .vnews-box .news-caption .play-icon:hover, .color-option-2 h2.section-title:after, .color-option-2 .news-txt a.rm:hover, .author-box:hover:before, .col-md-9.blue-bg:before, .col-md-9.blue-bg:after, .footer-newsletter button, .tickets-list li:hover .tickets-detail h4 i, .tickets-detail h4 i, .tickets-list li .techlinqs-btn, .ticket-box a, .view-all a:hover, .price-table.selected-table h3, .price-table:hover h3, .price-table.selected-table .price-table-footer a, .price-table:hover .price-table-footer a, .price-table-footer a:hover, .contact-form .submit, #experts-slider.owl-theme .owl-dots .owl-dot.active span, .gallery .slick-next, .gallery .slick-prev, .blog-thumb a:hover, ul.post-tags a:hover, a.detail-btn:hover, .review-form input.submit, .event-counter .countdown-section, ul.share a, a.go:hover, .mat-fix-list:hover a.go, .mat-fix-list:hover span.score, .match-hover span, a.buy-now:hover, .pro-thumb a.link, .pro-box:hover a.buy-now, .techlinqs-pagination .pagination>li>a:hover, .techlinqs-pagination .pagination>.active>a, .techlinqs-pagination .pagination>.active>a:focus, .techlinqs-pagination .pagination>.active>a:hover, .techlinqs-pagination .pagination>.active>span, .techlinqs-pagination .pagination>.active>span:focus, .techlinqs-pagination .pagination>.active>span:hover, .audioplayer:not(.audioplayer-mini) .audioplayer-playpause {
+	background-color: #d21346;
+	color:#fff;
+}
+/* Background Color End */
+
+
+/*Text Color Start */
+
+.header.color-2 .newsticker>ul>li>a:hover, .event-txt-wrap:hover .event-txt h4 a,
+body a:hover, li.time-batch strong.m-date, .tab-news .nav>li.active a, .tab-news .nav>li>a:focus, .tab-news .nav>li>a:hover, .news-block:hover h4 a, .news-block:hover h5 a, .news-block:hover h6 a,
+.side-search button, .color-option-2 .schedule-box .steams .matches .win, .main-banner .slick-slide .banner-caption a, .color-option-2 .vnews-box .news-caption h3 a:hover, .color-option-2 .tab-news-vertical-nav .news-txt h6:hover, .color-option-2 ul.meta-info li a, .color-option-2 .news-txt h3 a:hover, .color-option-2 .news-txt h4 a:hover, .color-option-2 .news-txt h5 a:hover, .color-option-2 .news-txt h6 a:hover, #authors-slider.owl-carousel .author-box strong, .twitter-feed .tw-txt h6, .footer-nav-2 ul li a:hover, .footer-cr p a, .team-box:hover .player-name p strong.name, .team-small-details li.role, .tickets-list li:hover .tickets-date strong, .points-listing tr:hover, .circle-chart__percent, .gallery .gallery-nav .slick-dots li.slick-active button:before, .blog-thumb a, .blog-post h3 a:hover, ul.post-meta li a:hover, .related-posts .blog-content p .fa, .comm-txt .name, .rating-stars a.checked, .rating-stars a:hover, .event-post .event-date h5 span, .event-txt-wrap .event-txt p.loc .fa, .match-details p.loc .fa, .event-single p.loc .fa, .pro-box .pro-txt h5 a:hover, .price ins {
+	color: #d21346;
+}
+/*Text Color End */
+
+
+/*Border Color Start */
+.news-block:hover .news-txt a.rm,
+.tab-news .nav>li.active a, .tab-news .nav>li>a:focus, .tab-news .nav>li>a:hover,
+.techlinqs-pagination .pagination>li>a:hover, .techlinqs-pagination .pagination>.active>a, .techlinqs-pagination .pagination>.active>a:focus, .techlinqs-pagination .pagination>.active>a:hover, .techlinqs-pagination .pagination>.active>span, .techlinqs-pagination .pagination>.active>span:focus, .techlinqs-pagination .pagination>.active>span:hover, .color-option-2 .news-txt a.rm:hover, .price-table.selected-table .price-table-footer a, .price-table:hover .price-table-footer a, .price-table-footer a:hover, a.detail-btn:hover {
+	border-color: #d21346;
+}
+.header.color-2 .logo:before {
+	border-color: transparent transparent #d21346 transparent;
+}
+span.team-name:after {
+	border-top-color: #d21346;
+}
+.success-stroke {
+	stroke: #d21346;
+}
+
+
+/*Green */
+
+.newslist-block .news-block:hover .news-txt h4 a {color:#d21346;}
+
+.sidenews-slider .owl-theme .owl-nav [class*=owl-],
+.newslist-block .news-block:hover .news-txt a.rm {background:#d21346; color:#fff;}

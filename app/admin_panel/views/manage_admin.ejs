@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('inc/meta_head.ejs') %>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+    <%-include('inc/header.ejs') %>
+       
+
+    <!--News Gallery Start-->
+        <div class="news-section-wrapper news-gallery no-margin">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-title">Manage Admin</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                       
+
+                       <div class="col-md-12">
+                        <div class="schedule-tab">
+                            
+
+                            <!-- Nav tabs -->
+                            <ul class="nav" role="tablist">
+                                <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="true">Create Admin</a></li>
+                                <li role="presentation" class=""><a href="#manage" aria-controls="manage" role="tab" data-toggle="tab" aria-expanded="false">Manage</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="add">
+                                    <!-- <h6>Add</h6> -->
+
+                                <form method="post" action="/admin_panel/auth/signup">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="">Admin Name</label>
+                                                <input name="admin_name" type="text" class="form-control" required="">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="">Admin Username</label>
+                                                <input name="admin_user" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="">Admin Password</label>
+                                                <input name="admin_password" type="password" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="">Admin Type</label>
+                                                <select name="admin_type" class="form-control" id="" required>
+                                                    <option value="">--Select--</option>
+                                                    <option value="1">Super Admin</option>
+                                                    <option value="0">Mini Admin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="">Admin Status</label>
+                                                <select name="admin_status" class="form-control" id="" required>
+                                                    <option value="">--Select--</option>
+                                                    <option value="0">Active</option>
+                                                    <option value="1">Block</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      
+                                      <button type="submit" class="btn btn-warning">Submit</button>
+
+                                    </form>
+                                    
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="manage">
+                                   <!--  <h6>Manage</h6> -->
+
+                                  <div class='rg-container'>
+                                        <table class='rg-table' summary='Hed'>
+                                           
+                                            <thead>
+                                                <tr>
+                                                    <th class='text '>Admin Name</th>
+                                                    <th class='text '>Admin Username</th>
+                                                    <th class='text '>Admin Type</th>
+                                                    <th class='text '>Admin Status</th>
+                                                    <th class='text '>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <% userList.forEach(row => { %>
+                                                <tr class=''>
+                                                <td class='text ' data-title='Teams'><%=row.admin_name%></td>
+                                                <td class='text ' data-title='Game'><%=row.username%></td>
+                                                <% if(row.admin_type == 1){ %>
+                                                <td class='text ' data-title='Game'>Super Admin</td>
+                                                <% }else if(row.admin_type == 0){ %>
+                                                <td class='text ' data-title='Game'>Mini Admin</td>
+                                                <% } %>
+                                                <% if(row.admin_status == 0){ %>
+                                                <td class='text ' data-title='Game'>Active</td>
+                                                <% }else if(row.admin_type == 1){ %>
+                                                <td class='text ' data-title='Game'>Blocked</td>
+                                                <% } %>
+                                                <td class='text ' data-title='Action'> 
+                                                    <a href="/admin_panel/change_password/<%=row._id%>"><button class="btn btn-warning">Change Password</button></a>    
+                                                    <a href="/admin_panel/edit_admin/<%=row._id%>"><button class="btn btn-success">Edit</button></a>
+                                                    <a href="/admin_panel/delete_admin/<%=row._id%>"><button class="btn btn-danger">Delete</button></a>
+                                                </td>
+                                                </tr>        
+                                                <% }); %>
+                                               
+
+                                                  
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>  
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>     
+                         
+                       
+
+
+
+
+                    </div>
+                </div>
+                <!-- <div class="row text-center">  </div> -->
+            </div>
+        </div>
+        <!--News Gallery End-->
+       
+    
+        <%-include('inc/footer.ejs') %>
+
+        </body>
+</html>

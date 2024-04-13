@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('inc/meta_head.ejs') %>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+    <%-include('inc/header.ejs') %>
+       
+
+    <!--News Gallery Start-->
+        <div class="news-section-wrapper news-gallery no-margin">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-title">Manage Admin</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                       
+
+                       <div class="col-md-12">
+                        <div class="schedule-tab">
+                            
+
+                            <!-- Nav tabs -->
+                            <ul class="nav" role="tablist">
+                                
+                                <li role="presentation" class="active"><a href="#manage" aria-controls="manage" role="tab" data-toggle="tab" aria-expanded="false">Manage</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+
+                                <div role="tabpanel" class="tab-pane active" id="manage">
+                                   <!--  <h6>Manage</h6> -->
+
+                                  <div class='rg-container'>
+                                        <table class='rg-table' summary='Hed'>
+                                           
+                                            <thead>
+                                                <tr>
+                                                    <th class='text '>Username</th>
+                                                    <th class='text '>Type</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="userList">
+                                                
+                                            
+                                               
+
+                                                  
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>  
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>     
+                         
+                       
+
+
+
+
+                    </div>
+                </div>
+                <!-- <div class="row text-center">  </div> -->
+            </div>
+        </div>
+        <!--News Gallery End-->
+       
+    
+        <%-include('inc/footer.ejs') %>
+        <script>
+        function getLoggedInUser(){
+            $.get('/admin_panel/api/getloginUser',function(data){
+                let jobj = JSON.parse(JSON.stringify(data))
+                let html ="";
+                jobj.forEach(row => {
+                    html += "<tr>"
+                    +"<td>"+row.username+"</td>";
+                    if(row.admin_type == 0){
+                        html += "<td>Mini Admin</td>";
+                    }else{
+                        html += "<td>Super Admin</td>";
+                    }
+                    
+                    html +="</tr>";
+                });
+                $("#userList").html(html);
+            })
+        }
+        setInterval(function(){
+            getLoggedInUser();
+        },1000)
+        
+        </script>
+        </body>
+</html>

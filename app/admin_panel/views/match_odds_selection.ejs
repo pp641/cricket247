@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('inc/meta_head.ejs') %>
+        <link rel="stylesheet" href="/admin_panel/jquery-ui.min.css">
+
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+        <%-include('inc/header.ejs') %>
+
+
+            <!--News Gallery Start-->
+            <div class="news-section-wrapper news-gallery no-margin">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="section-title">Let's go to Match Analysis Management Dashboard</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+
+
+                            <div class="col-md-12">
+                                <div class="schedule-tab">
+
+
+                                    <!-- Nav tabs -->
+                                    <ul class="nav" role="tablist">
+                                        <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="true">Select Generated Match Odds</a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="add">
+                                            <!-- <h6>Add</h6> -->
+
+                                            <form id="match_selection">
+
+                                                <div class="form-group">
+                                                    <label for="">Live Game</label>
+                                                    <select method="get" name="match_id" class="form-control" id="">
+                                            <option value="">--Select--</option>
+                                            <% genMatch_List.forEach(row => { %>
+                                            <%
+                                            var game_name = 'Not Available';
+                                            var live_game_name = 'Not Available';
+                                            var event_team_a = 'Not Available';
+                                            var event_team_b = 'Not Available';
+                                            if(typeof row.Game !== 'undefined' && row.Game){
+                                                game_name = row.Game.game_name;
+                                            }
+                                            if(typeof row.liveGame !== 'undefined' && row.liveGame){
+                                                live_game_name = row.liveGame.live_game_name;
+                                            }
+                                            if(typeof row.Event !== 'undefined' && row.Event){
+                                                event_team_a = row.Event.event_team_a;
+                                                event_team_b = row.Event.event_team_b;
+                                            }
+                                            %>
+                                            <option value="<%=row.row._id%>"><%=game_name; %> => <%=event_team_a+' vs '+event_team_b; %> => <%=live_game_name; %> => <%=moment(row.row.created_at).format("DD-MMM-YYYY HH:mm"); %></option>
+                                            <% }) %>
+                                            
+                                        </select>
+                                                </div>
+
+
+
+
+                                                <button type="submit" class="btn btn-warning">Next</button>
+
+                                            </form>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <!-- <div class="row text-center">  </div> -->
+                </div>
+            </div>
+            <!--News Gallery End-->
+
+
+            <%-include('inc/footer.ejs') %>
+
+                <script type="text/javascript" src="/admin_panel/jquery-ui.min.js"></script>
+
+                <script>
+                    (function($) {
+                        const admin_type = "<%-userData.admin_type%>";
+                        $(function() {
+                            $('#match_selection').on('submit', function(e) {
+                                e.preventDefault();
+                                let gen_id = this.match_id.value;
+                                if (admin_type == 1) {
+                                    window.location = '/admin_panel/manage_match_odds/' + gen_id;
+                                } else {
+                                    window.location = '/admin_panel/manage_match_odds_user/' + gen_id;
+                                }
+                            })
+                        })
+                    })(jQuery)
+                </script>
+</body>
+
+</html>

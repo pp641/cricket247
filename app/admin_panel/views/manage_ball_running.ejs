@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('inc/meta_head.ejs') %>
+    <style>
+        .loader {
+            display: none;
+            position: fixed;
+            z-index: 1000000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(255, 255, 255, .8) url('/admin_panel/images/pIkfp.gif') 50% 50% no-repeat;
+        }
+
+        .btn {
+            margin: 1px;
+            padding: 5px 10px;
+        }
+
+        .primary > a {
+            color: #fff !important;
+            background-color: #5cb85c !important;
+            border-color: #4cae4c !important;
+        }
+
+        .primary:hover > a {
+            color: #fff !important;
+            background-color: #449d44 !important;
+            border-color: #398439 !important;
+        }
+
+        .section-title {
+            font-size: 22px;
+        }
+
+        .in {
+            background: #0000001a;
+        }
+    </style>
+</head>
+<body>
+<div class="loader" id="loading"></div>
+<!--Wrapper Start-->
+<div class="wrapper color-option-2">
+    <%- include('inc/header.ejs') %>
+    <!--News Gallery Start-->
+    <div class="news-section-wrapper news-gallery no-margin">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <%
+                    var game_name = 'Not Available';
+                    var event_team_a = 'Not Available';
+                    var event_team_b = 'Not Available';
+                    var event_date = 'Not Available';
+                    var live_game_name = 'Not Available';
+                    if (typeof gameDetails.gameData !== 'undefined' && gameDetails.gameData) {
+                        game_name = gameDetails.gameData.game_name;
+                    }
+                    if (typeof gameDetails.eventData !== 'undefined' && gameDetails.eventData) {
+                        event_team_a = gameDetails.eventData.event_team_a;
+                        event_team_b = gameDetails.eventData.event_team_b;
+                    }
+                    if (typeof gameDetails.eventDateData !== 'undefined' && gameDetails.eventDateData) {
+                        event_date = moment(gameDetails.eventDateData.event_date).format("DD-MMM-YYYY");
+                    }
+                    if (typeof gameDetails.live_event !== 'undefined' && gameDetails.live_event) {
+                        live_game_name = gameDetails.live_event.live_game_name;
+                    }
+                    %>
+                    <h3 class="section-title">[Main Game - <%= game_name %>] / [<%= event_team_a %>
+                        vs <%= event_team_b %>] / [<%= event_date %>] / [<%= live_game_name %>]</h3>
+                    <hr>
+                    <h3>Manage Ball Running</h3>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 section-title"
+                     style='text-align:center;background:#333;padding:5px;margin-bottom:5px;'>
+                    <button class="btn btn-danger" onclick="updateAllStatus(1)">Suspend All</button>
+                    <button class="btn btn-danger" onclick="updateAllStatus(2)">Ball Running</button>
+                    <button class="btn btn-danger" onclick="updateAllStatus(0)">Active All</button>
+                    <button class="btn btn-danger" onclick='updatehideshow(1)'>Hide All</button>
+                    <button class="btn btn-danger" onclick='updatehideshow(0)'>Show All</button>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="row score">
+                <div class="col-md-12">
+                    <table class="table table-dark">
+
+                        <thead>
+                        <tr>
+                            <th><b>Team</b></th>
+                            <th><b>Total</b></th>
+                            <th><b>Wickets</b></th>
+                            <th><b>Action</b></th>
+                        </tr>
+                        </thead>
+                        <tbody id="scoreboard">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <label>Live New Update</label>
+                        <input class="form-control" id="liveNewsUpdate" onkeyup="newsUpdate(this.value, event)">
+                    </div>
+                    <div class="clearfix"></div>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12">
+                        <div class="schedule-tab">
+                            <!-- Nav tabs -->
+                            <ul class="nav" role="tablist">
+                                <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab"
+                                                                          data-toggle="tab" aria-expanded="true">Manage
+                                        Ball Running</a></li>
+                                <li role="presentation" class=""><a href="#old" aria-controls="tab1" role="tab"
+                                                                    data-toggle="tab" aria-expanded="true">Old Ball
+                                        Running</a></li>
+                                <li role="presentation" class="primary"><a href="javascript:void(0)"
+                                                                           onclick="resetballRunning()">Reset</a></li>
+                                <li role="presentation" class="primary"><a href="javascript:void(0)" data-toggle="modal"
+                                                                           data-target="#overScore">Over Score</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="add">
+                                    <div class='rg-container'>
+                                        <table class='rg-table' summary='Hed'>
+                                            <thead>
+                                            <tr>
+                                                <th class='text '>Ball Number</th>
+                                                <th class='text '>Result</th>
+                                                <th class='text '>Edit Result</th>
+                                                <th class='text '>Current Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="showBallrunning">
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="old">
+                                    <div class='rg-container'>
+                                        <div class="ccl-md-12">
+                                            <button class="btn btn-primary" onclick="refresh2()">Refresh</button>
+                                        </div>
+                                        <table class='rg-table' summary='Hed'>
+                                            <thead>
+                                            <tr>
+                                                <th class='text '>Ball Number</th>
+                                                <th class='text '>Result</th>
+                                                <th class='text '>Edit Result</th>
+                                                <th class='text '>Current Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="showBallrunning2">
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row text-center">  </div> -->
+        </div>
+    </div>
+    <!--News Gallery End-->
+
+
+    <%- include('inc/footer.ejs') %>
+    <!-- Popup -->
+    <div id="overScore" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-danger ml-2" data-dismiss="modal">X</button>
+                    <button type="button" class="pull-right btn btn-info" id="addinning">Add Inning</button>
+                    <h4 class="modal-title pull-left">Over Score</h4>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <select name="select_inning" id="select_inning" class="form-control">
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-success" id="getOvers">Get Overs</button>
+                        <button class="btn btn-success" id="addOver">Add Overs</button>
+                        <button class="btn btn-danger" id="removeinning">Remove Inning</button>
+                    </div>
+                    <table class=" table table-dark">
+                        <thead>
+                        <tr>
+                            <th><b>Over</b></th>
+                            <th><b>Current Over Runs</b></th>
+                            <th><b>Action</b></th>
+                        </tr>
+                        </thead>
+                        <tbody id="overList">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Popup End -->
+
+    <script src="/admin_panel/plugins/custom.js"></script>
+
+    <script>
+        const match_id = '<%= match_id %>';
+
+        function getBallRunning(match_id) {
+            $.post('/admin_panel/api/getBallRunning', {match_id: match_id, type: "0"})
+            .then(function (data) {
+                return JSON.parse(JSON.stringify(data));
+            })
+            .done(function (ball_run_json) {
+                let html = '';
+
+                ball_run_json.forEach(row => {
+
+                    html += getLayout(row);
+
+                });
+
+                $('#showBallrunning').html(html);
+            })
+            .catch(function () {
+
+            })
+        }
+
+        function getBallRunning2(match_id) {
+            $.post('/admin_panel/api/getBallRunning', {match_id: match_id, type: "1"})
+            .then(function (data) {
+                return JSON.parse(JSON.stringify(data));
+            })
+            .done(function (ball_run_json) {
+                let html = '';
+
+                ball_run_json.forEach(function (row, i) {
+                    if (i >= 4) {
+                        html += getLayout2(row);
+                    }
+
+                });
+
+                $('#showBallrunning2').html(html);
+            })
+            .catch(function () {
+
+            })
+        }
+
+        function getLayout(row) {
+            let layout = '';
+            let value = row.result;
+            if (row.ball_status == 1) {
+                if (value == "#") {
+                    value = 'Ball Running';
+                }
+                layout = "<tr class=''>"
+                    + "<td class='text ' data-title='Title'>"
+                    + '<input type="text" onkeyup="updateRanking(\'' + row._id + '\',this,event)" value="' + row.bal_no.toFixed(1) + '" class="form-control">'
+                    + "</td>"
+                    + "<td class='text ' data-title='Type' id='col" + row._id + "'>"
+                    + '<button onclick="update_result(\'' + row._id + '\',0,1)" class="btn btn-success">0</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',1,1)" class="btn btn-success">1</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',2,1)" class="btn btn-success">2</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',3,1)" class="btn btn-success">3</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',4,1)" class="btn btn-success">4</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',5,1)" class="btn btn-success">5</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',6,1)" class="btn btn-success">6</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'R\',1)" class="btn btn-success">R</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'A\',1)" class="btn btn-success">A</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'W\',1)" class="btn btn-success">W</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'U\',1)"  title="Third Umpire" class="btn btn-success">TU</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'O\',1)" title="Out" class="btn btn-success">O</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'N\',1)" title="Not Out" class="btn btn-success">NO</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'AP\',1)" title="Appeal" class="btn btn-success">AP</button>'
+                    + '<br><br>'
+                    + '<p>Wide Ball</p>'
+                    + '<button onclick="update_result(\'' + row._id + '\',0,2)" class="btn btn-warning">0</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',1,2)" class="btn btn-warning">1</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',2,2)" class="btn btn-warning">2</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',3,2)" class="btn btn-warning">3</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',4,2)" class="btn btn-warning">4</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',5,2)" class="btn btn-warning">5</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',6,2)" class="btn btn-warning">6</button>'
+                    + '<br><br>'
+                    + '<p>No Ball</p>'
+                    + '<button onclick="update_result(\'' + row._id + '\',0,3)" class="btn btn-danger">0</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',1,3)" class="btn btn-danger">1</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',2,3)" class="btn btn-danger">2</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',3,3)" class="btn btn-danger">3</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',4,3)" class="btn btn-danger">4</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',5,3)" class="btn btn-danger">5</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',6,3)" class="btn btn-danger">6</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',\'D\',3)" class="btn btn-danger">Dead Ball</button>'
+                    + '</td>'
+                    + "<td class='text ' data-title='Result'><input type='text' onkeyup=\"custom_result('" + row._id + "',this,event , 6)\" class='form-control' value='" + value + "'></td>"
+                layout += "<td class='text ' data-title='BackALL/No'>";
+                if (row.hide_show == 1) {
+                    layout += ""
+                        + "Hide &nbsp;"
+                        + '<button onclick="update_result(\'' + row._id + '\',0, 5,\'' + value + '\')" class="btn btn-success" >Show</button>'
+
+                } else {
+                    layout += ""
+                        + "Show &nbsp;"
+                        + '<button onclick="update_result(\'' + row._id + '\',1, 5,\'' + value + '\')" class="btn btn-danger" >Hide</button>'
+                }
+
+                layout += '<button onclick="update_result(\'' + row._id + '\',10, 10,0)" class="btn btn-danger" >Complete Ball</button>'
+                    + '</td>'
+                    + '</tr>';
+            } else {
+                layout = "<tr class=''>"
+                    + "<td class='text ' data-title='Title'>"
+                    + '<input type="text"  onkeyup="updateRanking(\'' + row._id + '\',this,event)" value="' + row.bal_no.toFixed(1) + '" class="form-control">'
+                    + "</td>"
+                    + "<td class='text ' style='font-size: 18px;' data-title='Type'>"
+                    + value
+                    + "</td>";
+                    layout += "<td class='text ' data-title='Result'><input type='text' style='font-size: 18px;' id=\"input_new_value_"+row._id+"\" onkeyup=\"custom_result('" + row._id + "',this,event, 7)\" class='form-control' value='" + value + "'></td>";
+                    
+                if (row.hide_show == 1) {
+                    layout += "<td class='text ' data-title='BackALL/No'>"
+                        + "Hide";
+                } else {
+                    layout += "<td class='text ' data-title='BackALL/No'>"
+                        + "Show";
+                }
+                layout += "<br>"
+                    layout += ""
+                        + '<button onclick="update_result3(\'' + row._id + '\',11)" class="btn btn-warning">Update without nofication</button><br>';
+                if (row.hide_show == 1) {
+                    layout += '<button onclick="update_result(\'' + row._id + '\',0, 5,\'' + value + '\')" class="btn btn-success" >Show</button>';
+                } else {
+                    layout += '<button onclick="update_result(\'' + row._id + '\',1, 5,\'' + value + '\')" class="btn btn-danger" >Hide</button>';
+                }
+                layout +=
+                    '<button onclick="speak(\'' + value + '\')" class="btn btn-warning">Speak</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',1, 4)" class="btn btn-warning">Third Umpire</button><br>'
+                    + '<button onclick="update_result(\'' + row._id + '\',2, 4)" class="btn btn-warning">Not Out</button>'
+                    + '<button onclick="update_result(\'' + row._id + '\',3, 4)" class="btn btn-danger">Out</button>'
+                    + '<button onclick="delete_ball(\'' + row._id + '\')" class="btn btn-danger">Delete</button>'
+                    + '</td>'
+                    + '</tr>';
+            }
+            return layout;
+        }
+
+        function getLayout2(row) {
+            let layout = '';
+            let value = row.result;
+            if (row.ball_status == 1) {
+                if (value == "#") {
+                    value = 'Ball Running';
+                }
+                layout = "<tr class=''>"
+                    + "<td class='text ' data-title='Title'>"
+                    + '<input type="text" onkeyup="updateRanking(\'' + row._id + '\',this,event)" value="' + row.bal_no.toFixed(1) + '" class="form-control">'
+                    + "</td>"
+                    + "<td class='text ' data-title='Type' id='col" + row._id + "'>"
+                    + '<button onclick="update_result2(\'' + row._id + '\',0,1)" class="btn btn-success">0</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',1,1)" class="btn btn-success">1</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',2,1)" class="btn btn-success">2</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',3,1)" class="btn btn-success">3</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',4,1)" class="btn btn-success">4</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',5,1)" class="btn btn-success">5</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',6,1)" class="btn btn-success">6</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'R\',1)" class="btn btn-success">R</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'A\',1)" class="btn btn-success">A</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'W\',1)" class="btn btn-success">W</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'U\',1)"  title="Third Umpire" class="btn btn-success">TU</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'O\',1)" title="Out" class="btn btn-success">O</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'N\',1)" title="Not Out" class="btn btn-success">NO</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'AP\',1)" title="Appeal" class="btn btn-success">AP</button>'
+                    + '<br><br>'
+                    + '<p>Wide Ball</p>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',0,2)" class="btn btn-warning">0</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',1,2)" class="btn btn-warning">1</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',2,2)" class="btn btn-warning">2</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',3,2)" class="btn btn-warning">3</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',4,2)" class="btn btn-warning">4</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',5,2)" class="btn btn-warning">5</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',6,2)" class="btn btn-warning">6</button>'
+                    + '<br><br>'
+                    + '<p>No Ball</p>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',0,3)" class="btn btn-danger">0</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',1,3)" class="btn btn-danger">1</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',2,3)" class="btn btn-danger">2</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',3,3)" class="btn btn-danger">3</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',4,3)" class="btn btn-danger">4</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',5,3)" class="btn btn-danger">5</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',6,3)" class="btn btn-danger">6</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',\'D\',3)" class="btn btn-danger">Dead Ball</button>'
+                    + '</td>'
+                    + "<td class='text ' data-title='Result'><input type='text' onkeyup=\"custom_result('" + row._id + "',this,event , 6)\" class='form-control' value='" + value + "'></td>"
+                layout += "<td class='text ' data-title='BackALL/No'>";
+                if (row.hide_show == 1) {
+                    layout += ""
+                        + "Hide &nbsp;"
+                        + '<button onclick="update_result2(\'' + row._id + '\',0, 5,\'' + value + '\')" class="btn btn-success" >Show</button>'
+
+                } else {
+                    layout += ""
+                        + "Show &nbsp;"
+                        + '<button onclick="update_result2(\'' + row._id + '\',1, 5,\'' + value + '\')" class="btn btn-danger" >Hide</button>'
+                }
+
+                layout += '<button onclick="update_result2(\'' + row._id + '\',10, 10,0)" class="btn btn-danger" >Complete Ball</button>'
+                    + '</td>'
+                    + '</tr>';
+            } else {
+                layout = "<tr class=''>"
+                    + "<td class='text ' data-title='Title'>"
+                    + '<input type="text"  onkeyup="updateRanking(\'' + row._id + '\',this,event)" value="' + row.bal_no.toFixed(1) + '" class="form-control">'
+                    + "</td>"
+                    + "<td class='text ' style='font-size: 18px;' data-title='Type'>"
+                    + value
+                    + "</td>"
+                    + "<td class='text ' data-title='Result'><input type='text' style='font-size: 18px;' onkeyup=\"custom_result('" + row._id + "',this,event, 7)\" class='form-control' value='" + value + "'></td>";
+                if (row.hide_show == 1) {
+                    layout += "<td class='text ' data-title='BackALL/No'>"
+                        + "Hide";
+                } else {
+                    layout += "<td class='text ' data-title='BackALL/No'>"
+                        + "Show";
+                }
+                layout += "<br><br>"
+                if (row.hide_show == 1) {
+                    layout += '<button onclick="update_result2(\'' + row._id + '\',0, 5,\'' + value + '\')" class="btn btn-success" >Show</button>';
+                } else {
+                    layout += '<button onclick="update_result2(\'' + row._id + '\',1, 5,\'' + value + '\')" class="btn btn-danger" >Hide</button>';
+                }
+                layout +=
+                    '<button onclick="speak(\'' + value + '\')" class="btn btn-warning">Speak</button><br >'
+                    + '<button onclick="update_result2(\'' + row._id + '\',1, 4)" class="btn btn-warning">Third Umpire</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',2, 4)" class="btn btn-warning">Not Out</button>'
+                    + '<button onclick="update_result2(\'' + row._id + '\',3, 4)" class="btn btn-danger">Out</button>'
+                    + '<button onclick="delete_ball2(\'' + row._id + '\')" class="btn btn-danger">Delete</button>'
+                    + '</td>'
+                    + '</tr>';
+            }
+            return layout;
+        }
+
+        function refresh2() {
+            getBallRunning2(match_id);
+        }
+
+        function speak(msg) {
+            $.get('/api/cricket_audio/' + msg + '/' + match_id, function () {});
+        }
+
+        function custom_result(id, inp, e, type) {
+            var enterKey = 13;
+            if (e.which == enterKey) {
+                $("#loading").show();
+                $("#col" + id).html('');
+                $.post('/admin_panel/api/updateball_running', {
+                    ball_runn_id: id,
+                    value: inp.value,
+                    type: type
+                })
+                .done(function () {
+                    getBallRunning(match_id);
+                    $("#loading").hide();
+                })
+                .catch(function () {
+                    $("#loading").hide();
+                });
+            }
+        }
+
+        function update_result(id, value, type, msg) {
+            $("#loading").show();
+            $("#col" + id).html('');
+            $.post('/admin_panel/api/updateball_running', {
+                ball_runn_id: id,
+                value: value,
+                type: type
+            })
+            .then(function (data) {
+                return JSON.parse(JSON.stringify(data));
+            })
+            .done(function (rec_data) {
+                if (msg != 'Ball Running') {
+                    if (rec_data.type == 5) {
+                        if (rec_data.val == 0) {
+
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+                    } else if (rec_data.type == 1) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+
+                    } else if (rec_data.type == 2) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+                    } else if (rec_data.type == 3) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+                    }
+                    } else {
+                    if (rec_data.hide_show == 0) {
+                        bal = "Ball Running";
+                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {
+                        });
+                    }
+                }
+                $("#loading").hide();
+                getBallRunning(match_id);
+                
+            })
+            .catch(function () {
+                $("#loading").hide();
+            });
+        }
+        function update_result3(id, type, msg) {
+            $("#loading").show();
+            $("#col" + id).html('');
+            let value = $("#input_new_value_"+id).val();
+            $.post('/admin_panel/api/updateball_running', {
+                ball_runn_id: id,
+                value: value,
+                type: type
+            })
+            .then(function (data) {
+                return JSON.parse(JSON.stringify(data));
+            })
+            .done(function (rec_data) {
+                if (msg != 'Ball Running') {
+                    if (rec_data.type == 5) {
+                        if (rec_data.val == 0) {
+
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+                    } else if (rec_data.type == 1) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+
+                    } else if (rec_data.type == 2) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+                    } else if (rec_data.type == 3) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
+                            });
+                        }
+                    }
+                } else {
+                    if (rec_data.hide_show == 0) {
+                        bal = "Ball Running";
+                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {
+                        });
+                    }
+                }
+                $("#loading").hide();
+                getBallRunning(match_id);
+                
+            })
+            .catch(function () {
+                $("#loading").hide();
+            });
+        }
+        function update_result2(id, value, type, msg) {
+            $("#loading").show();
+            $("#col" + id).html('');
+            $.post('/admin_panel/api/updateball_running',{
+                ball_runn_id: id,
+                value: value,
+                type: type
+            })
+            .then(function (data) {
+                return JSON.parse(JSON.stringify(data));
+            })
+            .done(function (rec_data) {
+                if (msg != 'Ball Running') {
+                    if (rec_data.type == 5) {
+                        if (rec_data.val == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                        }
+                    } else if (rec_data.type == 1) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                        }
+
+                    } else if (rec_data.type == 2) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                        }
+                    } else if (rec_data.type == 3) {
+                        if (rec_data.hide_show == 0) {
+                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                        }
+                    }
+                } else {
+                    if (rec_data.hide_show == 0) {
+                        bal = "Ball Running";
+                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {});
+                    }
+                }
+                $("#loading").hide();
+                getBallRunning2(match_id);
+                
+            })
+            .catch(function () {
+                $("#loading").hide();
+            });
+        }
+
+        function resetballRunning() {
+            $.post('/admin_panel/api/resetball_running', {match_id: match_id}, function (data) {
+                getBallRunning(match_id);
+                getBallRunning2(match_id);
+            })
+        }
+
+        function newsUpdate(value, e) {
+            var enterKey = 13;
+            if (e.which == enterKey) {
+                $.post('/admin_panel/api/news_update', {match_id: match_id, news: value}, function (data) {
+                    let obj = JSON.parse(JSON.stringify(data));
+                    $("#liveNewsUpdate").val(obj.news);
+                    alert("News Updated");
+                });
+            }
+        }
+
+        function scoreUpdate(value, e) {
+            var enterKey = 13;
+            if (e.which == enterKey) {
+                $.post('/admin_panel/api/score_update', {match_id: match_id, score: value}, function (data) {
+                    let obj = JSON.parse(JSON.stringify(data));
+                    if (obj.length != 0) {
+                        $("#ScoreUpdate").val(obj.score);
+                        alert("Score Updated");
+                    }
+
+                });
+            }
+        }
+
+        function getNews() {
+            $.post('/admin_panel/api/getNews', {match_id: match_id}, function (data) {
+                let obj = JSON.parse(JSON.stringify(data));
+                $("#liveNewsUpdate").val(obj.news);
+
+            });
+        }
+
+        function getscore() {
+            $.post('/admin_panel/api/getscore', {match_id: match_id}, function (data) {
+                let obj = JSON.parse(JSON.stringify(data));
+                if (obj.length != 0) {
+                    $("#ScoreUpdate").val(obj.score);
+                }
+
+            });
+        }
+
+        //   getscore();
+        function updateRanking(market_id, t, e) {
+            var enterKey = 13;
+            if (e.which == enterKey) {
+                $.post('/admin_panel/api/update_rank', {market_id: market_id, rank: t.value}, function () {
+                    alert('Ball No. Updated');
+                });
+            }
+        }
+
+        function delete_ball(ball_id) {
+            $("#loading").show();
+            $("#col" + ball_id).html('');
+            $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+            .done(function () {
+                $("#loading").hide();
+                getBallRunning(match_id);
+            })
+            .catch(function () {
+                $("#loading").hide();
+                getBallRunning(match_id);
+            });
+        }
+
+        function delete_ball2(ball_id) {
+            $("#loading").show();
+            $("#col" + ball_id).html('');
+            $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+            .done(function () {
+                $("#loading").hide();
+                getBallRunning2(match_id);
+            })
+            .catch(function () {
+                $("#loading").hide();
+                getBallRunning2(match_id);
+            });
+        }
+
+        function getScore(match_id) {
+            $.post('/admin_panel/api/getScore', {match_id: match_id}, function (data) {
+                let Jobj = JSON.parse(JSON.stringify(data));
+                let tr = "";
+                Jobj.forEach(row => {
+                    tr += '<tr>' +
+                        '<td>' + row.team + '</td>' +
+                        '<td><input class="form-control" id="total_' + row._id + '" value="' + row.Total + '" ><hr style="margin:2px;"><div class="text-center">' +
+                        '<button onclick="updateWick(\'' + row._id + '\',1,1)" class="btn btn-success">1</button>' +
+                        '<button onclick="updateWick(\'' + row._id + '\',2,1)" class="btn btn-success">2</button>' +
+                        '<button onclick="updateWick(\'' + row._id + '\',3,1)" class="btn btn-success">3</button>' +
+                        '<button onclick="updateWick(\'' + row._id + '\',4,1)" class="btn btn-success">4</button>' +
+                        '<button onclick="updateWick(\'' + row._id + '\',5,1)" class="btn btn-success">5</button>' +
+                        '<button onclick="updateWick(\'' + row._id + '\',6,1)" class="btn btn-success">6</button>' +
+                        '</div></td>' +
+                        '<td><input class="form-control" id="wickets_' + row._id + '" value="' + row.Wickets + '" ><hr style="margin:2px;"><div class="text-center">' +
+                        '<button onclick="updateWick(\'' + row._id + '\',-1,2)" class="btn btn-danger">-</button>' +
+                        '<button onclick="updateWick(\'' + row._id + '\',1,2)" class="btn btn-success">+</button>' +
+                        '</div></td>' +
+                        '<td><input type="button" onclick="updateScore(\'' + row._id + '\')" class="form-control btn btn-primary" value="Update"></td>' +
+                        '</tr>'
+                }
+            )
+                
+                $("#scoreboard").html(tr);
+            });
+        }
+
+        function updateScore(id) {
+            let total = $("#total_" + id).val()
+            let wicket = $("#wickets_" + id).val()
+            let overs = $("#overs_" + id).val()
+            $.post("/admin_panel/api/updatescore", {
+                id: id,
+                total: total,
+                wicket: wicket,
+                overs: overs
+            }, function (data) {
+                alert("Score Updated");
+                getScore(match_id);
+
+            })
+        }
+
+        function updateWick(id, val, type) {
+            $.post("/admin_panel/api/update_wicket", {val: val, id: id, type: type}, function (data) {
+                alert(data);
+                getScore(match_id);
+
+            })
+        }
+
+        let selected_inning = "";
+
+        function getcurr_over_dt() {
+            $.post("/admin_panel/api/curr_over_dt", {selected_inning: selected_inning}, function (data) {
+                let obj = JSON.parse(data);
+                let html = '';
+                obj.forEach(function (row) {
+                    html += '<tr>' +
+                        '<td><input type="text" data-id="' + row._id + '" value="' + row.overs + '" class="form-control update-over-value2" id="curr_overs_' + row._id + '" name="curr_overs"></td>' +
+                        '<td><input type="number" data-id="' + row._id + '" value="' + row.over_runs + '" class="form-control update-over-value3" id="curr_runs_' + row._id + '" name="curr_runs"></td>' +
+                        '<td><button class="btn btn-primary update-over-value" data-id="' + row._id + '">Update</button>' +
+                        '<button class="btn btn-danger remove-over-value" data-id="' + row._id + '">Delete</button></td>' +
+                        '</tr>';
+                });
+                $('#overList').html(html);
+                $('.update-over-value2').on('keyup',function(){
+                    let id = $(this).attr('data-id');
+                    var code = e.which; // recommended to use e.which, it's normalized across browsers
+                    if(code==13)e.preventDefault();
+                    if(code==32||code==13||code==188||code==186){
+                        if ($('#curr_overs_' + id).val().trim() != "" && $('#curr_runs_' + id).val().trim() != "") {
+                        let data = {};
+                        data.curr_overs = $('#curr_overs_' + id).val();
+                        data.curr_runs = $('#curr_runs_' + id).val();
+                        $.post("/admin_panel/api/updateOverRuns", {
+                            curr_overs: data.curr_overs,
+                            curr_runs: data.curr_runs,
+                            over_id: id
+                        }, function (data) {
+                            alert('Done');
+                            getcurr_over_dt();
+                        });
+                        } else {
+                            alert('Enter Value First');
+                        }
+                    } // missing closing if brace
+                });
+                $('.update-over-value3').on('keyup',function(e){
+                    let id = $(this).attr('data-id');
+                    var code = e.which; // recommended to use e.which, it's normalized across browsers
+                    if(code==13)e.preventDefault();
+                    if(code==32||code==13||code==188||code==186){
+                        if ($('#curr_overs_' + id).val().trim() != "" && $('#curr_runs_' + id).val().trim() != "") {
+                        let data = {};
+                        data.curr_overs = $('#curr_overs_' + id).val();
+                        data.curr_runs = $('#curr_runs_' + id).val();
+                        $.post("/admin_panel/api/updateOverRuns", {
+                            curr_overs: data.curr_overs,
+                            curr_runs: data.curr_runs,
+                            over_id: id
+                        }, function (data) {
+                            alert('Done');
+                            getcurr_over_dt();
+                        });
+                        } else {
+                            alert('Enter Value First');
+                        }
+                    } // missing closing if brace
+                });
+                $('.update-over-value').on('click', function () {
+                    let id = $(this).attr('data-id');
+                    if ($('#curr_overs_' + id).val().trim() != "" && $('#curr_runs_' + id).val().trim() != "") {
+                        let data = {};
+                        data.curr_overs = $('#curr_overs_' + id).val();
+                        data.curr_runs = $('#curr_runs_' + id).val();
+                        $.post("/admin_panel/api/updateOverRuns", {
+                            curr_overs: data.curr_overs,
+                            curr_runs: data.curr_runs,
+                            over_id: id
+                        }, function (data) {
+                            alert('Done');
+                            getcurr_over_dt();
+                        });
+                    } else {
+                        alert('Enter Value First');
+                    }
+                });
+                $('.remove-over-value').on('click', function () {
+                    let id = $(this).attr('data-id');
+                    if (confirm('Are you sure you want to delete this over?')) {
+                        $.post("/admin_panel/api/removeOver", {over_id: id}, function (data) {
+                            alert('Done');
+                            getcurr_over_dt();
+                        });
+                    }
+                });
+            })
+        }
+
+        function addOver() {
+
+            $.post("/admin_panel/api/addOver", {selected_inning: selected_inning}, function (data) {
+                getcurr_over_dt();
+            });
+
+        }
+
+        function getInning(match_id) {
+            $.post("/admin_panel/api/getinning", {match_id: match_id}, function (data) {
+                let obj = JSON.parse(data);
+                let option = '<option value=""> -- Select Inning -- </option>';
+                obj.forEach(function (row) {
+                    option += '<option value="' + row._id + '"> Inning ' + row.inn_no + '</option>';
+                });
+                $("#select_inning").html(option);
+            })
+        }
+
+        function removeInning() {
+            $.post("/admin_panel/api/removeinning", {selected_inning: selected_inning}, function (data) {
+                getInning(match_id);
+                selected_inning = '';
+                getcurr_over_dt();
+            })
+        }
+
+        $(function () {
+            getBallRunning(match_id);
+            getBallRunning2(match_id);
+            getScore(match_id);
+            getNews();
+            getInning(match_id);
+            $('#select_inning').on('change', function (e) {
+                selected_inning = this.value;
+                getcurr_over_dt();
+            });
+            $("#getOvers").on('click', function () {
+                if (selected_inning == "") {
+                    alert('Select Innings First');
+                } else {
+                    getcurr_over_dt();
+                }
+            });
+            $("#addOver").on('click', function () {
+                if (selected_inning == "") {
+                    alert('Select Innings First');
+                } else {
+                    addOver();
+                }
+            });
+            $("#addinning").on('click', function () {
+                $.post('/admin_panel/api/addinning', {match_id: match_id}, function (data) {
+                    getInning(match_id);
+                });
+            });
+            $("#removeinning").on('click', function () {
+                if (selected_inning == "") {
+                    alert('Select Innings First');
+                } else {
+                    removeInning();
+                }
+            });
+            $('#updateOverRuns').on('submit', function (e) {
+                e.preventDefault();
+
+                let curr_overs = this.curr_overs.value;
+                let curr_runs = this.curr_runs.value;
+                let match_id_info = match_id;
+                $.post("/admin_panel/api/updateOverRuns", {
+                    curr_overs: curr_overs,
+                    curr_runs: curr_runs,
+                    match_id: match_id_info
+                }, function (data) {
+                    alert('Done');
+                    getcurr_over_dt(match_id);
+                })
+            });
+
+            
+        });
+    </script>
+</body>
+</html>

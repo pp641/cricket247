@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%-include('inc/meta_head.ejs') %>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+    <%-include('inc/header.ejs') %>
+
+    <!--News Gallery Start-->
+        <div class="news-section-wrapper news-gallery no-margin">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-title">Manage Registered Users</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                       
+
+                       <div class="col-md-12">
+                        <div class="schedule-tab">
+                            
+
+                            <!-- Nav tabs -->
+                            <ul class="nav" role="tablist">
+                                <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="true">Add</a></li>
+                                <li role="presentation" class=""><a href="#manage" aria-controls="manage" role="tab" data-toggle="tab" aria-expanded="false">Manage</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="add">
+                                    <!-- <h6>Add</h6> -->
+
+                                <form method="post" action="/admin_panel/save_match_reg_user">
+                                      
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="">First Name</label>
+                                                <input name="first_name" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="">Last Name</label>
+                                                <input name="last_name" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="">Username</label>
+                                                <input name="username" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>        
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="">Password</label>
+                                                <input name="password" type="password" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning">Submit</button>
+
+                                </form>
+                                    
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="manage">
+                                   <!--  <h6>Manage</h6> -->
+
+                                  <div class='rg-container'>
+                                        <table class='rg-table' summary='Hed'>
+                                           
+                                            <thead>
+                                                <tr>
+                                                    <th class='text '>first_name</th>
+                                                    <th class='text '>last_name</th>
+                                                    <th class='text '>Username</th>
+                                                    <th class='text '>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% reg_userList.forEach(row => { %>
+                                                    <tr class=''>
+                                                        <td class='text ' data-title='Game'><%=row.first_name%></td>
+                                                        <td class='text ' data-title='Game'><%=row.last_name%></td>    
+                                                        <td class='text ' data-title='Game'><%=row.username%></td>
+                                                        <td class='text ' data-title='Action'> 
+                                                        
+                                                        <a href="/admin_panel/change_password_user/<%=row._id%>"><button class="btn btn-warning">Change Password</button></a>    
+                                                        <a href="/admin_panel/delete_reg_user/<%=row._id%>"><button class="btn btn-danger">Delete</button></a>
+
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+
+                                                  
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>  
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>     
+                         
+                       
+
+
+
+
+                    </div>
+                </div>
+                <!-- <div class="row text-center">  </div> -->
+            </div>
+        </div>
+        <!--News Gallery End-->
+       
+    
+        <%-include('inc/footer.ejs') %>
+        </body>
+</html>

@@ -1,0 +1,5 @@
+//Used
+http://www.binarytranslator.com/text-to-voice-converter
+
+//Alternative
+https://www.ispeech.org/text.to.speech

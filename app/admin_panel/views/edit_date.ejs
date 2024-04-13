@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('inc/meta_head.ejs') %>
+     <link rel="stylesheet" href="/admin_panel/jquery-ui.min.css">
+     <script type="text/javascript" src="/admin_panel/jquery-ui.min.js"></script>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+    <%-include('inc/header.ejs') %>
+       
+
+    <!--News Gallery Start-->
+        <div class="news-section-wrapper news-gallery no-margin">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="section-title">Manage Game Date</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                       
+
+                       <div class="col-md-12">
+                        <div class="schedule-tab">
+                            
+
+                            <!-- Nav tabs -->
+                            <ul class="nav" role="tablist">
+                                <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="true">Add Game Date</a></li>
+                                
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="add">
+                                    <!-- <h6>Add</h6> -->
+
+                                    <form method="post" action="/admin_panel/edit_manage_date/<%=event_date_id%>">
+                                      
+                                      <div class="form-group">
+                                        <label for="">Select Game</label>
+                                        <select required onchange="getGameEvents(this.value)" name="game_name" class="form-control" id="">
+                                            <option value="">--Select--</option>
+                                            <% GamesList.forEach(function(row){ %>
+                                                <% if(eventDateData.game_id == row._id){ %>
+                                                    <option selected value="<%=row._id;%>"><%=row.game_name;%></option>
+                                                <% } else {%>
+                                                    <option value="<%=row._id;%>"><%=row.game_name;%></option>
+                                                <% } %>
+                                            <% }); %>
+                                        </select>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="">Select Game Event</label>
+                                        <select required name="game_event" class="form-control" id="game_events">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="">Game Date</label>
+                                        <input required type="text" value="<%=moment(eventDateData.event_date).format('YYYY/MM/DD');%>" name="event_date" class="form-control datepicker" placeholder="YYYY/MM/DD">
+                                      </div>
+
+                                     
+                                      
+                                      <button type="submit" class="btn btn-warning">Submit</button>
+
+                                    </form>
+                                    
+                                </div>
+                         
+                            </div>
+                        </div>
+                       
+                    </div>     
+                         
+                       
+
+
+
+
+                    </div>
+                </div>
+                <!-- <div class="row text-center">  </div> -->
+            </div>
+        </div>
+        <!--News Gallery End-->
+       
+    
+        <%-include('inc/footer.ejs') %>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( ".datepicker" ).datepicker({
+      dateFormat: 'yy/mm/dd',
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true
+      /*minDate: 0*/ 
+    });
+  } );
+
+  function getGameEvents(game_id){
+    $.ajax({
+        url : "/admin_panel/get_match_events",
+        type : "POST",
+        data : {game_id : game_id},
+        success : function(data){
+            var obj = JSON.parse(data);
+            var layout = "<option value=''>--Select--</option>";
+            obj.forEach(Row => {
+                layout += "<option value='"+Row._id+"'>"+Row.event_team_a+" VS "+Row.event_team_b+"</option>";
+            })
+            $('#game_events').html(layout);
+        }
+    });
+  }
+  function getGameEventsEdit(game_id, old_event_id){
+    $.ajax({
+        url : "/admin_panel/get_match_events",
+        type : "POST",
+        data : {game_id : game_id},
+        success : function(data){
+            var obj = JSON.parse(data);
+            var layout = "<option value=''>--Select--</option>";
+            obj.forEach(Row => {
+                if(old_event_id == Row._id){
+                    layout += "<option selected value='"+Row._id+"'>"+Row.event_team_a+" VS "+Row.event_team_b+"</option>";
+                }else{
+                    layout += "<option value='"+Row._id+"'>"+Row.event_team_a+" VS "+Row.event_team_b+"</option>";
+                }
+                
+            })
+            $('#game_events').html(layout);
+        }
+    });
+  }
+  getGameEventsEdit("<%=eventDateData.game_id;%>","<%=eventDateData.event_id;%>");
+</script>
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%-include('inc/meta_head.ejs') %>
+<style>
+    .btn{
+        margin: 1px;
+        padding: 5px 10px;
+      }
+</style>
+</head>
+
+<body>
+
+    <!--Wrapper Start-->
+    <div class="wrapper color-option-2">
+    <%-include('inc/header.ejs') %>
+       
+
+    <!--News Gallery Start-->
+        <div class="news-section-wrapper news-gallery no-margin">
+            <div class="container-fluid">
+                <div class="row">
+                        <div class="col-md-10  pull-left">
+                            <%
+                                var game_name = 'Not Available';
+                                var event_team_a = 'Not Available';
+                                var event_team_b = 'Not Available';
+                                var event_date = 'Not Available';
+                                var live_game_name = 'Not Available';
+                                if(typeof gameDetails.gameData !== 'undefined' && gameDetails.gameData){
+                                  game_name = gameDetails.gameData.game_name;
+                                }
+                                if(typeof gameDetails.eventData !== 'undefined' && gameDetails.eventData){
+                                  event_team_a = gameDetails.eventData.event_team_a;
+                                  event_team_b = gameDetails.eventData.event_team_b;
+                                }
+                                if(typeof gameDetails.eventDateData !== 'undefined' && gameDetails.eventDateData){
+                                  event_date = moment(gameDetails.eventDateData.event_date).format("DD-MMM-YYYY");
+                                }
+                                if(typeof gameDetails.live_event !== 'undefined' && gameDetails.live_event){
+                                  live_game_name = gameDetails.live_event.live_game_name;
+                                }
+                            %>
+                            <h3 class="section-title">[Main Game - <%=game_name%>] / [<%=event_team_a%> vs <%=event_team_b%>] / [<%=event_date%>] / [<%=live_game_name%>]</h3>
+                        </div>
+                        <div class="col-md-2  pull-right">
+                        <button onclick="all_user_refresh()" class="btn btn-success">Refresh Users</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                    </div>
+
+
+                        <div class="col-md-12 col-sm-12" >
+                            <div class="col-md-12 section-title" style='text-align:center;background:#333;padding:5px;margin-bottom:5px;border-radius:5px;'>
+                                <button class="btn btn-danger" onclick="updateAllStatus(1)">Suspend All</button>
+                                <button class="btn btn-danger" onclick="updateAllStatus(2)">Ball Running</button>
+                                <button class="btn btn-danger" onclick="updateAllStatus(0)">Active All</button>
+                                <button class="btn btn-danger" onclick='updatehideshow(1)'>Hide All</button>
+                                <button class="btn btn-danger" onclick='updatehideshow(0)'>Show All</button>
+                                <a href='/admin_panel/manage_ball_running/<%=match_id%>'><button class="btn btn-success">Manage Ball Running</button></a>
+                                <button class="btn btn-success" onclick="add_market()">Add New Market</button>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <style>
+                        .icon-bar {
+                            width: 30px;
+                            background-color: #d9534f;
+                            /* display: inline; */
+                            position: fixed;
+                            top: 40%;
+                            left: 0;
+                            z-index: 9999;
+                        }
+
+                        .icon-bar a {
+                            display: block;
+                            text-align: center;
+                            padding: 6px;
+                            transition: all 0.3s ease;
+                            color: white;
+                            font-size: 20px;
+                        }
+
+                        .icon-bar a:hover {
+                            background-color: #000;
+                        }
+
+
+
+
+                        .icon-bar2 {
+                            width: 30px;
+                            background-color: #5cb85c;
+                            /* display: inline; */
+                            position: fixed;
+                            top: 40%;
+                            right: 0;
+                            display: none;
+                            z-index: 9999;
+                        }
+
+                        .icon-bar2 a {
+                            display: block;
+                            text-align: center;
+                            padding: 6px;
+                            transition: all 0.3s ease;
+                            color: white;
+                            font-size: 20px;
+                        }
+
+                        .icon-bar2 a:hover {
+                            background-color: #000;
+                        }
+
+
+                        </style>
+
+
+                        <div class="icon-bar">
+                          <a href="javascript:void(0)" title="Filter By">M</a>
+                          <a href="javascript:void(0)" onclick="updateAllStatus(1)" title="Suspend All"><i class="fa fa-times"></i></a>
+                          <a href="javascript:void(0)" onclick="updateAllStatus(2)" title="Ball Running All"><i class="fa fa-circle"></i></a>
+                          <a href="javascript:void(0)" onclick="updateAllStatus(0)" title="Active All"><i class="fa fa-check-square"></i></a>
+                          <a href="javascript:void(0)" onclick="updatehideshow(1)" title="Hide All"><i class="fa fa-eye-slash"></i></a>
+                          <a href="javascript:void(0)" onclick="updatehideshow(0)" title="Show All"><i class="fa fa-eye"></i></a>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+
+
+                               <div class="col-md-12">
+                                <div class="schedule-tab">
+
+
+                                    <!-- Nav tabs -->
+                                    <ul class="nav" role="tablist">
+                                        <li role="presentation" class="active"><a href="#add" aria-controls="tab1" role="tab" data-toggle="tab" aria-expanded="true">Manage Match Odds</a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="add">
+                                            <!-- <h6>Add</h6> -->
+
+                                            <div class='rg-container'>
+                                                <table class='rg-table' id="match_odds_table" summary='Hed'>
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th class='text '>Rank</th>
+                                                            <th class='text '>User Rank</th>
+                                                            <th class='text '>Title</th>
+                                                            <th class='text '>Type</th>
+                                                            <th class='text '>Diff</th>
+                                                            <th class='text '>BackALL/No</th>
+                                                            <th class='text '>LayAll/Yes</th>
+                                                            <th class='text '>Current Status</th>
+                                                            <th class='text '>Status Action</th>
+                                                            <th class='text '>Plus/Minus</th>
+                                                            <th class='number '>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="matchodds">
+
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    <!-- <div class="row text-center">  </div> -->
+                </div>
+            </div>
+        <!--News Gallery End-->
+       
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title" id='edit_modal_title'>Modal Header</h4>
+            </div>
+            <form class="form-horizontal" action="" onsubmit="return updateLayOdds(this)">
+            <div class="modal-body">
+            <input type="hidden" class="form-control" id="market_id" placeholder="Diff">
+            <input type="hidden" id="unq_id" value="337">
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Title</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="update_title" placeholder="Title">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Diff</label>
+                <div class="col-sm-9"> 
+                  <input type="text" class="form-control" id="update_Diff" placeholder="Diff">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">No</label>
+                <div class="col-sm-9"> 
+                  <input type="text" class="form-control" id="update_backAll" placeholder="Back All">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Yes</label>
+                <div class="col-sm-9"> 
+                  <input type="text" class="form-control" id="update_layAll" placeholder="Lay All">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Rank</label>
+                <div class="col-sm-9"> 
+                  <input type="text" class="form-control" id="update_layAll_rank" placeholder="Lay All">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">User Rank</label>
+                <div class="col-sm-9"> 
+                  <input type="text" value="0" id="user_rank" class="form-control" placeholder="User Rank">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Number No</label>
+                <div class="col-sm-9"> 
+                  <input type="text" class="form-control" id="numbackLay" placeholder="Number Lay All">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Number Yes</label>
+                <div class="col-sm-9"> 
+                  <input type="text" class="form-control" id="numbLayAll" placeholder="Number Lay All">
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">Active/Suspend/Bowling</label>
+                <div class="col-sm-9"> 
+                 <select name="" id="update_status" class="form-control">
+                   <option value="">SELECT</option>
+                   <option value="0">Active</option>
+                   <option value="1">Suspend</option>
+                   <option value="3">Bowl Running</option>
+                 </select>
+                </div>
+              </div> -->
+          
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+          </div>
+      
+        </div>
+      </div>
+      <div id="addMarket" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id='edit_modal_title'>Modal Header</h4>
+          </div>
+          <form class="form-horizontal" onsubmit="return addMarketNew(this)">
+          <div class="modal-body">
+          <input type="hidden" class="form-control" name="main_match_id" value="<%=match_id;%>" placeholder="Diff">
+            <div class="form-group">
+              <label class="control-label col-sm-3" name="" for="email">Title</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="title" placeholder="Title">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Diff</label>
+              <div class="col-sm-9"> 
+                <input type="text" value="1" name="diff" class="form-control" placeholder="Diff">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">No</label>
+              <div class="col-sm-9"> 
+                <input type="text" value="0" name="yes" class="form-control" placeholder="Back All">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Yes</label>
+              <div class="col-sm-9"> 
+                <input type="text" value="0" name="no" class="form-control" placeholder="Lay All">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Rank</label>
+              <div class="col-sm-9"> 
+                <input type="text" value="9999" name="rank" class="form-control" placeholder="Lay All">
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="pwd">User Rank</label>
+                <div class="col-sm-9"> 
+                  <input type="text" value="9999" name="user_rank" class="form-control" placeholder="User Rank">
+                </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Number No</label>
+              <div class="col-sm-9"> 
+                <input type="text" value="0" name="no_yes" class="form-control" placeholder="Number Lay All">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Number Yes</label>
+              <div class="col-sm-9"> 
+                <input type="text" value="0" name="no_no" class="form-control" placeholder="Number Lay All">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Market Type</label>
+              <div class="col-sm-9"> 
+                <select class="form-control" name="market_type">
+                  <option value="0">BackLay</option>
+                  <option value="1">layAll</option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="form-group">
+              <label class="control-label col-sm-3" for="pwd">Active/Suspend/Bowling</label>
+              <div class="col-sm-9"> 
+               <select name="" id="update_status" class="form-control">
+                 <option value="">SELECT</option>
+                 <option value="0">Active</option>
+                 <option value="1">Suspend</option>
+                 <option value="3">Bowl Running</option>
+               </select>
+              </div>
+            </div> -->
+        
+          </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+          </form>
+        </div>
+    
+      </div>
+    </div>
+    <%-include('inc/footer.ejs') %>
+    <script src="/admin_panel/plugins/socket.js"></script>
+    <script>
+        const match_id = '<%=match_id%>';
+        // const user_id = '';
+    </script>
+    <script src="/admin_panel/plugins/custom.js"></script>
+    <script>
+    const url = window.location.origin.split(':')[0]+':'+window.location.origin.split(':')[1]+':3025/admin_panel';
+        console.log(url);
+    var socket1 = io.connect(url);
+    //var socket1 = io.connect(window.location.origin+'/admin_panel');
+    var oldback_lay = [];
+    var oldmatch_odds = [];
+    function check_data( Old_data, New_data)
+    {
+    
+      check = false;
+      if(Old_data.length == New_data.length)
+      {
+      // White
+        var Old_length = Old_data.length;
+        var New_length = New_data.length;
+        
+        // alert(' Old : '+ Old_length+ ' New : '+New_length)
+        if(Old_length != New_length)
+        {
+          check = true;
+        }
+        else
+        {
+        for(i = 0;i <New_length;i++)
+        {
+          // alert(old_data.matchLayJson[i]);
+          if(checkJsons(Old_data[i],New_data[i]))
+          {
+    
+          }
+          else
+          {
+            check = true;    
+          }
+        }
+        }
+      }
+      else
+      {
+        check = true;
+      }
+      return check;
+    }
+    
+    function checkJsons( otherJson, newJson)
+    {
+    
+    
+        var sameJson = true;
+        $.each(newJson, function(key, value){
+            if(otherJson[key] != newJson[key]) 
+            {
+                sameJson=false;
+            } 
+            
+        });
+        return sameJson;
+    }
+    getMatchodds_all2(match_id);
+
+
+    socket1.on('match_odds_'+match_id, function(data) {
+        let next = data.next;
+        
+        if(next.operation_type == "update") {
+          const market_id = next._id;
+          if(match_id != next.data.gen_id) {
+            return;
+          }
+          if(next.data.ranking != $('#rank'+market_id).val()) {
+            getMatchodds_all2(match_id);
+            return;
+          }
+          $('#match_id'+market_id).html(next.data.match_name);
+          $('#match_diff'+market_id).html(next.data.diff);
+          
+          var match_yes = next.data.match_yes.toFixed(2);
+          var match_no =next.data.match_no.toFixed(2);
+          if(next.data.market_type == 1){
+            match_yes = next.data.match_yes.toFixed(0);
+            match_no =next.data.match_no.toFixed(0);
+          }
+          $('.updateYes'+market_id).html(match_yes);
+          $('.updateNo'+market_id).html(match_no);
+          $('#myModal').modal('hide');
+          $('.rank'+market_id).html(next.data.ranking);
+          $('.user_rank'+market_id).html(next.data.user_rank);
+          let string_status = '';
+          let status_btn = "";
+          switch(next.data.active_status){
+              case 0:string_status = 'Active'
+              status_btn = "<button class='btn btn-sm btn-danger' title='Suspend' onClick=\"updateStatus('"+next.data._id+"',1)\"><i class='fa fa-times' aria-hidden='true'></i></button>"
+              +"<button class='btn btn-sm btn-danger' title='Ball Running' onClick=\"updateStatus('"+next.data._id+"',2)\"> <i class='fa fa-circle' aria-hidden='true'></i> </button>";
+              break;
+              case 1:string_status = 'Suspended'
+              status_btn = ""
+              +""
+              +"<button class='btn btn-sm btn-primary' title='Active' onClick=\"updateStatus('"+next.data._id+"',0)\"> <i class='fa fa-check-square' aria-hidden='true'></i> </button>";
+              break;
+              case 2: string_status = 'Ball Running'
+              status_btn = ""
+              +""
+              +"<button class='btn btn-sm btn-success' title='Active' onClick=\"updateStatus('"+next.data._id+"',0)\"> <i class='fa fa-check-square' aria-hidden='true'></i> </button>";
+              break;
+          }
+          $('.currentStatus'+market_id).html(string_status);
+          $('.btnChange'+market_id).html(status_btn);
+        } else {
+          if(match_id != next.data.gen_id) {
+            return;
+          }
+          getMatchodds_all2(match_id);
+        }
+    });
+
+    
+    
+    function all_user_refresh(){
+        $.get('/admin_panel/api/refresh_all');
+    }
+    function add_market(){
+        $("#addMarket").modal();
+    }
+    function addMarketNew(form){
+        let main_match_id = form.main_match_id.value;    
+        let title = form.title.value;
+        let diff = form.diff.value;
+        let yes = form.yes.value;
+        let no = form.no.value;
+        let rank = form.rank.value;
+        let no_yes = form.no_yes.value;
+        let no_no = form.no_no.value;
+        let market_type = form.market_type.value;
+        let user_rank = form.user_rank.value;
+        let value = {}
+        value.main_match_id = main_match_id;
+        value.title = title; 
+        value.diff = diff; 
+        value.yes = yes; 
+        value.no = no; 
+        value.rank = rank; 
+        value.no_yes = no_yes; 
+        value.no_no = no_no; 
+        value.market_type = market_type; 
+        value.user_rank = user_rank; 
+        $.post("/admin_panel/api/addMarketNew",value,function(data){
+            form.reset();
+            form.title.value = ""; 
+            form.diff.value = 1;
+            form.yes.value = 0;
+            form.no.value = 0;
+            form.rank.value = 9999;
+            form.no_yes.value = 0;
+            form.no_no.value = 0;
+            if(data){
+              alert('Market Added');
+            }else{
+              alert('Try Again Later');
+            }
+            refresh();
+        });
+        return false;
+    }
+    </script>
+    </body>
+</html>

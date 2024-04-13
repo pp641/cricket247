@@ -1,0 +1,366 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+body h1 {
+	font-size: 28px;
+}
+body h2 {
+	font-size: 24px;
+}
+body h3 {
+	font-size: 18px;
+}
+body h4 {
+	font-size: 16px;
+}
+body h5 {
+	font-size: 14px;
+}
+body h6 {
+	font-size: 14px;
+}
+.wrapper {
+	width: 100%;
+	max-width: inherit;
+}
+.wrapper img {
+	max-width: 100%;
+	height: auto;
+}
+.small-grid .news-txt {
+	float: left;
+	width: 59%;
+}
+.small-grid {
+	margin: 0px;
+	padding: 0px 20px 20px;
+}
+.tab-news ul.nav li {
+	display: inline-block;
+	padding: 0 10px;
+}
+.news-section-wrapper .schedule-box {
+	width: 100%;
+}
+.schedule-box .sdate {
+	width: 40px;
+}
+.color-option-2 .schedule-box .steams {
+	width: 170px;
+}
+.schedule-box .steams {
+	width: 260px;
+	float: left;
+	padding: 0 10px;
+}
+.schedule-box .steams strong.t2 img, .schedule-box .steams strong.t1 img {
+	display: none;
+}
+.tab-news-vertical-nav.small-grid .small-thumb {
+	width: 100px;
+}
+.small-grid ul.meta-info {
+	display: none;
+}
+#authors-slider.owl-carousel .author-box .txt {
+	font-size: 16px;
+}
+.event-txt-wrap .event-thumb {
+	margin-right: 15px;
+}
+.event-txt-wrap .event-txt {
+	width: 58%;
+}
+.widget .small-grid .small-thumb {
+	width: 65px;
+}
+.pro-thumb {
+	max-height: 200px;
+}
+.ticket-box img {
+	width: 96px;
+}
+.tickets-list li .techlinqs-btn {
+	margin: 10px;
+}
+.match-fix {
+	width: 85%;
+}
+.main-banner .slick-slide .banner-caption {
+	top: 35%;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+body h1 {
+	font-size: 28px;
+}
+body h2 {
+	font-size: 24px;
+}
+body h3 {
+	font-size: 20px;
+}
+body h4 {
+	font-size: 18px;
+}
+body h5 {
+	font-size: 16px;
+}
+body h6 {
+	font-size: 14px;
+}
+.wrapper {
+	width: 100%;
+	max-width: inherit;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+.logo:before {
+	display: none;
+}
+.featured-news-block .p3l, .featured-news-block .p3, .featured-news-block .p3r {
+	padding: 0 15px;
+}
+.news-block, .fnews-thumb, div#featured-slider {
+	margin-bottom: 30px;
+}
+.fl-pagination, .tab-news ul.nav {
+	margin-bottom: 20px;
+}
+.schedule-box {
+	width: 100%;
+	margin-bottom: 15px;
+}
+.main-banner .slick-slide .banner-caption a, .main-banner .slick-slide .banner-caption p {
+	display: none;
+}
+.tab-news-vertical-nav.small-grid {
+	margin-top: 20px;
+}
+.event-txt-wrap .event-thumb {
+	margin-right: 20px;
+}
+.event-txt-wrap .event-txt {
+	float: left;
+	width: 58%;
+}
+.sidebar {
+	margin-top: 30px;
+	width: 100%;
+	float: left;
+}
+.pro-thumb {
+	overflow: hidden;
+	max-height: 210px;
+	min-height: 210px;
+}
+.pro-large-img {
+	margin-bottom: 30px;
+}
+.review .review-content {
+	width: 82%;
+}
+.price-table.selected-table {
+	margin-top: 0;
+}
+.related-players .team-box, .price-table {
+	margin-bottom: 30px;
+}
+.tickets-list li .techlinqs-btn {
+	margin: 10px;
+}
+.match-fix {
+	width: 85%;
+}
+}
+ @media (min-width: 200px) and (max-width: 767px) {
+body h1 {
+	font-size: 28px;
+}
+body h2 {
+	font-size: 24px;
+}
+body h3 {
+	font-size: 20px;
+}
+body h4 {
+	font-size: 18px;
+}
+body h5 {
+	font-size: 16px;
+}
+body h6 {
+	font-size: 14px;
+}
+.wrapper {
+	width: 100%;
+	max-width: inherit;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+.logo:before {
+	display: none;
+}
+.header .navbar-toggle {
+	background: #d21346;
+}
+.header .navbar-toggle .icon-bar {
+	background: #fff;
+}
+.header .in {
+	background: none;
+}
+ul.sub-menu {
+	width: 100%;
+	position: static;
+}
+.featured-news-block .p3l, .featured-news-block .p3, .featured-news-block .p3r {
+	padding: 0 15px;
+}
+.news-block, .fnews-thumb, div#featured-slider {
+	margin-bottom: 15px;
+}
+.small-grid .news-txt {
+	float: left;
+	width: 59%;
+}
+.tab-news ul.nav {
+	text-align: left;
+	margin-bottom: 10px;
+}
+.tab-news ul.nav li {
+	padding: 0 7px;
+}
+.fl-pagination .pagination>li>a.pagi {
+	padding: 0 5px;
+}
+.player-thumb, .vnews-box, .small-grid, .footer-widget, .fl-pagination {
+	margin-bottom: 15px;
+}
+ul.acbar-right {
+	display: none;
+}
+.schedule-box {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.main-banner .slick-slide .banner-caption a, .main-banner .slick-slide .banner-caption p {
+	display: none;
+}
+.pro-thumb img, .event-txt-wrap .event-thumb img, .player-thumb img {
+	width: 100%;
+	height: auto;
+}
+footer.footer-two {
+	padding: 0 15px;
+}
+.event-content, .event-post .event-date {
+	width: 100%;
+	padding: 0px;
+}
+.event-txt-wrap .event-txt, .event-txt-wrap .event-thumb {
+	width: 100%;
+	margin: 0px;
+}
+.event-txt-wrap .event-txt {
+	padding: 20px 0;
+}
+ul.post-tags a {
+	margin-bottom: 3px;
+}
+.points-listing, .pro-large-img, a.buy-now, .blog-list .blog-thumb {
+	margin-bottom: 10px;
+}
+.comments ul.child-comment {
+	padding-left: 20px;
+}
+.review-form h4.section-title {
+	margin-right: 15px;
+}
+.qty a {
+	margin: 5px !important;
+}
+.review .review-content {
+	width: 100%;
+	padding: 10px 0;
+}
+.points-listing td {
+	line-height: 24px;
+	border: 1px solid #d9d9d9;
+	padding: 0 5px;
+	text-align: center;
+	font-size: 12px;
+}
+.points-listing thead th {
+	line-height: 30px;
+	padding: 5px;
+	font-size: 12px;
+}
+.team-small-details img, .related-players .team-box, .price-table {
+	margin-bottom: 30px;
+}
+.price-table.selected-table {
+	margin-top: 0px;
+}
+.tickets-detail {
+	padding: 15px;
+	text-align: center;
+	width: 100%;
+}
+.tickets-detail .logo-team2, .tickets-detail .logo-team1 {
+	display: inline-block;
+	float: none;
+	width: 100%;
+}
+.tickets-list li .techlinqs-btn {
+	float: none;
+	margin: 20px;
+	display: inline-block;
+}
+.mat-fix-list .match-date {
+	margin-right: 20px;
+}
+.match-fix {
+	width: 72%;
+	padding: 20px;
+}
+.match-hover {
+	display: none;
+}
+ul.mg li span {
+	margin: 15px 0;
+}
+.fnews-thumb .fnews-txt {
+	text-align: center;
+}
+.schedule-box .sdate {
+	width: 40px;
+}
+.schedule-box .steams {
+	width: 205px;
+}
+.small-grid .small-thumb {
+	width: 65px;
+}
+.main-banner .slides-thumnail {
+	display: none;
+}
+.main-banner .slick-slide .banner-caption {
+	position: absolute;
+	top: 25%;
+	left: 0;
+	width: 100%;
+	padding: 30px;
+}
+.tab-news-vertical-nav.small-grid .small-thumb {
+	width: 90px;
+}
+
+.wrapper {padding:0px;}
+
+}
