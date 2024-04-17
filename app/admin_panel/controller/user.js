@@ -48,7 +48,7 @@ controller.admin_online_users = function(req, res, next){
   const userID = req.adminUser;
   res.render("admin_online_users",{userData : userID})
 }
-controller.update_user_log = async function(req, res, next){
+controller.update_user_log = async function(req, res, next){ // moment 30 sec add 
   const userID = req.body.user_id;
   let data = await common.getDataByValue(admin_user_check,{usr_id : userID});
   if(data.length === 0){

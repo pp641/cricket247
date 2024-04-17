@@ -30,7 +30,8 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/logout',function(req,res,next){
-  common.removeValue(usrlog_session,{usr_id : req.adminUser._id});
+  // console.log("first logout thing" , req.body, usrlog_session, req.adminUser._id, req)
+  common.removeValue(usrlog_session,{usr_id : req.adminUser._id});   // logout functionality
   req.logout();
   res.redirect('/admin_panel');
 });

@@ -47,6 +47,7 @@ controller.alot_user = async function(req,res,next){
 
 //Change Admin Password Page
 controller.change_password = function(req,res,next){
+    console.log("changing here", req.adminUser , req.params)
     let userdetails = req.adminUser;
     let admin_user = req.params.admin_user_id;
     res.render('change_admin_password',{userData : userdetails, admin_user_id: admin_user});
