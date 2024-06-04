@@ -6,11 +6,12 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const dbConfig = require('../db.js');
 const genunid = require('./genunid.js');
+var mongoose = require('mongoose');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo')(expressSession);
 // var RedisStore = require('connect-redis')(expressSession);
-const redis   = require("redis");
-const client  = redis.createClient();
+// const redis   = require("redis");
+// const client  = redis.createClient();
 var flash = require('connect-flash');
 const passport = require('passport'),
 adminpassport = new passport.Passport();
@@ -20,7 +21,6 @@ require("./passport.js")(adminpassport);
 
  // mongoose library
 
-var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -43,15 +43,13 @@ var authRouter = require('./routes/auth')(adminpassport);
 var app = express();
 var compression = require('compression')
 
+
 app.use(compression())
 
 
 
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
-var redis_socket = require('socket.io-redis');
-io.adapter(redis_socket({ host: dbConfig.redis_host, port: dbConfig.redis_port }));
-
 app.io = io;
 io.on( "connection", function()
 {
@@ -167,15 +165,5 @@ app.use(function(req, res, next) {
 
 });
 
-// error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
 
 module.exports = app;

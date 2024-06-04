@@ -51,10 +51,6 @@ app.use(function (req, res, next) {
 
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
-var redis_socket = require('socket.io-redis');
-
-io.adapter(redis_socket({ host: dbConfig.redis_host, port: dbConfig.redis_port }));
-
 app.io = io;
 io.on( "connection", function()
 {
