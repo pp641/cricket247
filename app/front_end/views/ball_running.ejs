@@ -300,9 +300,10 @@
         <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="/plugins/socket.js"></script>
         <script src="/plugins/moment.min.js"></script>
-        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+        <!-- <script src='https://code.responsivevoice.org/responsivevoice.js'></script> -->
+        <script src="https://code.responsivevoice.org/responsivevoice.js?key=DBBZIixi"></script>
         <script>
-        var socket1 = io.connect('http://cricket247online.com:85/');
+        var socket1 = io.connect('http://cricket247online.com:5000/');
       //var socket1 = io.connect(window.location.origin+'/admin_panel');
               socket1.on('error', (err) => {
                   console.log('Error connecting to server', err);

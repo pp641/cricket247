@@ -1,4 +1,4 @@
-var socket1 = io.connect(window.location.origin + ':85/');
+var socket1 = io.connect(window.location.origin + ':5000/');
 socket1.on('error', (err) => {
 });
 
@@ -6,21 +6,31 @@ socket1.on('disconnect', () => {
 });
 
 socket1.on('reconnect', (number) => {
+    console.log("Error 1 ")
+
 });
 
 socket1.on('reconnect_attempt', () => {
+    console.log("Error 2 ")
+    
 });
 
 socket1.on('reconnecting', (number) => {
+    console.log("Error 3")
+    
 });
 
 socket1.on('reconnect_error', (err) => {
+    console.log("Error 4")
+
 });
 
 socket1.on('reconnect_failed', () => {
+    console.log("Error5 ")
 });
 
 socket1.on('connect_error', () => {
+    console.log("Error 6 ")
 
 });
 socket1.on(match_id, function(Message) {

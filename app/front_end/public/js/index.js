@@ -1,21 +1,58 @@
-var socket1 = io.connect(window.location.origin + ":8080/");
+var socket1 = io.connect('http://103.27.232.213:8080');
 socket1.on("error", (t) => {}),
-  socket1.on("disconnect", () => {}),
-  socket1.on("reconnect", (t) => {}),
-  socket1.on("reconnect_attempt", () => {}),
-  socket1.on("reconnecting", (t) => {}),
-  socket1.on("reconnect_error", (t) => {}),
-  socket1.on("reconnect_failed", () => {}),
-  socket1.on("connect_error", () => {}),
+
+  socket1.on("disconnect", () => {
+    console.log("disconnect")
+  }),
+  socket1.on("reconnect", (t) => {
+    console.log("Reconnect")
+  }),
+  socket1.on("reconnect_attempt", (t) => {
+    console.log("Reconnect attemt",t)
+  }),
+  socket1.on("reconnecting", (t) => {
+    console.log("Reconnecting")
+  }),
+  socket1.on("reconnect_error", (t) => {
+    console.log("Reconnect error", ) 
+  }),
+  socket1.on("reconnect_failed", () => {
+    console.log("reconnect failed")
+  }),
+  socket1.on("connect_error", () => {
+    console.log("connect error")
+  }),
+
+
   socket1.on(match_id, function (t) {
-    let e = JSON.parse(t);
-    if (match_id == e.match_id) {
-      let t = e.text;
-      isNaN(e.text) ||
-        (t = 1 == e.text || 0 == e.text ? e.text + " run" : e.text + " runs"),
-        responsiveVoice.speak(t, "UK English Male");
+    console.log("okdkd");
+    try {
+      let e = JSON.parse(t);
+      if (match_id == e.match_id) {
+        let message = e.text;
+        if (!isNaN(e.text)) {
+          message = e.text == 1 || e.text == 0 ? e.text + " run" : e.text + " runs";
+        }
+        responsiveVoice.speak(message, "UK English Male", {
+          onstart: function () {
+            console.log("Speaking started...");
+          },
+          onend: function () {
+            console.log("Speaking finished.");
+          },
+          onerror: function (error) {
+            console.error("Error while speaking:", error);
+            // Handle the error here, such as displaying a message to the user
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error processing received data:", error);
+      // Handle the error here, such as logging it or displaying a message to the user
     }
   });
+  
+
 var index = (function () {
   var t = [],
     e = [],
@@ -290,6 +327,7 @@ var index = (function () {
     };
   return {
     init: function (t) {
+      console.log("ok matc", t)
       setInterval(function () {
         h(t);
       }, 880),
@@ -308,4 +346,5 @@ var index = (function () {
     },
   };
 })();
+console.log("oceriofjeiiij")
 index.init(match_id);
