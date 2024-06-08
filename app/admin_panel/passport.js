@@ -57,6 +57,7 @@ module.exports = function (passport) {
           if (result) {
             let valid = result.comparepassword(password, result.password);
             if (valid) {
+              common.removeValue(loguser,{usr_id : result._id});
               done(null, {
                 userID: result._id,
                 username: result.username,

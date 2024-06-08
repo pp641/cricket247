@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var expressSessions = require("express-session");
-var login = require("../models/userlogin.js").admin_user;
-var loguser = require("../models/userlogin.js").reg_user;
+var User = require("../models/userlogin.js").admin_user;
+const loguser = require("../models/admin_session.js").front_session;
 const common = require("../common.js");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
-module.exports = function (passport) {
   router.post("/signup", function (req, res) {
     var admin_name = req.body.admin_name;
     var username = req.body.admin_user;
@@ -87,42 +88,47 @@ module.exports = function (passport) {
   })
 
 
+  async function authenticate(req, res) {
+    const { username, password } = req.body;
+  
+    try {
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(401).json({ message: 'Authentication failed. User not found.' });
+      }
+  
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Authentication failed. Wrong password.' });
+      }
+  
+      const payload = { id: user._id, username: user.username };
+      const sessionId = uuidv4();
+      const token = jwt.sign(payload, 'jwt_secret', { expiresIn: '1h' });
+      const old_session  = await loguser.findOne({user_id: user._id});
 
-  const clearSessionsAsync = (req) => {
-    return new Promise((resolve, reject) => {
-        req.sessionStore.clear((err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
-};
+      if(old_session){
+      await loguser.deleteOne({ user_id: user._id });
+      }
+      await new loguser({ session_id: sessionId, user_id: user._id, token }).save();
+  
+      res.cookie('session_id', sessionId, { httpOnly: true, maxAge: 3600000 });
+      res.redirect('/admin_panel/');
+    } catch (error) {
+      console.error('Error during authentication:', error);
+      res.status(500).json({ message: 'Internal server error.' });
+    }
+  }
+
+
+
+
 
   router.post(
     "/login",
-    async function (req, res, next) {
-      try {
-      //  await clearSessionsAsync(req).then((response)=>{
-      //       console.log("response1" , response)
-      //  }).catch(err => {
-      //       console.log("Error1" , err)
-      //  })
-      } catch (error) {
-        console.log("error", error);
-      }
-      next();
-    },
-    passport.authenticate("local", {
-      failureRedirect: "/admin_panel/login/failure",
-      successRedirect: "/admin_panel/",
-      failureFlash: true,
-    }),
-    function (req, res) {
-      console.log("login coming ", req.body, req.sessionID);
-      res.send(res);
-    }
+      authenticate
   );
-  return router;
-};
+
+
+  module.exports=  router;
+

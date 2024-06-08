@@ -1,27 +1,21 @@
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+const path = require('path');
 const dbConfig = require('../db.js');
-const genunid = require('./genunid.js');
 var mongoose = require('mongoose');
-const expressSession = require('express-session');
-const MongoStore = require('connect-mongo')(expressSession);
-// var RedisStore = require('connect-redis')(expressSession);
-// const redis   = require("redis");
-// const client  = redis.createClient();
-var flash = require('connect-flash');
-const passport = require('passport'),
-adminpassport = new passport.Passport();
-require("./passport.js")(adminpassport);
-
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+var app = express();
 
 
  // mongoose library
 
-mongoose.Promise = global.Promise;
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(bodyParser.json());
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -31,16 +25,14 @@ mongoose.connect(dbConfig.url,dbConfig.options)
   .catch((err) => console.error(err));
 
 
-  // mongoose library end here
 
 
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
-var authRouter = require('./routes/auth')(adminpassport);
+var authRouter = require('./routes/auth');
 
 
-var app = express();
 var compression = require('compression')
 
 
@@ -68,41 +60,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.disable('x-powered-by')
 
-app.use(expressSession({
-  secret: "6D11526858523A2E6C62876E272C9" ,
-  store:new MongoStore({
-      mongooseConnection: mongoose.connection,
-      collection: 'my_app_sessions' 
-  }),
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 600000,secure: false },
-  rolling: true
-})
-);
 
 
 
-// app.use(expressSession({
-//   secret: "6D11526858523A2E6C62876E272C9" ,
-//   store:  new MongoDBSessionStore({
-//     uri : dbConfig.url,
-//     collection : 'my_app_sesssion'
-//   }),
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { maxAge: 600000 },
-// }))
 
-app.use(flash());
-app.use(adminpassport.initialize({ userProperty: "adminUser" }));
-app.use(adminpassport.session());
-// if (app.get('env') == 'production') {
-//   app.use(morgan('combined'));
-// } else {
-//   app.use(morgan('combined'));
-// }
-app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
