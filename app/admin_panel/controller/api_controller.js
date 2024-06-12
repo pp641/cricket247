@@ -43,15 +43,22 @@ controller.getMatch_data = async function(req,res,next){
     arr.match_match_odds = match_match_odds;
     res.send(arr);
 }
-controller.getMatch_data_all = async function(req,res,next){
-    let match_id = req.body.match_id;
-    let match_layoff = await common.getDataByValue(match_odds, {gen_id : match_id, market_type : 0});
-    let match_match_odds = await common.getDataByValue(match_odds, {gen_id : match_id, market_type : 1});
-    let arr = {}
-    arr.match_layoff = match_layoff;
-    arr.match_match_odds = match_match_odds;
-    res.send(arr);
-}
+
+controller.getMatch_data_all = async function(req, res, next) {
+    try {
+        const match_id = req.body.match_id;
+        const match_data = await match_odds.find({ gen_id: match_id, market_type: { $in: [0, 1] } })
+        const match_layoff = match_data.filter(data => data.market_type === 0);
+        const match_match_odds = match_data.filter(data => data.market_type === 1);
+        res.send({
+            match_layoff,
+            match_match_odds
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 controller.update_users = async function(req, res, next){
     let market_id = req.body.market_id;
@@ -117,7 +124,7 @@ controller.updateStatus = async function(req,res,next){
     }
     let mData = await common.getDataByID(match_odds, market_id);
     res.send(mData);
-    
+
 }
 
 controller.updateStatusAll = async function(req,res,next){

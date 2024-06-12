@@ -233,9 +233,11 @@ controller.manage_match_odds = async function(req,res,next){
     let match_id = req.params.match_id;
     let gen_match = await common.getDataByID(generated_match,match_id);
     let live_event = await common.getDataByID(live_game,gen_match.main_match_id);
-    let eventDateData = await common.getDataByID(manage_date,live_event.event_date_id);
-    let eventData = await common.getDataByID(manage_event,live_event.event_id);
-    let gameData = await common.getDataByID(manage_game,live_event.game_id);
+    let [eventDateData, eventData, gameData] = await Promise.all([
+        common.getDataByID(manage_date, live_event.event_date_id),
+        common.getDataByID(manage_event, live_event.event_id),
+        common.getDataByID(manage_game, live_event.game_id)
+    ]);
     let data = {};
     data.live_event = live_event
     data.eventDateData = eventDateData
