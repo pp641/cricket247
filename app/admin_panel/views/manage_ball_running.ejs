@@ -38,6 +38,9 @@
         .in {
             background: #0000001a;
         }
+        .ball_action{
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -49,7 +52,26 @@
     <div class="news-section-wrapper news-gallery no-margin">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="modal fade" id="deleteConfirmationBall" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationBallLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-top" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteConfirmationBallLabel">Confirm Delete</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure ! You want to delete this Ball?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                          <button type="button" class="btn btn-danger" id="confirmDeleteBall">Yes</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            <div class="col-md-12">
                     <%
                     var game_name = 'Not Available';
                     var event_team_a = 'Not Available';
@@ -373,7 +395,7 @@
                     + '<button onclick="update_result(\'' + row._id + '\',1, 4)" class="btn btn-warning">Third Umpire</button><br>'
                     + '<button onclick="update_result(\'' + row._id + '\',2, 4)" class="btn btn-warning">Not Out</button>'
                     + '<button onclick="update_result(\'' + row._id + '\',3, 4)" class="btn btn-danger">Out</button>'
-                    + '<button onclick="delete_ball(\'' + row._id + '\')" class="btn btn-danger">Delete</button>'
+                    + '<button onclick="delete_ball(\'' + row._id + '\')" data-ball-id="'+row._id+'" class="btn btn-danger ball_action">Delete</button>'
                     + '</td>'
                     + '</tr>';
             }
@@ -714,6 +736,15 @@
         }
 
         function delete_ball(ball_id) {
+           
+                $("#deleteConfirmationBall").modal("show");
+                document
+                  .getElementById("confirmDeleteBall")
+                  .addEventListener("click", function confirmDeleteHandler() {
+                    console.log("market id: " ,ball_id);
+                    // delete_market(ballId);
+
+
             $("#loading").show();
             $("#col" + ball_id).html('');
             $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
@@ -725,7 +756,18 @@
                 $("#loading").hide();
                 getBallRunning(match_id);
             });
+
+
+                    $("#deleteConfirmationBall").modal("hide");
+                    this.removeEventListener("click", confirmDeleteHandler);
+                  });
+            
+            
+
         }
+
+
+        
 
         function delete_ball2(ball_id) {
             $("#loading").show();
@@ -939,11 +981,15 @@
                 });
             });
             $("#removeinning").on('click', function () {
+                console.log("getting here...");
                 if (selected_inning == "") {
                     alert('Select Innings First');
-                } else {
-                    removeInning();
-                }
+                } 
+                else {
+            if(confirm("Are you sure ! You want to delete this innings? ")){
+                removeInning();
+            }    
+        }
             });
             $('#updateOverRuns').on('submit', function (e) {
                 e.preventDefault();
