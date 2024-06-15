@@ -82,6 +82,8 @@ controller.match_game_event = async function(req,res,next){
 
 }
 
+
+
 //Generate Match
 controller.match_odds_selection = async function(req,res,next){
     
@@ -736,4 +738,15 @@ controller.delete_admin = async function(req, res, next){
     await common.remove(usermodel,admin_id);
     res.send("<script>alert('Deleted Successfully'); window.location = '/admin_panel/manage_admin'</script>")
 }
+
+controller.change_mini_admin_password  = async function(req,res,next){
+    console.log("ok getting" , req.body , req.adminUser )
+    let userdetails = req.adminUser;
+    let admin_user_id = req.adminUser._id
+    let admin_user = req.params.admin_user_id;
+    console.log("okde", admin_user_id )
+    res.render('change_mini_admin_password',{userData : userdetails, admin_user_id: admin_user_id});
+}
+
+
 module.exports = controller;

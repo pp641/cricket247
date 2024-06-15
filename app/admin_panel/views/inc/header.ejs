@@ -38,10 +38,12 @@
                                             </li> -->
                                             <li><a href="/"  target="_blank" kind="" srclang="" label="">VISIT WEBSITE</a></li>
                                             <li> <a href="#">Manage User <span class="caret"></span></a>
-                                                <ul class="sub-menu"> 
-                                                <% if(userData.admin_type == 1){ %>
-                                                    <li><a href="/admin_panel/manage_admin">Manage Admin</a></li>
-                                                    <li><a href="/admin_panel/admin_online_users">Online Admin</a></li>
+                                                <ul class="sub-menu">                                 
+                                                    <% if (userData.admin_type == 1) { %>
+                                                        <li><a href="/admin_panel/manage_admin">Manage Admin</a></li>
+                                                        <li><a href="/admin_panel/admin_online_users">Online Admin</a></li>
+                                                    <% } else { %>
+                                                        <li><a href="/admin_panel/change_mini_admin_password">Change Mini Admin Details </a></li>
                                                     <% } %>
                                                     <li><a href="/admin_panel/online_users">Online User</a></li>
                                                     <li><a href="/admin_panel/manage_registered_member">Register Member</a></li>

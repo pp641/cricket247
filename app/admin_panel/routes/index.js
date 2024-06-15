@@ -7,6 +7,7 @@ const ballRunningController = require("../controller/ball_running.js");
 const usrlog_session = require("../models/userlogin.js").admin_user_check;
 const loguser = require("../models/admin_session.js").front_session;
 const common = require("../common.js");
+const { route } = require("./auth.js");
 const loggedin = function (req, res, next) {
   const session_id = req.cookies.session_id;
   loguser.find({ session_id: session_id }).then(async (data, error) => {
@@ -63,6 +64,8 @@ router.get("/admin_online_users", loggedin, userController.admin_online_users);
 
 router.post("/update_user_log", userController.update_user_log);
 
+
+router.get("/change_mini_admin_password",loggedin, matchController.change_mini_admin_password)
 router.get("/manage_game", loggedin, matchController.match_game);
 router.get("/manage_game_event", loggedin, matchController.match_game_event);
 router.get("/manage_game_date", loggedin, matchController.manage_game_date);

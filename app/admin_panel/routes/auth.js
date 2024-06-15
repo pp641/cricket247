@@ -13,7 +13,7 @@ const { v4: uuidv4 } = require('uuid');
     var password = req.body.admin_password;
     var admin_type = req.body.admin_type;
     var admin_status = req.body.admin_status;
-    login.findOne({ username: username }, function (error, result) {
+    User.findOne({ username: username }, function (error, result) {
       if (error) {
         console.log("here error");
         res.status(500).send(error);
@@ -26,7 +26,7 @@ const { v4: uuidv4 } = require('uuid');
                 " window.location = '/admin_panel/manage_admin'</script>"
             );
         } else {
-          var record = new login();
+          var record = new User();
           record.admin_name = admin_name;
           record.username = username;
           record.password = record.hashPassword(password);
@@ -56,9 +56,9 @@ const { v4: uuidv4 } = require('uuid');
     console.log("changing password" , req.body)
     let admin_id = req.body.admin_user_id;
     let admin_password = req.body.New_Password;
-    let record = new login();
+    let record = new User();
     let new_password = record.hashPassword(admin_password);
-    await common.update(login, admin_id, { password: new_password });
+    await common.update(User, admin_id, { password: new_password });
     res.send(
       "<script>alert('Password Changed Successfully');" +
         " window.location = '/admin_panel/manage_admin'</script>"
@@ -67,13 +67,13 @@ const { v4: uuidv4 } = require('uuid');
 
   router.post("/change_admin_password", async function(req, res) {
       console.log("request body", req.body , req.sessionID, req.session)
-      let old_password = req.body.user_old_password;
+      let old_password = req.body.user_old_password;  
       let new_password = req.body.user_new_password;
       let confirm_password = req.body.confirm_user_new_password;
       let admin_user_id = req.session.passport.user.userID
       if(new_password === confirm_password) {
-      let record = new login();
-      await common.update(login, admin_user_id, { password: new_password });
+      let record = new User();
+      await common.update(record, admin_user_id, { password: new_password });
       res.send(
         "<script>alert('Password Changed Successfully')" + 
         " window.location = '/admin_panel/online_users'</script>"
@@ -130,5 +130,41 @@ const { v4: uuidv4 } = require('uuid');
   );
 
 
+
+
+  router.post('/change_mini_admin_password', async (req, res) => {
+    try {
+      const { admin_user_id, Old_Password, New_Password, Confirm_New_Password } = req.body;
+  
+      if (New_Password !== Confirm_New_Password) {
+        return res.status(400).send('New Password and Confirm New Password do not match');
+      }
+  
+      const user = await User.findById(admin_user_id);
+      if (!user) {
+        return res.status(404).send('User not found');
+      }
+  
+      const isMatch = await bcrypt.compare(Old_Password, user.password);
+      if (!isMatch) {
+        return res.status(400).send('Old Password is incorrect');
+      }
+  
+      const salt = await bcrypt.genSalt(10);
+      const hashedNewPassword = await bcrypt.hash(New_Password, salt);
+  
+      user.password = hashedNewPassword;
+      await user.save();
+  
+      res.redirect('/admin_panel/');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
+
+
   module.exports=  router;
 
+
+  // /admin_panel/auth/change_mini_admin_password
