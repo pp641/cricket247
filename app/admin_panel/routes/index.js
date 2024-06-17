@@ -51,10 +51,13 @@ router.get("/signup", function (req, res, next) {
 });
 
 router.get("/logout", function (req, res, next) {
-  common.removeValue(usrlog_session, { usr_id: req.adminUser._id });
-  req.logout();
-  res.redirect("/admin_panel");
+  const cookies = Object.keys(req.cookies);
+  cookies.forEach(cookieName => {
+    res.clearCookie(cookieName);
+  });
+  res.redirect("/admin_panel/");
 });
+
 
 //After Login
 //Get
