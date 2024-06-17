@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const dbConfig = require('../db.js');
 var mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 var app = express();
 
