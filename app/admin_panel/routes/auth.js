@@ -92,26 +92,31 @@ const { v4: uuidv4 } = require('uuid');
     const { username, password } = req.body;
   
     try {
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username : username });
       if (!user) {
-        return res.status(401).json({ message: 'Authentication failed. User not found.' });
+        return res.send(
+          "<script>alert('Authentication failed. User not found');" +
+          "window.location = '/admin_panel/login'</script>"
+        );
       }
   
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).json({ message: 'Authentication failed. Wrong password.' });
+        return res.send(
+          "<script>alert('Passwords does not match');" +
+          "window.location = '/admin_panel/login'</script>"
+        );
       }
   
       const payload = { id: user._id, username: user.username };
       const sessionId = uuidv4();
-      const token = jwt.sign(payload, 'jwt_secret', { expiresIn: '1h' });
+      const token = jwt.sign(payload, 'jwt_secret', { expiresIn: '24h' });
       const old_session  = await loguser.findOne({user_id: user._id});
 
       if(old_session){
       await loguser.deleteOne({ user_id: user._id });
       }
       await new loguser({ session_id: sessionId, user_id: user._id, token }).save();
-  
       res.cookie('session_id', sessionId, { httpOnly: true, maxAge: 3600000 });
       res.redirect('/admin_panel/');
     } catch (error) {
@@ -121,6 +126,42 @@ const { v4: uuidv4 } = require('uuid');
   }
 
 
+  // async function authenticate(req, res) {
+  //   const { username, password } = req.body;
+  
+  //   try {
+  //     const user = await User.findOne({ username });
+  //     if (!user) {
+  //       req.flash('error', 'Authentication failed. User not found.');
+  //       return res.redirect('/login');
+  //     }
+  
+  //     const isMatch = await bcrypt.compare(password, user.password);
+  //     if (!isMatch) {
+  //       req.flash('error', 'Authentication failed. Wrong password.');
+  //       return res.redirect('/login');
+  //     }
+  
+  //     const payload = { id: user._id, username: user.username };
+  //     const sessionId = uuidv4();
+  //     const token = jwt.sign(payload, 'jwt_secret', { expiresIn: '1h' });
+  //     const oldSession = await loguser.findOne({ user_id: user._id });
+  
+  //     if (oldSession) {
+  //       await loguser.deleteOne({ user_id: user._id });
+  //     }
+  //     await new loguser({ session_id: sessionId, user_id: user._id, token }).save();
+  
+  //     res.cookie('session_id', sessionId, { httpOnly: true, maxAge: 3600000 });
+  //     req.flash('success', 'Authentication successful.');
+  //     res.redirect('/admin_panel/');
+  //   } catch (error) {
+  //     console.error('Error during authentication:', error);
+  //     req.flash('error', 'Internal server error.');
+  //     res.redirect('/login');
+  //   }
+  // }
+  
 
 
 
