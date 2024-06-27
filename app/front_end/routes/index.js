@@ -17,6 +17,8 @@ const loggedin = function(req,res,next){
 /* GET home page. */
 router.get('/', loggedin, dash_controller.dashboard);
 
+router.post('/update_user_password', loggedin, dash_controller.update_user_password);
+
 router.get('/user_dashboard/:match_id', loggedin, dash_controller.match_monitor);
 
 router.get('/ball_running/:match_id',loggedin,dash_controller.ball_running)
