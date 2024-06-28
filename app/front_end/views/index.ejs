@@ -296,19 +296,6 @@
       },1000);
 
       updateusertime();
-      
-      function updatePassword() {
-        const oldPassword = document.getElementById('oldPassword').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
-        let userId = "<%=userdata._id%>";
-        console.log("detailss", userId);
-        $.post('/update_user_password',{oldPassword , newPassword , confirmNewPassword , userId  } , function(data){
-            console.log("okgot" , data)
-            alert(data.message);
-            $("passwordModal").modal("hide")
-        })
-      }
 
     </script>
   </head>
@@ -378,7 +365,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="updatePassword()" class="btn btn-primary"> Update Password</button>
+                    <button type="button" data-dismiss="modal" onclick="updatePassword()" class="btn btn-primary"> Update Password</button>
                 </div>
             </div>
         </div>
@@ -608,6 +595,21 @@
           }
         });
       };
+
+      function updatePassword() {
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+        let userId = "<%=userdata._id%>";
+        console.log("detailss", userId);
+        $.post('/update_user_password',{oldPassword , newPassword , confirmNewPassword , userId  } , function(data){
+            alert(data.message);
+            document.getElementById('oldPassword').value = ''
+            document.getElementById('newPassword').value = ''
+            document.getElementById('confirmNewPassword').value = ''
+        })
+      }
+
     </script>
     <!-- The Modal -->
   </body>

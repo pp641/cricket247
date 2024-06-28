@@ -1,5 +1,5 @@
 const db = require('mongodb');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs')
 const ObjectID = db.ObjectID;
 
 var moment = require('moment');
@@ -28,10 +28,12 @@ controller.update_user_password =  async function(req,res,next){
     let check_password =  bcrypt.compareSync(oldPassword , userDetails.password)
     if(check_password){
         if( newPassword === confirmNewPassword){
-            const hashedNewPassword =  bcrypt.hash(newPassword, 10);
+            const hashedNewPassword = bcrypt.hashSync(newPassword,bcrypt.genSaltSync(10))
+            console.log("got here", hashedNewPassword )
             userDetails.password = hashedNewPassword;
-            await userDetails.save();
-            res.json({message : "Password Updated Successfully"})
+            await userDetails.save((err,data)=>{
+                res.json({message : "Password Updated Successfully"})
+            });
         }else{
             res.json({message : "New Password and Confirm New Password are not matching !"})
         }
