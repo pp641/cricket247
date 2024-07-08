@@ -16,6 +16,7 @@
     "connect-mongodb-session": "^5.0.0",
     "connect-redis": "^3.4.2",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "datetimepicker": "^0.1.39",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",

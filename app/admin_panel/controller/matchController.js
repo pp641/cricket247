@@ -576,7 +576,7 @@ controller.delete_event = async function(req, res, next){
     let err3 = await common.removeValue(manage_date,{event_id : event_id});
     let matchgames = await common.getDataByCol(live_game, value);
     await delete_live_game(matchgames);
-    res.send("<script>alert('Deleted Successfully'); window.location = '/admin_panel/manage_game_event'</script>")
+    res.send("<script>alert('Deleted Successfully');</script>")
 }
 controller.delete_reg_user = async function(req, res, next){
     let reg_user_id = req.params.reg_id;

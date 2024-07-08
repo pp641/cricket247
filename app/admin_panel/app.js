@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const dbConfig = require('../db.js');
@@ -7,9 +8,16 @@ var mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 var app = express();
 
+const corsOptions = {
+  origin: '*', // Allow all origins
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
+  allowedHeaders: 'Content-Type,Authorization', 
+};
+
+app.use(cors(corsOptions));
+
 
  // mongoose library
-
 
 app.use(cookieParser());
 app.use(express.json());
