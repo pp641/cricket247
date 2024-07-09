@@ -1,4 +1,4 @@
-var socket1 = io.connect('http://103.27.232.213:8080');
+var socket1 = io.connect(window.location.origin + "/");
 socket1.on("error", (t) => {}),
 
   socket1.on("disconnect", () => {
@@ -327,7 +327,6 @@ var index = (function () {
     };
   return {
     init: function (t) {
-      console.log("ok matc", t)
       setInterval(function () {
         h(t);
       }, 880),
@@ -346,5 +345,4 @@ var index = (function () {
     },
   };
 })();
-console.log("oceriofjeiiij")
 index.init(match_id);
