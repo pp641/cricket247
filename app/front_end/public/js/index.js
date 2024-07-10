@@ -1,4 +1,5 @@
 var socket1 = io.connect(window.location.origin + "/");
+console.log("hereto connect ", window.location.origin);
 socket1.on("error", (t) => {}),
 
   socket1.on("disconnect", () => {
@@ -345,4 +346,5 @@ var index = (function () {
     },
   };
 })();
+console.log("okdo", window.location.origin)
 index.init(match_id);

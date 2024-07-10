@@ -352,7 +352,7 @@
     </script>
     <script src="/admin_panel/plugins/custom.js"></script>
     <script>
-
+console.log("okdododood", window.location.origin)
 var socket1 = io.connect(window.location.origin + "/");
 function refresh() {
   getMatchodds(match_id, user_id), transfer(), getMarketLink(match_id, user_id);

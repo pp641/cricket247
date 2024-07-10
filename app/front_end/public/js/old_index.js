@@ -1,4 +1,5 @@
 var socket1 = io.connect(window.location.origin + ':5000/');
+console.log("is is called", window.location.origin)
 socket1.on('error', (err) => {
 });
 
