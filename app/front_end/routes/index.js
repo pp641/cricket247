@@ -3,14 +3,36 @@ var router = express.Router();
 
 var dash_controller = require("../controller/dash_controller.js");
 const usrlog_session = require('../models/userlogin.js').userlogchk;
-const common = require('../common.js');
-const loggedin = function(req,res,next){
-  if(req.User){
-    next();
-  }else{
-    res.redirect('/login');
-  }
+var User = require('../models/userlogin.js').userlog;
 
+const common = require('../common.js');
+const loggedin =  async function(req,res,next){
+try {
+  const session_id = req.cookies.session_id;
+  console.log("Getting session", session_id)
+  await usrlog_session.find({session_id: session_id}).then((async (data,error)=>{
+    console.log("GETTING", data, error)
+    if(!data.length){
+      res.redirect("/login");
+      return;
+    }
+    await User.findOne({_id : data[0]?.usr_id} , (err,loggedData)=>{
+      console.log("Decsision", err , loggedData);
+      if(loggedData?._id){
+            req.User = {
+                _id : loggedData._id,
+                username : loggedData.username
+            };
+          next();
+      }else{
+         res.redirect("/login");
+      }
+    });
+  }))
+
+} catch(error) {
+  console.log("Error " , error);
+}
 }
 
 

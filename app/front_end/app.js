@@ -6,15 +6,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dbConfig = require('../db.js');
 var genunid = require('./genunid.js');
-var flash = require('connect-flash');
-
 var mongoose = require('mongoose');
 
-var expressSession = require('express-session');
-const MongoStore = require('connect-mongo')(expressSession);
-var passport = require('passport'),
-webpassport = new passport.Passport();
-require("./passport.js")(webpassport);
+// var flash = require('connect-flash');
+// var expressSession = require('express-session');
+// const MongoStore = require('connect-mongo')(expressSession);
+// var passport = require('passport'),
+// webpassport = new passport.Passport();
+// require("./passport.js")(webpassport);
+
 mongoose.Promise = global.Promise;
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -26,7 +26,7 @@ mongoose.connect(dbConfig.url,dbConfig.options)
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
-var authRouter = require('./routes/auth')(webpassport);
+var authRouter = require('./routes/auth')
 
 var app = express();
 var compression = require('compression')
@@ -79,21 +79,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.disable('x-powered-by')
-app.use(expressSession({
-  name: 'UserSesson',
-  secret: "CBFCBADB97A4DB6F" ,
-  store:new MongoStore({
-      mongooseConnection: mongoose.connection,
-      collection: 'front_session' //default - sessions
-  }),
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 600000,secure: false },
-  rolling: true
-}));
-app.use(flash());
-app.use(webpassport.initialize({ userProperty: "User" }));
-app.use(webpassport.session());
+// app.use(expressSession({
+//   name: 'UserSesson',
+//   secret: "CBFCBADB97A4DB6F" ,
+//   store:new MongoStore({
+//       mongooseConnection: mongoose.connection,
+//       collection: 'front_session' //default - sessions
+//   }),
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { maxAge: 600000,secure: false },
+//   rolling: true
+// }));
+// app.use(flash());
+// app.use(webpassport.initialize({ userProperty: "User" }));
+// app.use(webpassport.session());
 if (app.get('env') == 'production') {
   // app.use(logger('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: __dirname + '/../morgan.log' }));
 } else {
