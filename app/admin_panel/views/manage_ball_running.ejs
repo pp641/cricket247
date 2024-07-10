@@ -43,6 +43,9 @@
         }
     </style>
 </head>
+<script>
+    const host_ip = '103.27.232.213'
+</script>
 <body>
 <div class="loader" id="loading"></div>
 <!--Wrapper Start-->
@@ -503,8 +506,13 @@
         }
 
         function speak(msg) {
-            $.get('/api/cricket_audio/' + msg + '/' + match_id, function () {});
-        }
+fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
+  .then(response => response.json()) 
+  .then(data => {
+    console.log(data); 
+  })
+  .catch((error) => console.log('Error fetching data:', error));
+}
 
         function custom_result(id, inp, e, type) {
             var enterKey = 13;
@@ -542,31 +550,26 @@
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
 
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                     } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {
-                        });
+                       fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
                 $("#loading").hide();
@@ -594,31 +597,26 @@
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
 
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                 } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {
-                        });
+                       fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
                 $("#loading").hide();
@@ -644,26 +642,26 @@
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                 } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {});
+                        fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
                 $("#loading").hide();

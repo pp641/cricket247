@@ -9,7 +9,7 @@ const loguser = require("../models/admin_session.js").front_session;
 const common = require("../common.js");
 const { route } = require("./auth.js");
 const loggedin = function (req, res, next) {
-  const session_id = req.cookies.session_id;
+  const session_id = req.cookies.session_id_admin;
   loguser.find({ session_id: session_id }).then(async (data, error) => {
     if(!data.length){
       res.redirect("/admin_panel/login");

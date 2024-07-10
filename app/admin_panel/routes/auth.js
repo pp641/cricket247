@@ -117,7 +117,7 @@ const { v4: uuidv4 } = require('uuid');
       await loguser.deleteOne({ user_id: user._id });
       }
       await new loguser({ session_id: sessionId, user_id: user._id, token }).save();
-      res.cookie('session_id', sessionId, { httpOnly: true, maxAge: 3600000 });
+      res.cookie('session_id_admin', sessionId, { httpOnly: true, maxAge: 3600000 });
       res.redirect('/admin_panel/');
     } catch (error) {
       console.error('Error during authentication:', error);
