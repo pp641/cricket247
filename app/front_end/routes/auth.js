@@ -33,7 +33,7 @@ router.post("/login" , async (req, res)=>{
       console.log("getting older" , old_session)
       await loguser.deleteMany({ usr_id: user._id });
       await new loguser({ session_id: sessionId, usr_id: user._id, token }).save();
-      res.cookie('session_id', sessionId, { httpOnly: true, maxAge: 3600000 });
+      res.cookie('session_id_user', sessionId, { httpOnly: true, maxAge: 3600000 });
       res.redirect('/');
     } catch (error) {
       console.error('Error during authentication:', error);

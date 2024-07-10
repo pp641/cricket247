@@ -8,7 +8,7 @@ var User = require('../models/userlogin.js').userlog;
 const common = require('../common.js');
 const loggedin =  async function(req,res,next){
 try {
-  const session_id = req.cookies.session_id;
+  const session_id = req.cookies.session_id_user;
   console.log("Getting session", session_id)
   await usrlog_session.find({session_id: session_id}).then((async (data,error)=>{
     console.log("GETTING", data, error)
