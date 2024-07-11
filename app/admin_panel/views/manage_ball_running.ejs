@@ -270,29 +270,31 @@
 
     <script>
 
-
-
-        const match_id = '<%= match_id %>';
+            const match_id = '<%= match_id %>';
             const muteButton = document.getElementById("myButton");
-            let clicked = false;
-            document.getElementById("myButton").addEventListener('DOMContentLoaded', async()=>{
-            let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
-                    let is_muted = result.matchdetails.muted
-                    muteButton.style.backgroundColor = is_muted ? "red" : "blue";
-                    muteButton.textContent = is_muted ? "Mute" : "Unmute"
-                })
+        document.addEventListener('DOMContentLoaded', async()=>{
+            console.log("im loaded")
+           await $.get(`/admin_panel/get_game_details/${match_id}`).then((result)=>{
+                console.log("got result data", result);
+                let resultdata = result.matchdetails;
+                let is_muted = result.matchdetails.muted
+                muteButton.style.backgroundColor = !is_muted ? "red" : "blue";
+                muteButton.textContent = !is_muted ? "Mute" : "Unmute"
+            })
+})
 
             muteButton.addEventListener("click", async function() {
-                    let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
-                    let is_muted = result.matchdetails.muted
-                    clicked = !is_muted; 
-                    muteButton.style.backgroundColor = clicked ? "red" : "blue";
-                    muteButton.textContent = clicked ? "Mute" : "Unmute"
-                    $.post('/admin_panel/update_mute_status',{clicked : clicked, match_id : match_id})
-                    .then((res) => {
-                        console.log("gettimg latest", res);                        
+                    await $.get(`/admin_panel/get_game_details/${match_id}`)
+                    .then(async (result) => {
+                        let is_muted = result.matchdetails.muted
+                        let clicked  = !is_muted
+                        console.log("Getting first" , result.matchdetails)
+                       await $.post('/admin_panel/update_mute_status',{clicked : clicked, match_id : match_id})
+                        .then((res) => {
+                            console.log("gettimg latest", res); 
+                            window.location.reload();
+                        })
                     })
-                    
                  });
 
         function getBallRunning(match_id) {
