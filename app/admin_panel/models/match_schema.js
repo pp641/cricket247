@@ -177,6 +177,10 @@ const generated_match = new schema({
         type: Date, 
         required: true, 
         default: Date.now 
+    },
+    muted : {
+        type : Boolean , 
+        default : false
     }
 });
 

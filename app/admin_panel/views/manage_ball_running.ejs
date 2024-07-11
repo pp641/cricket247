@@ -41,6 +41,12 @@
         .ball_action{
             display: inline;
         }
+        #myButton {
+  color: white;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+}
     </style>
 </head>
 <script>
@@ -160,6 +166,8 @@
                                                                            onclick="resetballRunning()">Reset</a></li>
                                 <li role="presentation" class="primary"><a href="javascript:void(0)" data-toggle="modal"
                                                                            data-target="#overScore">Over Score</a></li>
+                             <li ><a  id="myButton" >Mute</a></li> 
+                                                                            
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -192,7 +200,7 @@
                                                 <th class='text '>Ball Number</th>
                                                 <th class='text '>Result</th>
                                                 <th class='text '>Edit Result</th>
-                                                <th class='text '>Current Status</th>
+                                                <th class='text '>Current Statussss</th>
                                             </tr>
                                             </thead>
                                             <tbody id="showBallrunning2">
@@ -261,7 +269,31 @@
     <script src="/admin_panel/plugins/custom.js"></script>
 
     <script>
+
+
+
         const match_id = '<%= match_id %>';
+            const muteButton = document.getElementById("myButton");
+            let clicked = false;
+            document.getElementById("myButton").addEventListener('DOMContentLoaded', async()=>{
+            let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+                    let is_muted = result.matchdetails.muted
+                    muteButton.style.backgroundColor = is_muted ? "red" : "blue";
+                    muteButton.textContent = is_muted ? "Mute" : "Unmute"
+                })
+
+            muteButton.addEventListener("click", async function() {
+                    let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+                    let is_muted = result.matchdetails.muted
+                    clicked = !is_muted; 
+                    muteButton.style.backgroundColor = clicked ? "red" : "blue";
+                    muteButton.textContent = clicked ? "Mute" : "Unmute"
+                    $.post('/admin_panel/update_mute_status',{clicked : clicked, match_id : match_id})
+                    .then((res) => {
+                        console.log("gettimg latest", res);                        
+                    })
+                    
+                 });
 
         function getBallRunning(match_id) {
             $.post('/admin_panel/api/getBallRunning', {match_id: match_id, type: "0"})
@@ -365,7 +397,7 @@
                         + '<button onclick="update_result(\'' + row._id + '\',1, 5,\'' + value + '\')" class="btn btn-danger" >Hide</button>'
                 }
 
-                layout += '<button onclick="update_result(\'' + row._id + '\',10, 10,0)" class="btn btn-danger" >Complete Ball</button>'
+                layout += '<button onclick="update_result(\'' + row._id + '\',10, 10,0)" class="btn btn-danger" >Complete Ballssssss</button>'
                     + '</td>'
                     + '</tr>';
             } else {
@@ -535,6 +567,8 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
         }
 
         function update_result(id, value, type, msg) {
+            console.log("i Hva been called")
+        
             $("#loading").show();
             $("#col" + id).html('');
             $.post('/admin_panel/api/updateball_running', {
@@ -545,7 +579,12 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
             .then(function (data) {
                 return JSON.parse(JSON.stringify(data));
             })
-            .done(function (rec_data) {
+            .done(async function (rec_data) {
+                 let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+                 let is_muted = result.matchdetails.muted
+                 console.log("what getting", is_muted)
+              if(is_muted === false){   
+
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
@@ -572,6 +611,9 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
                        fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
+            }
+            
+
                 $("#loading").hide();
                 getBallRunning(match_id);
                 

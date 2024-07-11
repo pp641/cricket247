@@ -111,6 +111,12 @@ router.get(
   ballRunningController.manage_ball_running
 );
 
+router.get("/get_game_details/:match_id", loggedin , ballRunningController.get_game_details);
+router.post("/update_mute_status", loggedin , ballRunningController.update_mute_status);
+
+
+
+
 //Delete
 router.get("/delete_gen/:gen_id", loggedin, matchController.delete_gen);
 router.get(
