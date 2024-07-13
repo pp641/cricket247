@@ -54,10 +54,14 @@ router.get('/login/failure', function(req, res, next) {
   res.render('login',{Message:message});
 });
 
-router.get('/logout',function(req,res,next){
-  common.removeValue(usrlog_session,{usr_id : req.User._id});
-  req.logout();
-  res.redirect('/');
+router.get("/logout", function (req, res, next) {
+    const cookies = Object.keys(req.cookies);
+    cookies.forEach(cookieName => {
+      if(cookieName === 'session_id_user'){
+          res.clearCookie(cookieName);
+      }
+    });
+  res.redirect('/login');
 });
 
 
