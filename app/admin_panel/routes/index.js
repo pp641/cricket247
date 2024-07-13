@@ -53,7 +53,9 @@ router.get("/signup", function (req, res, next) {
 router.get("/logout", function (req, res, next) {
   const cookies = Object.keys(req.cookies);
   cookies.forEach(cookieName => {
-    res.clearCookie(cookieName);
+    if(cookieName === 'session_id_admin'){
+        res.clearCookie(cookieName);
+    }
   });
   res.redirect("/admin_panel/");
 });
