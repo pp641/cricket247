@@ -1,7 +1,6 @@
 const createError = require('http-errors');
 const http = require('http')
 var debug = require('debug')('temp:server');
-
 const express = require('express');
 var app = express();
 const cors = require('cors');
@@ -10,7 +9,7 @@ const path = require('path');
 const cluster = require('node:cluster');
 const dbConfig = require('../db');
 const cookieParser = require('cookie-parser');
-const numCPUs = require('node:os').availableParallelism();
+const numCPUs = require('os').cpus().length
 const process = require('node:process');
 const mongoose = require('mongoose')
 
@@ -35,7 +34,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
- // mongoose library
 
 app.use(cookieParser());
 app.use(express.json());
@@ -65,7 +63,6 @@ app.use(function(req, res, next){
   res.io = io;
   next();
 });
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.disable('x-powered-by')
