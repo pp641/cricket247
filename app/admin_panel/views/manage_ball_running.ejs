@@ -24,7 +24,9 @@
             background-color: #5cb85c !important;
             border-color: #4cae4c !important;
         }
-
+        .perform3{
+            display: inline-block;
+        }
         .primary:hover > a {
             color: #fff !important;
             background-color: #449d44 !important;
@@ -61,6 +63,7 @@
     <div class="news-section-wrapper news-gallery no-margin">
         <div class="container-fluid">
             <div class="row">
+
                 <div class="modal fade" id="deleteConfirmationBall" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationBallLabel" aria-hidden="true">
                     <div class="modal-dialog modal-top" role="document">
                       <div class="modal-content">
@@ -528,7 +531,7 @@
                     + '<button onclick="update_result2(\'' + row._id + '\',1, 4)" class="btn btn-warning">Third Umpire</button>'
                     + '<button onclick="update_result2(\'' + row._id + '\',2, 4)" class="btn btn-warning">Not Out</button>'
                     + '<button onclick="update_result2(\'' + row._id + '\',3, 4)" class="btn btn-danger">Out</button>'
-                    + '<button onclick="delete_ball2(\'' + row._id + '\')" class="btn btn-danger">Delete</button>'
+                    + '<button onclick="delete_ball2(\'' + row._id + '\')" class="btn btn-danger perform3">Delete</button>'
                     + '</td>'
                     + '</tr>';
             }
@@ -539,13 +542,20 @@
             getBallRunning2(match_id);
         }
 
-        function speak(msg) {
-fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
-  .then(response => response.json()) 
-  .then(data => {
-    console.log(data); 
+
+              
+
+async function speak(msg) {
+let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+let is_muted = result.matchdetails.muted
+if(is_muted === false){   
+    await fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
+    .then(response => response.json()) 
+    .then(data => {
+    console.log("is it callled", data); 
   })
   .catch((error) => console.log('Error fetching data:', error));
+  }
 }
 
         function custom_result(id, inp, e, type) {
@@ -682,7 +692,12 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
             .then(function (data) {
                 return JSON.parse(JSON.stringify(data));
             })
-            .done(function (rec_data) {
+            .done(async function (rec_data) {
+
+                    let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+                    let is_muted = result.matchdetails.muted
+                    console.log("what getting", is_muted)
+                    if(is_muted === false){   
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
@@ -708,6 +723,7 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
                         fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
+            }
                 $("#loading").hide();
                 getBallRunning2(match_id);
                 
@@ -779,10 +795,10 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
 
         function delete_ball(ball_id) {
            
-                $("#deleteConfirmationBall").modal("show");
-                document
-                  .getElementById("confirmDeleteBall")
-                  .addEventListener("click", function confirmDeleteHandler() {
+              $("#deleteConfirmationBall").modal("show");
+              document
+                .getElementById("confirmDeleteBall")
+                .addEventListener("click", function confirmDeleteHandler() {
                     console.log("market id: " ,ball_id);
                     // delete_market(ballId);
 
@@ -793,17 +809,65 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
             .done(function () {
                 $("#loading").hide();
                 getBallRunning(match_id);
-            })
+                })
             .catch(function () {
                 $("#loading").hide();
                 getBallRunning(match_id);
-            });
+                });
 
 
-                    $("#deleteConfirmationBall").modal("hide");
-                    this.removeEventListener("click", confirmDeleteHandler);
-                  });
+                  $("#deleteConfirmationBall").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+          });
             
+            
+
+        }
+
+
+
+
+        function delete_ball2(ball_id) {
+
+            // $("#loading").show();
+            // $("#col" + ball_id).html('');
+            // $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+            // .done(function () {
+            //     $("#loading").hide();
+            //     getBallRunning2(match_id);
+            // })
+            // .catch(function () {
+            //     $("#loading").hide();
+            //     getBallRunning2(match_id);
+            // });
+
+            // document.querySelectorAll(".perform3").forEach((element)=>{
+            //     element.addEventListener("click" , () =>{
+            //         $("#deleteConfirmationBall").modal("show");
+            //     })
+            // })
+
+
+            document.querySelectorAll(".perform3").forEach((element) => {
+            element.addEventListener("click", () => {
+              $("#deleteConfirmationBall").modal("show");
+              document
+                .getElementById("confirmDeleteBall")
+                .addEventListener("click", function confirmDeleteHandler() {
+                //   let ball_id = element.dataset.marketId;
+                  console.log("pkball", ball_id)
+                  $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+                .done(function () {
+                        getBallRunning2(match_id);
+                })
+                .catch(function () {
+                     getBallRunning2(match_id);
+                     });
+                  $("#deleteConfirmationBall").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+                });
+            });
+          });
             
 
         }
@@ -811,19 +875,26 @@ fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
 
         
 
-        function delete_ball2(ball_id) {
-            $("#loading").show();
-            $("#col" + ball_id).html('');
-            $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
-            .done(function () {
-                $("#loading").hide();
-                getBallRunning2(match_id);
-            })
-            .catch(function () {
-                $("#loading").hide();
-                getBallRunning2(match_id);
-            });
-        }
+        // function delete_ball2(ball_id) {
+        //     $("#loading").show();
+        //     $("#col" + ball_id).html('');
+        //     $("#deleteConfirmationModal").modal("show");
+        //     document.getElementById("confirmDelete")
+        //     .addEventListener("click" , function confirmDeleteHandler {
+
+        // $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+        //     .done(function () {
+        //         $("#loading").hide();
+        //         getBallRunning2(match_id);
+        //     })
+        //     .catch(function () {
+        //         $("#loading").hide();
+        //         getBallRunning2(match_id);
+        //     });
+        //     $("#deleteConfirmationModal").modal("hide");
+        // this.removeEventListener("click", confirmDeleteHandler);
+        //     })
+        // }
 
         function getScore(match_id) {
             $.post('/admin_panel/api/getScore', {match_id: match_id}, function (data) {
