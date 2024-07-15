@@ -646,7 +646,10 @@ if(is_muted === false){
             .then(function (data) {
                 return JSON.parse(JSON.stringify(data));
             })
-            .done(function (rec_data) {
+            .done( async function (rec_data) {
+            let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+            let is_muted = result.matchdetails.muted
+            if(is_muted === false){   
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
@@ -673,6 +676,7 @@ if(is_muted === false){
                        fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
+            }
                 $("#loading").hide();
                 getBallRunning(match_id);
                 
