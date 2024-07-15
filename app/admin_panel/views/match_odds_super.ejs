@@ -381,7 +381,6 @@
     const url = window.location.origin.split(':')[0]+':'+window.location.origin.split(':')[1]+':3025/admin_panel';
         console.log(url);
     var socket1 = io.connect(url);
-    //var socket1 = io.connect(window.location.origin+'/admin_panel');
     var oldback_lay = [];
     var oldmatch_odds = [];
     function check_data( Old_data, New_data)

@@ -363,6 +363,24 @@ function getMatchodds_all(match_id) {
             layout_match_match_odds = data2;
             $("#matchodds").html(layout_matchlayoff + layout_match_match_odds);
             sortTable("match_odds_table");
+                        document.querySelectorAll(".perform").forEach((element) => {
+              element.addEventListener("click", () => {
+                $("#deleteConfirmationModal").modal("show");
+                document
+                  .getElementById("confirmDelete")
+                  .addEventListener("click", function confirmDeleteHandler() {
+                    let marketId = element.dataset.marketId;
+                    console.log("market id: ", marketId);
+                    delete_market(marketId);
+                    // $.post('/admin_panel/api/delete_market', { market_id: market_id }, function (data) {
+                    //     refresh_status();
+                    //     getMarketLink(match_id, user_id);
+                    // });
+                    $("#deleteConfirmationModal").modal("hide");
+                    this.removeEventListener("click", confirmDeleteHandler);
+                  });
+              });
+            });
         });
         
     });
@@ -420,11 +438,11 @@ async function getLayout_allot(array) {
         switch (row.hide_and_show_status) {
             case 0: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                 + "<button class='btn btn-sm btn-danger' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" title='Hide'><i class='fa fa-eye-slash' aria-hidden='true'></i></button>"
-                + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                + "<button data-market-id = "+row._id+" class='btn btn-sm btn-danger perform' ><i class='fa fa-trash' aria-hidden='true'></i></button>";
                 break;
             case 1: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                 + "<button class='btn btn-sm btn-success' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" ><i class='fa fa-eye' aria-hidden='true'></i></button>"
-                + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                + "<button data-market-id = "+row._id+" class='btn btn-sm btn-danger perform' ><i class='fa fa-trash' aria-hidden='true'></i></button>";
                 break;
         }
 
