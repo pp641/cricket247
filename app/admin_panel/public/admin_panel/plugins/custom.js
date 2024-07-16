@@ -1,3 +1,60 @@
+
+let oldback_lay2 = []
+let oldmatch_odds2 = []
+function check_data( Old_data, New_data)
+    {
+    
+      check = false;
+      if(Old_data.length == New_data.length)
+      {
+      // White
+        var Old_length = Old_data.length;
+        var New_length = New_data.length;
+        
+        // alert(' Old : '+ Old_length+ ' New : '+New_length)
+        if(Old_length != New_length)
+        {
+          check = true;
+        }
+        else
+        {
+        for(i = 0;i <New_length;i++)
+        {
+          // alert(old_data.matchLayJson[i]);
+          if(checkJsons(Old_data[i],New_data[i]))
+          {
+    
+          }
+          else
+          {
+            check = true;    
+          }
+        }
+        }
+      }
+      else
+      {
+        check = true;
+      }
+      return check;
+    }
+    
+    function checkJsons( otherJson, newJson)
+    {
+    
+    
+        var sameJson = true;
+        $.each(newJson, function(key, value){
+            if(otherJson[key] != newJson[key]) 
+            {
+                sameJson=false;
+            } 
+            
+        });
+        return sameJson;
+    }
+    
+
 function getMatchodds(match_id, user_id) {
     $.post('/admin_panel/api/getMatch_data', { match_id: match_id, user_id: user_id })
     .then(function (data) {
@@ -95,11 +152,11 @@ function getMatchodds_all2(match_id) {
   $.post("/admin_panel/api/getMatch_data_all", { match_id: match_id })
     .then((data) => {
       let { match_layoff, match_match_odds } = data;
-      let chk1 = check_data(oldback_lay, match_layoff);
-      let chk2 = check_data(oldmatch_odds, match_match_odds);
+      let chk1 = check_data(oldback_lay2, match_layoff);
+      let chk2 = check_data(oldmatch_odds2, match_match_odds);
       if (chk1 || chk2) {
-        oldback_lay = match_layoff;
-        oldmatch_odds = match_match_odds;
+        oldback_lay2 = match_layoff;
+        oldmatch_odds2 = match_match_odds;
         Promise.all([getLayout3(match_layoff), getLayout3(match_match_odds)])
           .then(([layout_matchlayoff, layout_match_match_odds]) => {
             $("#matchodds").html(
@@ -115,6 +172,7 @@ function getMatchodds_all2(match_id) {
                     let marketId = element.dataset.marketId;
                     console.log("market id: ", marketId);
                     delete_market(marketId);
+                    window.location.reload();
                     $("#deleteConfirmationModal").modal("hide");
                     this.removeEventListener("click", confirmDeleteHandler);
                   });
@@ -370,12 +428,7 @@ function getMatchodds_all(match_id) {
                   .getElementById("confirmDelete")
                   .addEventListener("click", function confirmDeleteHandler() {
                     let marketId = element.dataset.marketId;
-                    console.log("market id: ", marketId);
-                    delete_market(marketId);
-                    // $.post('/admin_panel/api/delete_market', { market_id: market_id }, function (data) {
-                    //     refresh_status();
-                    //     getMarketLink(match_id, user_id);
-                    // });
+                    console.log("market idsss: ", marketId);
                     $("#deleteConfirmationModal").modal("hide");
                     this.removeEventListener("click", confirmDeleteHandler);
                   });
@@ -503,6 +556,7 @@ function delete_market(market_id) {
         $.post('/admin_panel/api/delete_market', { market_id: market_id }, function (data) {
             refresh_status();
             getMarketLink(match_id, user_id);
+            window.location.reload();
         });
 }
 
