@@ -1,6 +1,6 @@
 const cluster = require('node:cluster');
 const process = require('node:process');
-const numCPUs = require('os').availableParallelism()
+const numCPUs = require('os').cpus.length
 
 if (cluster.isPrimary) {
   console.log(`Primary ${process.pid} is running`);

@@ -9,7 +9,7 @@ const path = require('path');
 const cluster = require('node:cluster');
 const dbConfig = require('../db');
 const cookieParser = require('cookie-parser');
-const numCPUs = require('node:os').availableParallelism();
+const numCPUs = require('node:os').cpus.length
 const process = require('node:process');
 const mongoose = require('mongoose')
 
