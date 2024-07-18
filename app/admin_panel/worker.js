@@ -1,18 +1,18 @@
 const createError = require('http-errors');
 const http = require('http')
 var debug = require('debug')('temp:server');
+
 const express = require('express');
 var app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cluster = require('node:cluster');
 const dbConfig = require('../db');
 const cookieParser = require('cookie-parser');
 const numCPUs = require('node:os').availableParallelism();
 const process = require('node:process');
+const cluster = require('node:cluster')
 const mongoose = require('mongoose')
-
 async function mongooseConnection(){
   await mongoose.set('useNewUrlParser', true);
   await mongoose.set('useFindAndModify', false);
@@ -22,20 +22,12 @@ async function mongooseConnection(){
     .then(() =>  console.log('connection succesful'))
     .catch((err) => console.error(err));
   }
-
-  
-
 const corsOptions = {
   origin: '*', // Allow all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
   allowedHeaders: 'Content-Type,Authorization', 
 };
-
 app.use(cors(corsOptions));
-
-
- // mongoose library
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -43,21 +35,29 @@ app.use(bodyParser.json());
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 var authRouter = require('./routes/auth');
-
-
 var compression = require('compression')
-
-
 app.use(compression())
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
 app.io = io;
-io.on( "connection", function()
+io.on( "connection", function(socket)
 {
+
+  console.log( "A user connected" );
+  socket.on("error", function(error){
+      console.log("got errror", error)
+    })
+    socket.on("disconnect", function(){
+      console.log("got errror disconnect")
+      })
+    socket.on("refresh_status", function(){
+      console.log("refresh status called")
+    });
+    socket.on("refresh_showhide", function(){
+      console.log("refresh showhide called")
+    });
 });
 
-io.on("refresh_status", function(){});
-io.on("refresh_showhide", function(){});
 
 app.use(function(req, res, next){
   res.io = io;
@@ -126,75 +126,9 @@ app.use(function(req, res, next) {
    next(createError(404));
 
 });
-
-if (cluster.isPrimary) {
-  console.log(`Primary ${process.pid} is running`);
-
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-  });
-}else{
-
   mongooseConnection();
-  var port = normalizePort('3025');
-  app.set('port', port);
+  var port = 3025
   var server = http.createServer(app);
-  server.listen(port);
+  server.listen(port)
   app.io.attach(server);
-  server.on('error', onError);
-  server.on('listening', onListening);
-  console.log(`Worker ${process.pid} started`);
-}
-
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+  console.log(`Worker ${process.pid} started on port ${port}`);

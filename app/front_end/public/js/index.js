@@ -1,30 +1,58 @@
-var socket1 = io.connect(window.location.origin + "/");
-socket1.on("error", (t) => {}),
+// var socket1 = io.connect(window.location.origin + "/");
+// socket1.on("error", (t) => {}),
 
-  socket1.on("disconnect", () => {
-    console.log("disconnect")
-  }),
-  socket1.on("reconnect", (t) => {
-    console.log("Reconnect")
-  }),
-  socket1.on("reconnect_attempt", (t) => {
-    console.log("Reconnect attemt",t)
-  }),
-  socket1.on("reconnecting", (t) => {
-    console.log("Reconnecting")
-  }),
-  socket1.on("reconnect_error", (t) => {
-    console.log("Reconnect error", ) 
-  }),
-  socket1.on("reconnect_failed", () => {
-    console.log("reconnect failed")
-  }),
-  socket1.on("connect_error", () => {
-    console.log("connect error")
-  }),
+//   socket1.on("disconnect", () => {
+//     console.log("disconnect")
+//   }),
+//   socket1.on("reconnect", (t) => {
+//     console.log("Reconnect")
+//   }),
+//   socket1.on("reconnect_attempt", (t) => {
+//     console.log("Reconnect attemt",t)
+//   }),
+//   socket1.on("reconnecting", (t) => {
+//     console.log("Reconnecting")
+//   }),
+//   socket1.on("reconnect_error", (t) => {
+//     console.log("Reconnect error", ) 
+//   }),
+//   socket1.on("reconnect_failed", () => {
+//     console.log("reconnect failed")
+//   }),
+//   socket1.on("connect_error", () => {
+//     console.log("connect error")
+//   }),
 
 
-  socket1.on(match_id, function (t) {
+
+  const socket = io({
+    reconnection: true, // Enable reconnection
+    reconnectionDelay: 1000, // Delay between retries (1 second)
+    reconnectionDelayMax: 5000, // Maximum delay between retries (5 seconds)
+    reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
+  });
+  socket.connect(window.location.origin + '/')
+  
+  socket.on("connection", ()=>{
+    console.log("connected to socket")
+  })
+  socket.on('connect_error', (err) => {
+    console.error('Connection error:', err);
+  });
+  
+  socket.on('reconnect', () => {
+    console.log('Reconnected to server');
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('Disconnected from server');
+  });
+  
+
+
+
+
+  socket.on(match_id, function (t) {
     console.log("okdkd");
     try {
       let e = JSON.parse(t);

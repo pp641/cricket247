@@ -56,6 +56,7 @@ function check_data( Old_data, New_data)
     
 
 function getMatchodds(match_id, user_id) {
+    try {
     $.post('/admin_panel/api/getMatch_data', { match_id: match_id, user_id: user_id })
     .then(function (data) {
 
@@ -102,8 +103,13 @@ function getMatchodds(match_id, user_id) {
             });
           });
     });
+
+    }catch(error){
+        console.log("Error", error)
+    }
 }
 async function gettransferMatchodds(match_id, user_id, index) {
+    try {
     let lay = "";
     await $.post('/admin_panel/api/getMatch_data', { match_id: match_id, user_id: user_id }, async function (data) {
 
@@ -141,6 +147,9 @@ async function gettransferMatchodds(match_id, user_id, index) {
 
     });
     return lay;
+} catch(error){
+    console.log("Error" , error)
+}
 }
 
 
@@ -148,6 +157,8 @@ async function gettransferMatchodds(match_id, user_id, index) {
 
 
 function getMatchodds_all2(match_id) {
+    try 
+    {
   const startTiming = performance.now();
   $.post("/admin_panel/api/getMatch_data_all", { match_id: match_id })
     .then((data) => {
@@ -191,6 +202,10 @@ function getMatchodds_all2(match_id) {
   const endTiming = performance.now();
   const totalTiming = endTiming - startTiming;
   console.log(`Total timing: ${totalTiming}`);
+} catch(error){
+    console.log("Error", error);
+}
+
 }
 
  
@@ -198,6 +213,9 @@ function getMatchodds_all2(match_id) {
 
 
 function getLayout(array) {
+
+    try 
+    {
     var match_row = '';
     array.forEach(row => {
         if (row) {
@@ -277,6 +295,9 @@ function getLayout(array) {
         }
     });
     return match_row;
+} catch(error){
+    console.log("Error", error);
+}
 
 }
 
@@ -317,6 +338,8 @@ function sortTable(table_id) {
     }
 }
 async function getLayout3(array) {
+
+    try {
     var match_row = '';
     let users = await allotuser();
     array.forEach(row => {
@@ -399,10 +422,14 @@ async function getLayout3(array) {
             + "</tr>"
     });
     return match_row;
+} catch(error){
+    console.log("Error", error)
+}
 
 }
 
 function getMatchodds_all(match_id) {
+    try {
     console.log("being called here 1")
     $.post('/admin_panel/api/getMatch_data_all', { match_id: match_id })
     .then(function (data) {
@@ -437,6 +464,9 @@ function getMatchodds_all(match_id) {
         });
         
     });
+}catch(error){
+    console.log("Error", error);
+}
 }
 
 function allot_list(array, alloted_user, market_id) {
@@ -461,6 +491,8 @@ function allot_selected_users(market_id, users) {
     });
 }
 async function getLayout_allot(array) {
+
+    try {
     var match_row = '';
     let users = await allotuser();
     array.forEach(row => {
@@ -517,6 +549,9 @@ async function getLayout_allot(array) {
     });
 
     return match_row;
+}catch(error){
+    console.log("Error", error);
+}
 }
 
 async function allotuser() {
@@ -538,6 +573,7 @@ async function allotuser() {
 }
 
 function incpressed(market_id, type) {
+    try {
     $.post('/admin_panel/api/incData', { market_id: market_id, type: type }, function (data) {
 
         let match_data_row = JSON.parse(JSON.stringify(data));
@@ -550,6 +586,9 @@ function incpressed(market_id, type) {
         $('.updateYes' + market_id).html(match_yes);
         $('.updateNo' + market_id).html(match_no);
     });
+} catch(error){
+    console.log("Error " , error);
+}
 }
 
 function delete_market(market_id) {
@@ -581,6 +620,8 @@ function descpressed(market_id, type) {
 }
 
 function updateStatus(market_id, type) {
+
+    try {
     $.post('/admin_panel/api/updateStatus', { market_id: market_id, type: type }, function (data) {
         let match_data_row = JSON.parse(JSON.stringify(data));
         let status_btn = "";
@@ -604,6 +645,12 @@ function updateStatus(market_id, type) {
         $('.btnChange' + market_id).html(status_btn);
         // $('.updateNo'+market_id).html(match_data_row.match_no);
     });
+
+}
+catch(error){
+    console.log("Error", error);
+}
+
 }
 
 function showhide(market_id, type) {

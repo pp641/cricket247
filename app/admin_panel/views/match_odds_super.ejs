@@ -380,7 +380,30 @@
     <script>
     const url = window.location.origin.split(':')[0]+':'+window.location.origin.split(':')[1]+':3025/admin_panel';
         console.log(url);
-    var socket1 = io.connect(url);
+const socket = io({
+  reconnection: true, // Enable reconnection
+  reconnectionDelay: 1000, // Delay between retries (1 second)
+  reconnectionDelayMax: 5000, // Maximum delay between retries (5 seconds)
+  reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
+});
+socket.connect(url)
+
+socket.on("connection", ()=>{
+  console.log("connected to socket")
+})
+
+socket.on('connect_error', (err) => {
+  console.error('Connection error:', err);
+});
+
+socket.on('reconnect', () => {
+  console.log('Reconnected to server');
+});
+
+socket.on('disconnect', () => {
+  console.log('Disconnected from server');
+});
+
     var oldback_lay = [];
     var oldmatch_odds = [];
     function check_data( Old_data, New_data)
