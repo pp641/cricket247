@@ -6,8 +6,20 @@ var socket1 = io({
   reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
 });
 
-socket1.connect(window.location.origin + "/");
-socket1.on("error", (t) => {}),
+
+
+
+socket1.connect(window.location.origin + "/", {
+  "transports": ['websocket']
+});
+
+
+  socket1.on("connection" , (obj)=>{
+    console.log("connect", obj)
+  })
+  socket1.on("error", (t) => {
+    console.log("Error", t)
+  }),
 
   socket1.on("disconnect", () => {
     console.log("disconnect")

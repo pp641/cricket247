@@ -409,7 +409,9 @@ const socket = io({
   reconnectionDelayMax: 5000, // Maximum delay between retries (5 seconds)
   reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
 });
-socket.connect(window.location.origin + '/')
+socket.connect(window.location.origin + '/' ,{
+  "transports": ['websocket'],
+})
 
 socket.on("connection", ()=>{
   console.log("connected to socket")
