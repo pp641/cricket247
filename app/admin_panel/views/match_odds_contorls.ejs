@@ -524,6 +524,23 @@ function getMarketLink(t, a) {
           incdecDataMarketLink(t.attr("data-id"), t.attr("data-action-type"));
         }),
 
+        document.querySelectorAll(".perform").forEach((element) => {
+            element.addEventListener("click", () => {
+              $("#deleteConfirmationModal").modal("show");
+              document
+                .getElementById("confirmDelete")
+                .addEventListener("click", function confirmDeleteHandler() {
+                  let marketId = element.dataset.id
+                  // let actionType = element.dataset.actionType
+                  // console.log("market id: ", marketId);
+                  // incdecDataMarketLink(marketId, actionType);
+                  delete_market(marketId);
+                  $("#deleteConfirmationModal").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+                });
+            });
+          });
+
         document.querySelectorAll(".perform_delete").forEach((element) => {
             element.addEventListener("click", () => {
               $("#deleteConfirmationModal").modal("show");
@@ -652,10 +669,15 @@ $(function () {
             user_id: user_id,
             market_list: JSON.stringify(a),
           },
-          function (t) {
-            alert("Linked"),
-              $("#marketLinkModal").modal(),
-              getMarketLink(match_id, user_id);
+         async function (t) {
+          try{
+              alert("Linked"),
+              await $("#marketLinkModal").modal(),
+              await getMarketLink(match_id, user_id);
+              window.location.reload()
+            }catch(error){
+              console.log("Error", error)
+            }
           }
         );
       else alert("No Market Selected");
