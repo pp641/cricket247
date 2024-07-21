@@ -210,6 +210,18 @@ function getMatchodds_all2(match_id) {
 
  
 
+function performSomething(id){
+    console.log("okdodkolkmkfkdk", id)
+    $("#deleteConfirmationModal").modal("show");
+    document
+      .getElementById("confirmDelete")
+      .addEventListener("click", function confirmDeleteHandler() {
+        delete_market(id);
+        window.location.reload();
+        $("#deleteConfirmationModal").modal("hide");
+        this.removeEventListener("click", confirmDeleteHandler);
+      });
+}
 
 
 function getLayout(array) {
@@ -263,11 +275,11 @@ function getLayout(array) {
             switch (row.hide_and_show_status) {
                 case 0: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                     + "<button class='btn btn-sm btn-danger' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" title='Hide'><i class='fa fa-eye-slash' aria-hidden='true'></i></button>"
-                    + "<button class='btn btn-sm btn-danger perform' data-market-id='"+row._id+"'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                    + "<button class='btn btn-sm btn-danger' onclick=\"performSomething('" + row._id + "')\" data-market-id='"+row._id+"'><i class='fa fa-trash' aria-hidden='true'></i></button>";
                     break;
                 case 1: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                     + "<button class='btn btn-sm btn-success' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" ><i class='fa fa-eye' aria-hidden='true'></i></button>"
-                    + "<button class='btn btn-sm btn-danger perform' data-market-id='"+row._id+"'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                    + "<button class='btn btn-sm btn-danger' onclick=\"performSomething('" + row._id + "')\" data-market-id='"+row._id+"'><i class='fa fa-trash' aria-hidden='true'></i></button>";
                     break;
             }
 
