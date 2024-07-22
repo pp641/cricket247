@@ -2,7 +2,7 @@ const cluster = require('node:cluster');
 const process = require('node:process');
 const redisAdapter = require("socket.io-redis");
 const { setupMaster, setupWorker } = require("@socket.io/sticky");
-const numCPUs = require('os').availableParallelism()
+const numCPUs = require('os').cpus().length
 console.log("okd", numCPUs)
 if (cluster.isPrimary) {
   console.log(`Primary ${process.pid} is running`);
