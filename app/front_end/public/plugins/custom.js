@@ -428,13 +428,18 @@ function updateLayOdds(form){
        return false;
 }
 
-function updateAllStatus(type){
-    let match_id_val = match_id;
-    $.post('/admin_panel/api/updateStatusAll',{ match_id : match_id_val, type : type },function(data){
+async function updateAllStatus(type){
+    try{
+        let match_id_val = match_id;
+        await $.post('/admin_panel/api/updateStatusAll',{ match_id : match_id_val, type : type }).then(()=>{
+                $.get('/admin_panel/api/refresh_status');
+            }).catch(error =>{
+                    $.get('/admin_panel/api/refresh_status');
+            })
+}catch(error){
+    console.log("Error", error);
+    }
 
-            $.get('/admin_panel/api/refresh_status');
-        });
-    
 }
 
 function updatehideshow(type){
@@ -476,7 +481,6 @@ function refresh_status(){
             let status_btn = "";
             let market_id = row._id;
         switch(row.active_status){
-            
             case 0:string_status = 'Active'
             status_btn = "<button class='btn btn-danger' title='Suspend' onClick=\"updateStatus('"+row._id+"',1)\">X</button>"
             +"<button class='btn btn-danger' title='Ball Running' onClick=\"updateStatus('"+row._id+"',2)\">O</button>";
