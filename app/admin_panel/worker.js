@@ -41,7 +41,7 @@ var compression = require('compression')
 app.use(compression())
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
-io.adapter(redisAdapter({host: "localhost" , port : 6379}))
+io.adapter(redisAdapter({host: "103.27.232.213" , port : 6379}))
 app.io = io;
 io.on( "connection", function(socket)
 {
