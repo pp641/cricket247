@@ -360,7 +360,9 @@ var socket1 = io({
   reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
 });
 
-socket1.connect(window.location.origin + "/");
+socket1.connect(window.location.origin + "/" ,  {
+      transports: ['websocket',  'polling']
+  });
 function refresh() {
   getMatchodds(match_id, user_id), transfer(), getMarketLink(match_id, user_id);
 }

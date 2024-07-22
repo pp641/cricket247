@@ -9,8 +9,8 @@ var socket1 = io({
 
 
 
-socket1.connect(window.location.origin + "/", {
-  "transports": ['websocket']
+socket1.connect(window.location.origin + "/",  {
+  transports: ['websocket',  'polling']
 });
 
 
