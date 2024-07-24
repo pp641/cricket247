@@ -437,36 +437,36 @@ function addMarketNew(e) {
     !1
   );
 }
-socket1.on("error", (e) => {
+socket.on("error", (e) => {
   console.log("Error connecting to server", e);
 }),
-  socket1.on("disconnect", () => {
+  socket.on("disconnect", () => {
     console.log("Disconnect from server");
   }),
-  socket1.on("reconnect", (e) => {
+  socket.on("reconnect", (e) => {
     console.log("Reconnected to server", e);
   }),
-  socket1.on("reconnect_attempt", () => {
+  socket.on("reconnect_attempt", () => {
     console.log("Reconnect Attempt");
   }),
-  socket1.on("reconnecting", (e) => {
+  socket.on("reconnecting", (e) => {
     console.log("Reconnecting to server", e);
   }),
-  socket1.on("reconnect_error", (e) => {
+  socket.on("reconnect_error", (e) => {
     console.log("Reconnect Error", e);
   }),
-  socket1.on("reconnect_failed", () => {
+  socket.on("reconnect_failed", () => {
     console.log("Reconnect failed");
   }),
-  socket1.on("connect_error", () => {
+  socket.on("connect_error", () => {
     console.log("connect_error");
   }),
-  socket1.on("refresh_status", function () {
+  socket.on("refresh_status", function () {
     console.log("ok2");
     getMatchodds_all(match_id);
     getMatchodds_all2(match_id);
   }),
-  socket1.on("refresh_showhide", function () {
+  socket.on("refresh_showhide", function () {
     getMatchodds_all(match_id);
   }),
   getMatchodds_all2(match_id);
