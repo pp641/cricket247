@@ -445,7 +445,6 @@ function getMatchodds_all(match_id) {
     console.log("being called here 1")
     $.post('/admin_panel/api/getMatch_data_all', { match_id: match_id })
     .then(function (data) {
-
         let obj = JSON.parse(JSON.stringify(data));
         let matchlayoff = obj.match_layoff;
         let match_match_odds = obj.match_match_odds;
@@ -460,7 +459,7 @@ function getMatchodds_all(match_id) {
             layout_match_match_odds = data2;
             $("#matchodds").html(layout_matchlayoff + layout_match_match_odds);
             sortTable("match_odds_table");
-                        document.querySelectorAll(".perform").forEach((element) => {
+    document.querySelectorAll(".perform").forEach((element) => {
               element.addEventListener("click", () => {
                 $("#deleteConfirmationModal").modal("show");
                 document
@@ -468,6 +467,8 @@ function getMatchodds_all(match_id) {
                   .addEventListener("click", function confirmDeleteHandler() {
                     let marketId = element.dataset.marketId;
                     console.log("market idsss: ", marketId);
+                    delete_market(marketId);
+                    window.location.reload();
                     $("#deleteConfirmationModal").modal("hide");
                     this.removeEventListener("click", confirmDeleteHandler);
                   });
