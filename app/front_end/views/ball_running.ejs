@@ -303,7 +303,7 @@
         <!-- <script src='https://code.responsivevoice.org/responsivevoice.js'></script> -->
         <script src="https://code.responsivevoice.org/responsivevoice.js?key=DBBZIixi"></script>
         <script>
-        var socket1 = io.connect('http://cricket247online.com:5000/');
+        var socket1 = io.connect(window.location.origin + '/');
       //var socket1 = io.connect(window.location.origin+'/admin_panel');
               socket1.on('error', (err) => {
                   console.log('Error connecting to serverss', err);
