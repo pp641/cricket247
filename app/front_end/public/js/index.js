@@ -255,6 +255,13 @@ let index = (function () {
         case 1:
           (status_string = "Suspended"),
             (class_status = "text sespend-cell cell-text-color");
+            for(let i = 0; i < nonrepeatedData?.length; i++){
+              let data = nonrepeatedData[i];
+              if(data._id === e._id){
+                l = "back-update cell-text-color";
+                c = "text lay-update cell-text-color";
+              }
+            }
           if (1 == e.market_type) {
             (o = 0), (s = 0);
             e.match_yes && (o = e.match_yes.toFixed(0)),
@@ -286,6 +293,13 @@ let index = (function () {
         case 2:
           (status_string = "Ball Running"),
             (class_status = "text sespend-cell cell-text-color");
+            for(let i = 0; i < nonrepeatedData?.length; i++){
+              let data = nonrepeatedData[i];
+              if(data._id === e._id){
+                l = "back-update cell-text-color";
+                c = "text lay-update cell-text-color";
+              }
+            }
           (n = e.number_yes.toFixed(2)), (i = e.number_no.toFixed(2));
           if (1 == e.market_type) {
             (o = 0), (s = 0);
