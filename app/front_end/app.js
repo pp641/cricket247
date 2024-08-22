@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var dbConfig = require('../db.js');
+var dbConfig = require('./db.js');
 var genunid = require('./genunid.js');
 var mongoose = require('mongoose');
 

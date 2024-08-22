@@ -1,5 +1,5 @@
 
-const dbConfig =  require('../db')
+const dbConfig =  require('./db')
 const mongoose = require('mongoose');
 
 async function mongooseConnection() {
