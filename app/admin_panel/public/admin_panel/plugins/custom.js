@@ -820,10 +820,12 @@ function updateAllStatus(type) {
     let match_id_val = match_id;
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
         $.get('/admin_panel/api/refresh_status');
+        refresh_status()
         refresh_showhide();
     });
     }catch(error){
-        refresh_showhide();
+        refresh_status()
+        // refresh_showhide();
     }
 }
 
