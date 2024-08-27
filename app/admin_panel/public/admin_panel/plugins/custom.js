@@ -816,28 +816,46 @@ function updateLayOdds(form) {
 }
 
 function updateAllStatus(type) {
+    try{
     let match_id_val = match_id;
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
         $.get('/admin_panel/api/refresh_status');
+        refresh_showhide();
     });
-
+    }catch(error){
+        refresh_showhide();
+    }
 }
 
 function updatehideshow(type) {
+    try {
+    console.log("called here hereh re")
     let match_id_val = match_id;
     $.post('/admin_panel/api/updatehideshowAll', { match_id: match_id_val, type: type })
     .then(function () {
         $.get('/admin_panel/api/refresh_showhide');
+        refresh_showhide();
     });
+    }catch(error){
+        $.get('/admin_panel/api/refresh_showhide');
+        refresh_showhide()
+    }
 }
 
 async function updateAllStatus_user(type, user_id) {
+    try {
     let match_id_val = match_id;
-    await $.post('/admin_panel/api/updateStatusAll_user', { match_id: match_id_val, type: type, user_id: user_id }, function (data) {});
-}
+    await $.post('/admin_panel/api/updateStatusAll_user', { match_id: match_id_val, type: type, user_id: user_id }, function (data) {
+        refresh_showhide();
+    });
+    }catch(error){
+        refresh_showhide();
+    }  
+    }
 
 async function updatehideshow_user(type, user_id) {
     let match_id_val = match_id;
+    console.log("claled jeererjerjjre")
     await $.post('/admin_panel/api/updatehideshowAll_user', { match_id: match_id_val, type: type, user_id: user_id }, function (data) {});
 }
 
