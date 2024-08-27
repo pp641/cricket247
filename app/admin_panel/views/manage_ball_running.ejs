@@ -549,7 +549,7 @@ async function speak(msg) {
 let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
 let is_muted = result.matchdetails.muted
 if(is_muted === false){   
-    await fetch(`http://${host_ip}:8000/api/cricket_audio/${msg}/${match_id}`)
+    await fetch(`http://${host_ip}:85/api/cricket_audio/${msg}/${match_id}`)
     .then(response => response.json()) 
     .then(data => {
     console.log("is it callled", data); 
@@ -601,26 +601,26 @@ if(is_muted === false){
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
 
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                     } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                       fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
+                       fetch(`http://${host_ip}:85/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
             }
@@ -654,26 +654,26 @@ if(is_muted === false){
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
 
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                 } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                       fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
+                       fetch(`http://${host_ip}:85/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
             }
@@ -705,26 +705,26 @@ if(is_muted === false){
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            fetch(`http://${host_ip}:8000/api/cricket_audio/${rec_data.val}/${match_id}`)
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                 } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        fetch(`http://${host_ip}:8000/api/cricket_audio/${bal}/${match_id}`)
+                        fetch(`http://${host_ip}:85/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
             }
