@@ -214,7 +214,7 @@ async function getLayout_allot(array){
         if(row.market_type == 1){
             background = 'background :#333;color:#fff';
         }
-        
+
         let action_btn = '';
         switch(row.hide_and_show_status){
             case 0: action_btn = "<button class='btn btn-success' onclick=\"getModelInfo('"+row._id+"')\">Edit</button>"
@@ -428,15 +428,18 @@ function updateLayOdds(form){
        return false;
 }
 
-function updateAllStatus(type){
+ function updateAllStatus(type) {
+    try{
     let match_id_val = match_id;
-    $.post('/admin_panel/api/updateStatusAll',{ match_id : match_id_val, type : type },function(data){
-
-            $.get('/admin_panel/api/refresh_status');
-        });
-    
+    $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
+        $.get('/admin_panel/api/refresh_status');
+        refresh_showhide();
+    });
+            refresh_showhide();
+    }catch(error){
+        refresh_showhide();
+    }
 }
-
 function updatehideshow(type){
     let match_id_val = match_id;
     $.post('/admin_panel/api/updatehideshowAll',{ match_id : match_id_val, type : type },function(data){
