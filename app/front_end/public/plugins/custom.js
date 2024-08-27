@@ -428,19 +428,16 @@ function updateLayOdds(form){
        return false;
 }
 
-async function updateAllStatus(type){
+function updateAllStatus(type) {
     try{
-        console.log("Called hererhrerhe")
-        let match_id_val = match_id;
-        await $.post('/admin_panel/api/updateStatusAll',{ match_id : match_id_val, type : type }).then(()=>{
-                $.get('/admin_panel/api/refresh_status');
-            }).catch(error =>{
-                    $.get('/admin_panel/api/refresh_status');
-            })
-}catch(error){
-    console.log("Error", error);
+    let match_id_val = match_id;
+    $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
+        $.get('/admin_panel/api/refresh_status');
+        refresh_showhide();
+    });
+    }catch(error){
+        refresh_showhide();
     }
-
 }
 
 function updatehideshow(type){
