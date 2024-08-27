@@ -430,6 +430,7 @@ function updateLayOdds(form){
 
 async function updateAllStatus(type){
     try{
+        console.log("Called hererhrerhe")
         let match_id_val = match_id;
         await $.post('/admin_panel/api/updateStatusAll',{ match_id : match_id_val, type : type }).then(()=>{
                 $.get('/admin_panel/api/refresh_status');
