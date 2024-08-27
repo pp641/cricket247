@@ -7,12 +7,13 @@ services:
       dockerfile: Dockerfile
     image: pp641/admin_panel:latest
     ports:
-      - "3025:3025"
+      - "5000:5000"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     depends_on:
       - redis
+  
   redis:
     image: "redis:latest"
     ports: 

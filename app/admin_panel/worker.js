@@ -41,7 +41,6 @@ var compression = require('compression')
 app.use(compression())
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
-console.log("okdll", process.env)
 io.adapter(redisAdapter({ 
    host: process.env.REDIS_HOST || 'localhost',
   port: process.env.REDIS_PORT || 6379
@@ -134,7 +133,7 @@ app.use(function(req, res, next) {
 
 });
   mongooseConnection();
-  var port = 3025
+  var port = 5000
   var server = http.createServer(app);
   server.listen(port)
   app.io.attach(server);
