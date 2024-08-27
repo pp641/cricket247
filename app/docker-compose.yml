@@ -25,4 +25,4 @@ services:
       dockerfile: Dockerfile
     image: pp641/front_end:latest
     ports:
-      - "8000:8000"
+      - "85:85"
