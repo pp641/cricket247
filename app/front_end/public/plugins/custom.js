@@ -475,6 +475,7 @@ function refresh_showhide(){
 }
 
 function refresh_status(){
+    console.log("Called here okay")
     $.post('/admin_panel/api/getallData',{match_id : match_id, user_id : user_id},function(data){
         let mar_json = JSON.parse(JSON.stringify(data));
         mar_json.forEach(row => {

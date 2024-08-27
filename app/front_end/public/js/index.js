@@ -1,5 +1,5 @@
 
-var socket1 = io.connect(window.location.origin + "/");
+var socket1 = io.connect('http://103.73.191.38:85/');
 socket1.on("error", (t) => {}),
   socket1.on("disconnect", () => {}),
   socket1.on("reconnect", (t) => {}),
