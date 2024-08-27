@@ -3,8 +3,8 @@
   "version": "1.4.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www_frontend",
-    "test": "nodemon ./bin/www_frontend"
+    "start": "nodemon server.js",
+    "test": "nodemon server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -37,7 +37,7 @@
     "pm2": "^5.4.2",
     "redis": "^2.8.0",
     "socket.io": "^2.3.0",
-    "socket.io-redis": "^5.2.0",
+    "socket.io-redis": "^5.4.0",
     "uuid": "^3.4.0"
   }
 }

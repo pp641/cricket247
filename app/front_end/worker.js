@@ -2,16 +2,11 @@ var createError = require('http-errors');
 var cors = require('cors')
 var express = require('express');
 var path = require('path');
+const process = require('node:process');
 var cookieParser = require('cookie-parser');
+const redisAdapter = require("socket.io-redis");
 var dbConfig = require('./db.js');
 var mongoose = require('mongoose');
-
-// var flash = require('connect-flash');
-// var expressSession = require('express-session');
-// const MongoStore = require('connect-mongo')(expressSession);
-// var passport = require('passport'),
-// webpassport = new passport.Passport();
-// require("./passport.js")(webpassport);
 
 mongoose.Promise = global.Promise;
 mongoose.set('useNewUrlParser', true);
@@ -58,6 +53,10 @@ app.use(cors(corsOptions));
 
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
+io.adapter(redisAdapter({ 
+    host: process.env.REDIS_HOST || 'localhost',
+   port: process.env.REDIS_PORT || 6379
+ }))
 app.io = io;
 io.on( "connection", function()
 {
@@ -160,6 +159,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 // error handler
+
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
