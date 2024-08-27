@@ -170,4 +170,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+var port = 85
+var server = http.createServer(app);
+server.listen(port)
+app.io.attach(server);
+console.log(`Worker ${process.pid} started on port ${port}`);
