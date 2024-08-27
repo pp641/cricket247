@@ -133,7 +133,7 @@ app.use(function(req, res, next) {
 
 });
   mongooseConnection();
-  var port = 5000
+  var port = 3025
   var server = http.createServer(app);
   server.listen(port)
   app.io.attach(server);

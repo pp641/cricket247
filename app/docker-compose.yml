@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     image: pp641/admin_panel:latest
     ports:
-      - "5000:5000"
+      - "3025:3025"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
