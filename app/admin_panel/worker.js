@@ -13,7 +13,7 @@ const dbConfig = require('./db');
 const cookieParser = require('cookie-parser');
 const numCPUs = require('os').cpus().length
 const process = require('node:process');
-const cluster = require('node:cluster')
+const cluster = require('node:cluster');
 const mongoose = require('mongoose')
 async function mongooseConnection(){
   await mongoose.set('useNewUrlParser', true);
