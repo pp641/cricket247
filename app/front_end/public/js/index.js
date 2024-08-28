@@ -364,10 +364,10 @@ let index = (function () {
       }, 880),
         setInterval(function () {
           o(t);
-        }, 2000),
+        }, 950),
         setInterval(function () {
           s(t);
-        }, 2500),
+        }, 1500),
         setInterval(function () {
           r(t);
         }, 1850),
