@@ -1,4 +1,4 @@
-var socket1 = io.connect('http://103.73.191.38:85/');
+var socket1 = io.connect('http://137.59.55.98:85/');
 socket1.on('error', (err) => {
 });
 
