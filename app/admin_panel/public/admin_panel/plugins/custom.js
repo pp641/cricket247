@@ -159,6 +159,7 @@ async function gettransferMatchodds(match_id, user_id, index) {
 function getMatchodds_all2(match_id) {
     try 
     {
+        console.log("being called here again")
   const startTiming = performance.now();
   $.post("/admin_panel/api/getMatch_data_all", { match_id: match_id })
     .then((data) => {
@@ -817,21 +818,22 @@ function updateLayOdds(form) {
 
 function updateAllStatus(type) {
     try{
+        console.log("uve called 2")
     let match_id_val = match_id;
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
         $.get('/admin_panel/api/refresh_status');
         refresh_status()
         refresh_showhide();
-        // getMatchodds_all(match_id_val);
-        // getMatchodds_all2(match_id_val);
         
     });
+    $.get('/admin_panel/api/refresh_status');
+    refresh_status()
+    refresh_showhide();
+  
     }catch(error){
         let match_id_val = match_id;
         refresh_status()
-        // getMatchodds_all(match_id_val);
-        // getMatchodds_all2(match_id_val);
-        // refresh_showhide();
+        refresh_showhide();
     }
 }
 
