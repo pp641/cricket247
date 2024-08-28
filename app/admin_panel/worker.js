@@ -1,8 +1,8 @@
 const createError = require('http-errors');
 const http = require('http')
 var debug = require('debug')('temp:server');
-const redisAdapter = require("socket.io-redis");
-const { setupMaster, setupWorker } = require("@socket.io/sticky");
+// const redisAdapter = require("socket.io-redis");
+// const { setupMaster, setupWorker } = require("@socket.io/sticky");
 
 const express = require('express');
 var app = express();
@@ -41,10 +41,10 @@ var compression = require('compression')
 app.use(compression())
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
-io.adapter(redisAdapter({ 
-   host: process.env.REDIS_HOST || 'localhost',
-  port: process.env.REDIS_PORT || 6379
-}))
+// io.adapter(redisAdapter({ 
+//    host: process.env.REDIS_HOST || 'localhost',
+//   port: process.env.REDIS_PORT || 6379
+// }))
 app.io = io;
 io.on( "connection", function(socket)
 {

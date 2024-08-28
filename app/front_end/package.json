@@ -3,8 +3,8 @@
   "version": "1.4.0",
   "private": true,
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "nodemon server.js"
+    "start": "nodemon worker.js",
+    "test": "nodemon worker.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
