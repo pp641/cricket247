@@ -434,14 +434,14 @@ function updateAllStatus(type) {
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
         $.get('/admin_panel/api/refresh_status');
         refresh_showhide();
-        getMatchodds_all(match_id_val);
-        getMatchodds_all2(match_id_val);
+        // getMatchodds_all(match_id_val);
+        // getMatchodds_all2(match_id_val);
     });
     }catch(error){
         let match_id_val = match_id;
         refresh_showhide();
-        getMatchodds_all(match_id_val);
-        getMatchodds_all2(match_id_val);
+        // getMatchodds_all(match_id_val);
+        // getMatchodds_all2(match_id_val);
     }
 }
 
