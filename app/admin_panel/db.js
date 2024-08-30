@@ -1,5 +1,5 @@
 module.exports = {
-    url : 'mongodb://admin:crick525pswd@103.73.191.38:27017/cricket247online?authSource=admin',
+    url : 'mongodb://localhost:27017/test',
     options: {
         autoIndex: true,
         keepAlive: true,

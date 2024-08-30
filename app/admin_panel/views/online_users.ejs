@@ -108,7 +108,7 @@
         <%-include('inc/footer.ejs') %>
         <script>
         function getLoggedInUser(){
-            $.get('/api/getloginUser',function(data){
+            $.get('/admin_panel/api/getloginUser',function(data){
                 let jobj = JSON.parse(JSON.stringify(data))
                 let html ="";
                 jobj.forEach(row => {
