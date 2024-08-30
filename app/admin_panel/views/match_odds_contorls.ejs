@@ -360,9 +360,10 @@ var socket1 = io({
   reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
 });
 
-socket1.connect(window.location.origin + "/" ,  {
+socket1.connect('http://103.73.191.38:3025/' ,  {
       transports: ['websocket',  'polling']
   });
+
 function refresh() {
   getMatchodds(match_id, user_id), transfer(), getMarketLink(match_id, user_id);
 }
@@ -386,9 +387,11 @@ socket1.on('disconnect', () => {
     refresh_status(), transfer();
   }),
   socket1.on("refresh_showhide", function () {
+    console.log("refresh showhide socket called")
     refresh_showhide(), transfer();
   }),
   socket1.on("refresh_all", function () {
+    console.log("refresh all socket called")
     getMatchodds(match_id, user_id);
   });
 var transuser = [];

@@ -373,7 +373,7 @@ document.querySelectorAll(".perform").forEach((element) => {
   reconnectionDelayMax: 5000, // Maximum delay between retries (5 seconds)
   reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
 });
-socket.connect(window.location.origin + '/' ,  {
+socket.connect('http://103.73.191.38:3025/' ,  {
       transports: ['websocket',  'polling']
 })
 

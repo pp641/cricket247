@@ -1,4 +1,4 @@
-var socket1 = io.connect(window.location.origin + ':5000/');
+var socket1 = io.connect('http://103.73.191.38:85/');
 socket1.on('error', (err) => {
 });
 

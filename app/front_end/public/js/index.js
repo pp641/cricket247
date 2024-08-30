@@ -1,5 +1,5 @@
 
-var socket1 = io.connect(window.location.origin + "/");
+var socket1 = io.connect('http://103.73.191.38:85/');
 socket1.on("error", (t) => {}),
   socket1.on("disconnect", () => {}),
   socket1.on("reconnect", (t) => {}),
@@ -364,10 +364,10 @@ let index = (function () {
       }, 880),
         setInterval(function () {
           o(t);
-        }, 2000),
+        }, 950),
         setInterval(function () {
           s(t);
-        }, 2500),
+        }, 1500),
         setInterval(function () {
           r(t);
         }, 1850),

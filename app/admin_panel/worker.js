@@ -1,19 +1,19 @@
 const createError = require('http-errors');
 const http = require('http')
 var debug = require('debug')('temp:server');
-const redisAdapter = require("socket.io-redis");
-const { setupMaster, setupWorker } = require("@socket.io/sticky");
+// const redisAdapter = require("socket.io-redis");
+// const { setupMaster, setupWorker } = require("@socket.io/sticky");
 
 const express = require('express');
 var app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const dbConfig = require('../db');
+const dbConfig = require('./db');
 const cookieParser = require('cookie-parser');
 const numCPUs = require('os').cpus().length
 const process = require('node:process');
-const cluster = require('node:cluster')
+const cluster = require('node:cluster');
 const mongoose = require('mongoose')
 async function mongooseConnection(){
   await mongoose.set('useNewUrlParser', true);
@@ -41,7 +41,10 @@ var compression = require('compression')
 app.use(compression())
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
-io.adapter(redisAdapter({host: "103.27.232.213" , port : 6379}))
+// io.adapter(redisAdapter({ 
+//    host: process.env.REDIS_HOST || 'localhost',
+//   port: process.env.REDIS_PORT || 6379
+// }))
 app.io = io;
 io.on( "connection", function(socket)
 {
