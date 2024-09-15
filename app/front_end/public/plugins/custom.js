@@ -216,7 +216,7 @@ async function getLayout_allot(array){
         if(row.market_type == 1){
             background = 'background :#333;color:#fff';
         }
-        
+
         let action_btn = '';
         switch(row.hide_and_show_status){
             case 0: action_btn = "<button class='btn btn-success' onclick=\"getModelInfo('"+row._id+"')\">Edit</button>"
@@ -437,17 +437,12 @@ function updateAllStatus(type) {
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
         $.get('/admin_panel/api/refresh_status');
         refresh_showhide();
-        // getMatchodds_all(match_id_val);
-        // getMatchodds_all2(match_id_val);
     });
+            refresh_showhide();
     }catch(error){
-        let match_id_val = match_id;
         refresh_showhide();
-        // getMatchodds_all(match_id_val);
-        // getMatchodds_all2(match_id_val);
     }
 }
-
 function updatehideshow(type){
     let match_id_val = match_id;
     $.post('/admin_panel/api/updatehideshowAll',{ match_id : match_id_val, type : type },function(data){
