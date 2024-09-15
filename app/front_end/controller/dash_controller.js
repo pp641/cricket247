@@ -1,4 +1,5 @@
 const db = require('mongodb');
+const bcrypt = require('bcrypt-nodejs')
 const ObjectID = db.ObjectID;
 
 var moment = require('moment');
@@ -18,6 +19,34 @@ const generated_match = matchmodel.generated_match;
 
 const controller = {};
 
+
+controller.update_user_password =  async function(req,res,next){
+    try{
+    console.log("req", req.body)
+    let { oldPassword , newPassword , confirmNewPassword ,userId} = req.body 
+    let userDetails = await common.getDataByID(usermodel ,userId);
+    let check_password =  bcrypt.compareSync(oldPassword , userDetails.password)
+    if(check_password){
+        if( newPassword === confirmNewPassword){
+            const hashedNewPassword = bcrypt.hashSync(newPassword,bcrypt.genSaltSync(10))
+            console.log("got here", hashedNewPassword )
+            userDetails.password = hashedNewPassword;
+            await userDetails.save((err,data)=>{
+                res.json({message : "Password Updated Successfully"})
+            });
+        }else{
+            res.json({message : "New Password and Confirm New Password are not matching !"})
+        }
+
+    }else{
+        res.json({message : 'Old Password is not correct !'})
+    }
+
+    } catch(error){
+    console.log("Error", error);
+        res.json({message : "Internal Server Error"});
+    }
+}
 controller.dashboard = async function(req,res,next){
     let userID = req.User._id;
     let userdetails = await common.getDataByID(usermodel,userID);
@@ -27,6 +56,7 @@ controller.dashboard = async function(req,res,next){
     
     res.render('index',{userdata : userdetails, navigator : nav, moment : moment});
 }
+
 
 controller.match_monitor = async function(req,res,next){
     let match_id = req.params.match_id;

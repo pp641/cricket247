@@ -70,6 +70,7 @@ async function gettransferMatchodds(match_id,user_id,index){
 
 
 function getMatchodds_all2(match_id){
+    console.log("being called 4")
     $.post('/admin_panel/api/getMatch_data_all',{match_id : match_id},function(data){
         
         let obj = JSON.parse(JSON.stringify(data));
@@ -155,6 +156,7 @@ function getLayout(array){
 }
 
 function getMatchodds_all(match_id){
+    console.log("being called 3")
     $.post('/admin_panel/api/getMatch_data_all',{match_id : match_id},async function(data){
         
         let obj = JSON.parse(JSON.stringify(data));
@@ -428,8 +430,9 @@ function updateLayOdds(form){
        return false;
 }
 
- function updateAllStatus(type) {
+function updateAllStatus(type) {
     try{
+        console.log("uve called")
     let match_id_val = match_id;
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
         $.get('/admin_panel/api/refresh_status');
@@ -473,13 +476,13 @@ function refresh_showhide(){
 }
 
 function refresh_status(){
+    console.log("Called here okay")
     $.post('/admin_panel/api/getallData',{match_id : match_id, user_id : user_id},function(data){
         let mar_json = JSON.parse(JSON.stringify(data));
         mar_json.forEach(row => {
             let status_btn = "";
             let market_id = row._id;
         switch(row.active_status){
-            
             case 0:string_status = 'Active'
             status_btn = "<button class='btn btn-danger' title='Suspend' onClick=\"updateStatus('"+row._id+"',1)\">X</button>"
             +"<button class='btn btn-danger' title='Ball Running' onClick=\"updateStatus('"+row._id+"',2)\">O</button>";

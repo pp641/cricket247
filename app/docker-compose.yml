@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  admin_panel:
+    build: 
+      context: ./admin_panel
+      dockerfile: Dockerfile
+    image: pp641/admin_panel:latest
+    ports:
+      - "3025:3025"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+  
+  redis:
+    image: "redis:latest"
+    ports: 
+      - "6379:6379"
+
+  front_end:
+    build: 
+      context: ./front_end
+      dockerfile: Dockerfile
+    image: pp641/front_end:latest
+    ports:
+      - "85:85"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    

@@ -28,6 +28,8 @@ function checkJsons(otherJson, newJson) {
 	return sameJson;
 }
 module.exports = function (passport) {
+	console.log("login coming 22346")
+
 	passport.serializeUser(function (user, done) {
 		done(null, user);
 	});
@@ -55,20 +57,21 @@ module.exports = function (passport) {
 						let data = await common.getDataByColSingle(usrlog_session, {
 							usr_id: result._id
 						});
+						console.log("usr log data" , data);
 						if (typeof data != 'undefined' && data) {
 							if (typeof data.exp_time != 'undefined' && data.exp_time) {
 								let expire_time = moment(data.exp_time)
 								let isafter = expire_time.diff(current_time, 'second');
-								// if (isafter > 0) {
-								// 	done(null, false, {
-								// 		message: 'User Already Logged In. Wait for 30 sec after logout.'
-								// 	});
-								// } else {
+								if (isafter > 0) {
+									done(null, false, {
+										message: 'User Already Logged In. Wait for 30 sec after logout 2.'
+									});
+								} else {
 									done(null, {
 										username: result.username,
 										userID: result._id
 									}, {});
-								// }
+								}
 							} else {
 								done(null, {
 									username: result.username,

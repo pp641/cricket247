@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="section-title">Manage Admin</h2>
+                        <h2 class="section-title">Manage Admin</h2> <!-- user pass change -->
                     </div>
                 </div>
                 <div class="row">
@@ -55,9 +55,37 @@
                                                   
                                             </tbody>
                                         </table>
+                                        <form method="post" action="/admin_panel/auth/change_admin_password">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label for="">Old Admin Password</label>
+                                                    <input name="user_old_password" type="password" class="form-control" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label for=""> New Admin Password</label>
+                                                    <input name="user_new_password" type="password" class="form-control" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label for="">Confirm New Admin Password</label>
+                                                    <input name="confirm_user_new_password" type="password" class="form-control" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-danger">Change Password </button>
+                                                </div>
+                                            </div>
                                         
                                     </div>  
-
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +108,7 @@
         <%-include('inc/footer.ejs') %>
         <script>
         function getLoggedInUser(){
-            $.get('/api/getloginUser',function(data){
+            $.get('/admin_panel/api/getloginUser',function(data){
                 let jobj = JSON.parse(JSON.stringify(data))
                 let html ="";
                 jobj.forEach(row => {

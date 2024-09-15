@@ -1,5 +1,5 @@
 module.exports = {
-    url : 'mongodb+srv://prajjwalpandey641:8BSjr0Uab4zUOGw6@cluster0.ypyvsdp.mongodb.net/',
+    url : 'mongodb://localhost:27017/test',
     options: {
         autoIndex: true,
         keepAlive: true,

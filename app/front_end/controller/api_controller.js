@@ -109,6 +109,7 @@ controller.getNews = async function(req, res, next){
 }
 
 controller.cricket_audio = async function(req, res, next){
+    console.log("getting here audio")
     let text = req.params.text;
     let match_id = req.params.match_id;
     let val = {}

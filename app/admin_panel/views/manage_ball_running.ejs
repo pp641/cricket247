@@ -24,7 +24,9 @@
             background-color: #5cb85c !important;
             border-color: #4cae4c !important;
         }
-
+        .perform3{
+            display: inline-block;
+        }
         .primary:hover > a {
             color: #fff !important;
             background-color: #449d44 !important;
@@ -38,8 +40,20 @@
         .in {
             background: #0000001a;
         }
+        .ball_action{
+            display: inline;
+        }
+        #myButton {
+  color: white;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+}
     </style>
 </head>
+<script>
+    const host_ip = '137.59.55.98'
+</script>
 <body>
 <div class="loader" id="loading"></div>
 <!--Wrapper Start-->
@@ -49,7 +63,27 @@
     <div class="news-section-wrapper news-gallery no-margin">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+
+                <div class="modal fade" id="deleteConfirmationBall" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationBallLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-top" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteConfirmationBallLabel">Confirm Delete</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure ! You want to delete this Ball?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                          <button type="button" class="btn btn-danger" id="confirmDeleteBall">Yes</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            <div class="col-md-12">
                     <%
                     var game_name = 'Not Available';
                     var event_team_a = 'Not Available';
@@ -135,6 +169,8 @@
                                                                            onclick="resetballRunning()">Reset</a></li>
                                 <li role="presentation" class="primary"><a href="javascript:void(0)" data-toggle="modal"
                                                                            data-target="#overScore">Over Score</a></li>
+                             <li ><a  id="myButton" >Mute</a></li> 
+                                                                            
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -167,7 +203,7 @@
                                                 <th class='text '>Ball Number</th>
                                                 <th class='text '>Result</th>
                                                 <th class='text '>Edit Result</th>
-                                                <th class='text '>Current Status</th>
+                                                <th class='text '>Current Statussss</th>
                                             </tr>
                                             </thead>
                                             <tbody id="showBallrunning2">
@@ -236,7 +272,33 @@
     <script src="/admin_panel/plugins/custom.js"></script>
 
     <script>
-        const match_id = '<%= match_id %>';
+
+            const match_id = '<%= match_id %>';
+            const muteButton = document.getElementById("myButton");
+        document.addEventListener('DOMContentLoaded', async()=>{
+            console.log("im loaded")
+           await $.get(`/admin_panel/get_game_details/${match_id}`).then((result)=>{
+                console.log("got result data", result);
+                let resultdata = result.matchdetails;
+                let is_muted = result.matchdetails.muted
+                muteButton.style.backgroundColor = !is_muted ? "red" : "blue";
+                muteButton.textContent = !is_muted ? "Mute" : "Unmute"
+            })
+})
+
+            muteButton.addEventListener("click", async function() {
+                    await $.get(`/admin_panel/get_game_details/${match_id}`)
+                    .then(async (result) => {
+                        let is_muted = result.matchdetails.muted
+                        let clicked  = !is_muted
+                        console.log("Getting first" , result.matchdetails)
+                       await $.post('/admin_panel/update_mute_status',{clicked : clicked, match_id : match_id})
+                        .then((res) => {
+                            console.log("gettimg latest", res); 
+                            window.location.reload();
+                        })
+                    })
+                 });
 
         function getBallRunning(match_id) {
             $.post('/admin_panel/api/getBallRunning', {match_id: match_id, type: "0"})
@@ -340,7 +402,7 @@
                         + '<button onclick="update_result(\'' + row._id + '\',1, 5,\'' + value + '\')" class="btn btn-danger" >Hide</button>'
                 }
 
-                layout += '<button onclick="update_result(\'' + row._id + '\',10, 10,0)" class="btn btn-danger" >Complete Ball</button>'
+                layout += '<button onclick="update_result(\'' + row._id + '\',10, 10,0)" class="btn btn-danger" >Complete Ballssssss</button>'
                     + '</td>'
                     + '</tr>';
             } else {
@@ -373,7 +435,7 @@
                     + '<button onclick="update_result(\'' + row._id + '\',1, 4)" class="btn btn-warning">Third Umpire</button><br>'
                     + '<button onclick="update_result(\'' + row._id + '\',2, 4)" class="btn btn-warning">Not Out</button>'
                     + '<button onclick="update_result(\'' + row._id + '\',3, 4)" class="btn btn-danger">Out</button>'
-                    + '<button onclick="delete_ball(\'' + row._id + '\')" class="btn btn-danger">Delete</button>'
+                    + '<button onclick="delete_ball(\'' + row._id + '\')" data-ball-id="'+row._id+'" class="btn btn-danger ball_action">Delete</button>'
                     + '</td>'
                     + '</tr>';
             }
@@ -469,7 +531,7 @@
                     + '<button onclick="update_result2(\'' + row._id + '\',1, 4)" class="btn btn-warning">Third Umpire</button>'
                     + '<button onclick="update_result2(\'' + row._id + '\',2, 4)" class="btn btn-warning">Not Out</button>'
                     + '<button onclick="update_result2(\'' + row._id + '\',3, 4)" class="btn btn-danger">Out</button>'
-                    + '<button onclick="delete_ball2(\'' + row._id + '\')" class="btn btn-danger">Delete</button>'
+                    + '<button onclick="delete_ball2(\'' + row._id + '\')" class="btn btn-danger perform3">Delete</button>'
                     + '</td>'
                     + '</tr>';
             }
@@ -480,9 +542,21 @@
             getBallRunning2(match_id);
         }
 
-        function speak(msg) {
-            $.get('/api/cricket_audio/' + msg + '/' + match_id, function () {});
-        }
+
+              
+
+async function speak(msg) {
+let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+let is_muted = result.matchdetails.muted
+if(is_muted === false){   
+    await fetch(`http://${host_ip}:85/api/cricket_audio/${msg}/${match_id}`)
+    .then(response => response.json()) 
+    .then(data => {
+    console.log("is it callled", data); 
+  })
+  .catch((error) => console.log('Error fetching data:', error));
+  }
+}
 
         function custom_result(id, inp, e, type) {
             var enterKey = 13;
@@ -505,6 +579,8 @@
         }
 
         function update_result(id, value, type, msg) {
+            console.log("i Hva been called")
+        
             $("#loading").show();
             $("#col" + id).html('');
             $.post('/admin_panel/api/updateball_running', {
@@ -515,38 +591,41 @@
             .then(function (data) {
                 return JSON.parse(JSON.stringify(data));
             })
-            .done(function (rec_data) {
+            .done(async function (rec_data) {
+                 let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+                 let is_muted = result.matchdetails.muted
+                 console.log("what getting", is_muted)
+              if(is_muted === false){   
+
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
 
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                     } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {
-                        });
+                       fetch(`http://${host_ip}:85/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
+            }
+            
+
                 $("#loading").hide();
                 getBallRunning(match_id);
                 
@@ -567,38 +646,37 @@
             .then(function (data) {
                 return JSON.parse(JSON.stringify(data));
             })
-            .done(function (rec_data) {
+            .done( async function (rec_data) {
+            let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+            let is_muted = result.matchdetails.muted
+            if(is_muted === false){   
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
 
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {
-                            });
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                 } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {
-                        });
+                       fetch(`http://${host_ip}:85/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
+            }
                 $("#loading").hide();
                 getBallRunning(match_id);
                 
@@ -618,32 +696,38 @@
             .then(function (data) {
                 return JSON.parse(JSON.stringify(data));
             })
-            .done(function (rec_data) {
+            .done(async function (rec_data) {
+
+                    let result = await $.get(`/admin_panel/get_game_details/${match_id}`)
+                    let is_muted = result.matchdetails.muted
+                    console.log("what getting", is_muted)
+                    if(is_muted === false){   
                 if (msg != 'Ball Running') {
                     if (rec_data.type == 5) {
                         if (rec_data.val == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 1) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
 
                     } else if (rec_data.type == 2) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     } else if (rec_data.type == 3) {
                         if (rec_data.hide_show == 0) {
-                            $.get('/api/cricket_audio/' + rec_data.val + '/' + match_id, function () {});
+                            fetch(`http://${host_ip}:85/api/cricket_audio/${rec_data.val}/${match_id}`)
                         }
                     }
                 } else {
                     if (rec_data.hide_show == 0) {
                         bal = "Ball Running";
-                        $.get('/api/cricket_audio/' + bal + '/' + match_id, function () {});
+                        fetch(`http://${host_ip}:85/api/cricket_audio/${bal}/${match_id}`)
                     }
                 }
+            }
                 $("#loading").hide();
                 getBallRunning2(match_id);
                 
@@ -714,32 +798,107 @@
         }
 
         function delete_ball(ball_id) {
+           
+              $("#deleteConfirmationBall").modal("show");
+              document
+                .getElementById("confirmDeleteBall")
+                .addEventListener("click", function confirmDeleteHandler() {
+                    console.log("market id: " ,ball_id);
+                    // delete_market(ballId);
+
+
             $("#loading").show();
             $("#col" + ball_id).html('');
             $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
             .done(function () {
                 $("#loading").hide();
                 getBallRunning(match_id);
-            })
+                })
             .catch(function () {
                 $("#loading").hide();
                 getBallRunning(match_id);
-            });
+                });
+
+
+                  $("#deleteConfirmationBall").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+          });
+            
+            
+
         }
 
+
+
+
         function delete_ball2(ball_id) {
-            $("#loading").show();
-            $("#col" + ball_id).html('');
-            $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
-            .done(function () {
-                $("#loading").hide();
-                getBallRunning2(match_id);
-            })
-            .catch(function () {
-                $("#loading").hide();
-                getBallRunning2(match_id);
+
+            // $("#loading").show();
+            // $("#col" + ball_id).html('');
+            // $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+            // .done(function () {
+            //     $("#loading").hide();
+            //     getBallRunning2(match_id);
+            // })
+            // .catch(function () {
+            //     $("#loading").hide();
+            //     getBallRunning2(match_id);
+            // });
+
+            // document.querySelectorAll(".perform3").forEach((element)=>{
+            //     element.addEventListener("click" , () =>{
+            //         $("#deleteConfirmationBall").modal("show");
+            //     })
+            // })
+
+
+            document.querySelectorAll(".perform3").forEach((element) => {
+            element.addEventListener("click", () => {
+              $("#deleteConfirmationBall").modal("show");
+              document
+                .getElementById("confirmDeleteBall")
+                .addEventListener("click", function confirmDeleteHandler() {
+                //   let ball_id = element.dataset.marketId;
+                  console.log("pkball", ball_id)
+                  $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+                .done(function () {
+                        getBallRunning2(match_id);
+                })
+                .catch(function () {
+                     getBallRunning2(match_id);
+                     });
+                  $("#deleteConfirmationBall").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+                });
             });
+          });
+            
+
         }
+
+
+        
+
+        // function delete_ball2(ball_id) {
+        //     $("#loading").show();
+        //     $("#col" + ball_id).html('');
+        //     $("#deleteConfirmationModal").modal("show");
+        //     document.getElementById("confirmDelete")
+        //     .addEventListener("click" , function confirmDeleteHandler {
+
+        // $.post('/admin_panel/api/delete_ball', {ball_runn_id: ball_id})
+        //     .done(function () {
+        //         $("#loading").hide();
+        //         getBallRunning2(match_id);
+        //     })
+        //     .catch(function () {
+        //         $("#loading").hide();
+        //         getBallRunning2(match_id);
+        //     });
+        //     $("#deleteConfirmationModal").modal("hide");
+        // this.removeEventListener("click", confirmDeleteHandler);
+        //     })
+        // }
 
         function getScore(match_id) {
             $.post('/admin_panel/api/getScore', {match_id: match_id}, function (data) {
@@ -939,11 +1098,15 @@
                 });
             });
             $("#removeinning").on('click', function () {
+                console.log("getting here...");
                 if (selected_inning == "") {
                     alert('Select Innings First');
-                } else {
-                    removeInning();
-                }
+                } 
+                else {
+            if(confirm("Are you sure ! You want to delete this innings? ")){
+                removeInning();
+            }    
+        }
             });
             $('#updateOverRuns').on('submit', function (e) {
                 e.preventDefault();

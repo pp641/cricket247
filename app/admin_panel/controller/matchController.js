@@ -47,6 +47,7 @@ controller.alot_user = async function(req,res,next){
 
 //Change Admin Password Page
 controller.change_password = function(req,res,next){
+    console.log("changing here", req.adminUser , req.params)
     let userdetails = req.adminUser;
     let admin_user = req.params.admin_user_id;
     res.render('change_admin_password',{userData : userdetails, admin_user_id: admin_user});
@@ -80,6 +81,8 @@ controller.match_game_event = async function(req,res,next){
         EventList : matchevent, GameModel : event_info_list});
 
 }
+
+
 
 //Generate Match
 controller.match_odds_selection = async function(req,res,next){
@@ -232,9 +235,11 @@ controller.manage_match_odds = async function(req,res,next){
     let match_id = req.params.match_id;
     let gen_match = await common.getDataByID(generated_match,match_id);
     let live_event = await common.getDataByID(live_game,gen_match.main_match_id);
-    let eventDateData = await common.getDataByID(manage_date,live_event.event_date_id);
-    let eventData = await common.getDataByID(manage_event,live_event.event_id);
-    let gameData = await common.getDataByID(manage_game,live_event.game_id);
+    let [eventDateData, eventData, gameData] = await Promise.all([
+        common.getDataByID(manage_date, live_event.event_date_id),
+        common.getDataByID(manage_event, live_event.event_id),
+        common.getDataByID(manage_game, live_event.game_id)
+    ]);
     let data = {};
     data.live_event = live_event
     data.eventDateData = eventDateData
@@ -571,7 +576,7 @@ controller.delete_event = async function(req, res, next){
     let err3 = await common.removeValue(manage_date,{event_id : event_id});
     let matchgames = await common.getDataByCol(live_game, value);
     await delete_live_game(matchgames);
-    res.send("<script>alert('Deleted Successfully'); window.location = '/admin_panel/manage_game_event'</script>")
+    res.send("<script>alert('Deleted Successfully');</script>")
 }
 controller.delete_reg_user = async function(req, res, next){
     let reg_user_id = req.params.reg_id;
@@ -733,4 +738,15 @@ controller.delete_admin = async function(req, res, next){
     await common.remove(usermodel,admin_id);
     res.send("<script>alert('Deleted Successfully'); window.location = '/admin_panel/manage_admin'</script>")
 }
+
+controller.change_mini_admin_password  = async function(req,res,next){
+    console.log("ok getting" , req.body , req.adminUser )
+    let userdetails = req.adminUser;
+    let admin_user_id = req.adminUser._id
+    let admin_user = req.params.admin_user_id;
+    console.log("okde", admin_user_id )
+    res.render('change_mini_admin_password',{userData : userdetails, admin_user_id: admin_user_id});
+}
+
+
 module.exports = controller;

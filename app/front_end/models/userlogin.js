@@ -16,6 +16,12 @@ const userlogSchema = new schema({
 });
 
 const usrlog_session = new schema({
+    session_id : {
+        type : String
+    },
+    token : {
+        type: String
+    },
     usr_id : {
         type : String,
         required : true,

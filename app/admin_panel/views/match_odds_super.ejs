@@ -378,10 +378,34 @@
     </script>
     <script src="/admin_panel/plugins/custom.js"></script>
     <script>
-    const url = window.location.origin.split(':')[0]+':'+window.location.origin.split(':')[1]+':3025/admin_panel';
+    const url = 'http://137.59.55.98:3025/admin_panel';
         console.log(url);
-    var socket1 = io.connect(url);
-    //var socket1 = io.connect(window.location.origin+'/admin_panel');
+const socket = io({
+  reconnection: true, // Enable reconnection
+  reconnectionDelay: 1000, // Delay between retries (1 second)
+  reconnectionDelayMax: 5000, // Maximum delay between retries (5 seconds)
+  reconnectionAttempts: Infinity, // Retry indefinitely (or set a limit)
+});
+socket.connect(url ,  {
+      transports: ['websocket',  'polling']
+    })
+
+socket.on("connection", ()=>{
+  console.log("connected to socketss 2")
+})
+
+socket.on('connect_error', (err) => {
+  console.error('Connection error:', err);
+});
+
+socket.on('reconnect', () => {
+  console.log('Reconnected to server');
+});
+
+socket.on('disconnect', () => {
+  console.log('Disconnected from server');
+});
+
     var oldback_lay = [];
     var oldmatch_odds = [];
     function check_data( Old_data, New_data)

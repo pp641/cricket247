@@ -1,62 +1,69 @@
 const createError = require('http-errors');
+const http = require('http')
+var debug = require('debug')('temp:server');
+// const redisAdapter = require("socket.io-redis");
+// const { setupMaster, setupWorker } = require("@socket.io/sticky");
+
 const express = require('express');
+var app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const dbConfig = require('../db.js');
-var mongoose = require('mongoose');
+const dbConfig = require('./db');
 const cookieParser = require('cookie-parser');
-var app = express();
-
+const numCPUs = require('os').cpus().length
+const process = require('node:process');
+const cluster = require('node:cluster');
+const mongoose = require('mongoose')
+async function mongooseConnection(){
+  await mongoose.set('useNewUrlParser', true);
+  await mongoose.set('useFindAndModify', false);
+  await mongoose.set('useCreateIndex', true);
+  await mongoose.set('useUnifiedTopology', true);
+  await mongoose.connect(dbConfig.url,dbConfig.options)
+    .then(() =>  console.log('connection succesful'))
+    .catch((err) => console.error(err));
+  }
 const corsOptions = {
   origin: '*', // Allow all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
   allowedHeaders: 'Content-Type,Authorization', 
 };
-
 app.use(cors(corsOptions));
-
-
- // mongoose library
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect(dbConfig.url,dbConfig.options)
-  .then(() =>  console.log('connection succesful'))
-  .catch((err) => console.error(err));
-
-
-
-
-
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 var authRouter = require('./routes/auth');
-
-
 var compression = require('compression')
-
-
 app.use(compression())
-
-
-
 var socket_io    = require( "socket.io" );
 var io           = socket_io();
+// io.adapter(redisAdapter({ 
+//    host: process.env.REDIS_HOST || 'localhost',
+//   port: process.env.REDIS_PORT || 6379
+// }))
 app.io = io;
-io.on( "connection", function()
+io.on( "connection", function(socket)
 {
-    // console.log( "A user connected" );
+
+  console.log( "A user connected" );
+  socket.on("error", function(error){
+      console.log("got errror", error)
+    })
+    socket.on("disconnect", function(){
+      console.log("got errror disconnect")
+      })
+    socket.on("refresh_status", function(){
+      console.log("refresh status called")
+    });
+    socket.on("refresh_showhide", function(){
+      console.log("refresh showhide called")
+    });
 });
 
-io.on("refresh_status", function(){});
-io.on("refresh_showhide", function(){});
 
 app.use(function(req, res, next){
   res.io = io;
@@ -66,15 +73,8 @@ app.use(function(req, res, next){
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.disable('x-powered-by')
-
-
-
-
-
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/admin_panel', indexRouter);
 app.use('/admin_panel/api', apiRouter);
 app.use('/admin_panel/auth', authRouter);
@@ -128,11 +128,13 @@ app.get('*',function (req,res) {
   res.status(404).send(html);
 });
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
    next(createError(404));
 
 });
-
-
-module.exports = app;
+  mongooseConnection();
+  var port = 3025
+  var server = http.createServer(app);
+  server.listen(port)
+  app.io.attach(server);
+  console.log(`Worker ${process.pid} started on port ${port}`);

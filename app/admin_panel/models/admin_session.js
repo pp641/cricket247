@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const front_session = new schema({
-    session : {
+    session_id : {
         type : String
     },
-    expires : {
-        type : Date
+    user_id : {
+        type: String
+    },
+    token : {
+        type: String
     }
 });
 

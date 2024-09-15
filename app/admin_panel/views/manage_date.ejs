@@ -5,6 +5,11 @@
      <link rel="stylesheet" href="/admin_panel/jquery-ui.min.css">
      <script type="text/javascript" src="/admin_panel/jquery-ui.min.js"></script>
 </head>
+<style>
+    .perform{
+        display: inline-block;
+    }
+</style>
 
 <body>
 
@@ -22,6 +27,27 @@
                     </div>
                 </div>
                 <div class="row">
+                    
+                    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure ! You want to delete this Market?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                              <button type="button" class="btn btn-danger" id="confirmDelete">Yes</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-12 col-sm-12">
                        
 
@@ -102,7 +128,7 @@
                                                             </td>
                                                         <td class='text ' data-title='Action'> 
                                                         <a href="/admin_panel/edit_event_date/<%=row.row._id%>"><button class="btn btn-success">Edit</button></a>
-                                                        <a href='/admin_panel/delete_date/<%=row.row._id%>'><button class="btn btn-danger">Delete</button></a>
+                                                        <a><button data-market-id="<%=row.row._id%>" class="btn btn-danger perform">Delete</button></a>
 
                                                         </td>
                                                     </tr>
@@ -181,6 +207,32 @@
         }
     });
   }
+
+
+  document.querySelectorAll(".perform").forEach((element) => {
+            element.addEventListener("click", () => {
+              $("#deleteConfirmationModal").modal("show");
+              document
+                .getElementById("confirmDelete")
+                .addEventListener("click", function confirmDeleteHandler() {
+                  let marketId = element.dataset.marketId;
+                  console.log("market id: ", marketId);
+                  fetch(`/admin_panel/delete_date/${marketId}`)
+                .then((res)=> {
+                    console.log("res ok", res)
+                    window.location.reload();
+                })
+                .catch((err)=> {
+                    console.log("okor", err)
+                });
+                  $("#deleteConfirmationModal").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+                });
+            });
+          });
+
+
+
 
   
 </script>

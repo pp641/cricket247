@@ -1,4 +1,62 @@
+
+let oldback_lay2 = []
+let oldmatch_odds2 = []
+function check_data( Old_data, New_data)
+    {
+    
+      check = false;
+      if(Old_data.length == New_data.length)
+      {
+      // White
+        var Old_length = Old_data.length;
+        var New_length = New_data.length;
+        
+        // alert(' Old : '+ Old_length+ ' New : '+New_length)
+        if(Old_length != New_length)
+        {
+          check = true;
+        }
+        else
+        {
+        for(i = 0;i <New_length;i++)
+        {
+          // alert(old_data.matchLayJson[i]);
+          if(checkJsons(Old_data[i],New_data[i]))
+          {
+    
+          }
+          else
+          {
+            check = true;    
+          }
+        }
+        }
+      }
+      else
+      {
+        check = true;
+      }
+      return check;
+    }
+    
+    function checkJsons( otherJson, newJson)
+    {
+    
+    
+        var sameJson = true;
+        $.each(newJson, function(key, value){
+            if(otherJson[key] != newJson[key]) 
+            {
+                sameJson=false;
+            } 
+            
+        });
+        return sameJson;
+    }
+    
+
 function getMatchodds(match_id, user_id) {
+    try {
     $.post('/admin_panel/api/getMatch_data', { match_id: match_id, user_id: user_id })
     .then(function (data) {
 
@@ -29,9 +87,29 @@ function getMatchodds(match_id, user_id) {
         let layout_match_match_odds = getLayout(match_match_odds);
         $("#matchodds").html(table + layout_matchlayoff + layout_match_match_odds + tableend);
         sortTable("match_odds_table");
+        document.querySelectorAll(".perform").forEach((element) => {
+            console.log("okdod", element)
+            element.addEventListener("click", () => {
+              $("#deleteConfirmationModal").modal("show");
+              document
+                .getElementById("confirmDelete")
+                .addEventListener("click", function confirmDeleteHandler() {
+                  let marketId = element.dataset.marketId;
+                  console.log("market id: ", marketId);
+                  delete_market(marketId);
+                  $("#deleteConfirmationModal").modal("hide");
+                  this.removeEventListener("click", confirmDeleteHandler);
+                });
+            });
+          });
     });
+
+    }catch(error){
+        console.log("Error", error)
+    }
 }
 async function gettransferMatchodds(match_id, user_id, index) {
+    try {
     let lay = "";
     await $.post('/admin_panel/api/getMatch_data', { match_id: match_id, user_id: user_id }, async function (data) {
 
@@ -69,41 +147,88 @@ async function gettransferMatchodds(match_id, user_id, index) {
 
     });
     return lay;
+} catch(error){
+    console.log("Error" , error)
 }
+}
+
+
 
 
 
 function getMatchodds_all2(match_id) {
-    $.post('/admin_panel/api/getMatch_data_all', { match_id: match_id })
-    .then( function (data) {
-
-        let obj = JSON.parse(JSON.stringify(data));
-        let matchlayoff = obj.match_layoff;
-        let match_match_odds = obj.match_match_odds;
-        let chk1 = check_data(oldback_lay, matchlayoff);
-        let chk2 = check_data(oldmatch_odds, match_match_odds);
-        if (chk1 == true || chk2 == true) {
-            oldback_lay = matchlayoff;
-            oldmatch_odds = match_match_odds;
-            let layout_matchlayoff = '';
-            let layout_match_match_odds = '';
-            getLayout3(matchlayoff).
-                then(function (data) {
-                    layout_matchlayoff = data;
-                    return getLayout3(match_match_odds);
-                }).then(function (data2) {
-                    layout_match_match_odds = data2;
-                    $("#matchodds").html(layout_matchlayoff + layout_match_match_odds);
-                    sortTable("match_odds_table");
-                });
-
-
-        }
+    try 
+    {
+        console.log("being called here again")
+  const startTiming = performance.now();
+  $.post("/admin_panel/api/getMatch_data_all", { match_id: match_id })
+    .then((data) => {
+      let { match_layoff, match_match_odds } = data;
+      let chk1 = check_data(oldback_lay2, match_layoff);
+      let chk2 = check_data(oldmatch_odds2, match_match_odds);
+      if (chk1 || chk2) {
+        oldback_lay2 = match_layoff;
+        oldmatch_odds2 = match_match_odds;
+        Promise.all([getLayout3(match_layoff), getLayout3(match_match_odds)])
+          .then(([layout_matchlayoff, layout_match_match_odds]) => {
+            $("#matchodds").html(
+              `${layout_matchlayoff}${layout_match_match_odds}`
+            );
+            sortTable("match_odds_table");
+            document.querySelectorAll(".perform").forEach((element) => {
+              element.addEventListener("click", () => {
+                $("#deleteConfirmationModal").modal("show");
+                document
+                  .getElementById("confirmDelete")
+                  .addEventListener("click", function confirmDeleteHandler() {
+                    let marketId = element.dataset.marketId;
+                    console.log("market id: ", marketId);
+                    delete_market(marketId);
+                    window.location.reload();
+                    $("#deleteConfirmationModal").modal("hide");
+                    this.removeEventListener("click", confirmDeleteHandler);
+                  });
+              });
+            });
+          })
+          .catch((err) => {
+            console.error("Error in generating layout: ", err);
+          });
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching match data: ", err);
     });
+
+  const endTiming = performance.now();
+  const totalTiming = endTiming - startTiming;
+  console.log(`Total timing: ${totalTiming}`);
+} catch(error){
+    console.log("Error", error);
+}
+
+}
+
+ 
+
+function performSomething(id){
+    console.log("okdodkolkmkfkdk", id)
+    $("#deleteConfirmationModal").modal("show");
+    document
+      .getElementById("confirmDelete")
+      .addEventListener("click", function confirmDeleteHandler() {
+        delete_market(id);
+        window.location.reload();
+        $("#deleteConfirmationModal").modal("hide");
+        this.removeEventListener("click", confirmDeleteHandler);
+      });
 }
 
 
 function getLayout(array) {
+
+    try 
+    {
     var match_row = '';
     array.forEach(row => {
         if (row) {
@@ -151,11 +276,11 @@ function getLayout(array) {
             switch (row.hide_and_show_status) {
                 case 0: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                     + "<button class='btn btn-sm btn-danger' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" title='Hide'><i class='fa fa-eye-slash' aria-hidden='true'></i></button>"
-                    + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                    + "<button class='btn btn-sm btn-danger' onclick=\"performSomething('" + row._id + "')\" data-market-id='"+row._id+"'><i class='fa fa-trash' aria-hidden='true'></i></button>";
                     break;
                 case 1: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                     + "<button class='btn btn-sm btn-success' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" ><i class='fa fa-eye' aria-hidden='true'></i></button>"
-                    + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                    + "<button class='btn btn-sm btn-danger' onclick=\"performSomething('" + row._id + "')\" data-market-id='"+row._id+"'><i class='fa fa-trash' aria-hidden='true'></i></button>";
                     break;
             }
 
@@ -183,6 +308,9 @@ function getLayout(array) {
         }
     });
     return match_row;
+} catch(error){
+    console.log("Error", error);
+}
 
 }
 
@@ -223,6 +351,8 @@ function sortTable(table_id) {
     }
 }
 async function getLayout3(array) {
+
+    try {
     var match_row = '';
     let users = await allotuser();
     array.forEach(row => {
@@ -268,14 +398,15 @@ async function getLayout3(array) {
             }
         }
         let action_btn = '';
+
         switch (row.hide_and_show_status) {
             case 0: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                 + "<button class='btn btn-sm btn-danger' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" title='Hide'><i class='fa fa-eye-slash' aria-hidden='true'></i></button>"
-                + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                + "<button class='btn btn-sm btn-danger perform' data-market-id='"+row._id+"'  ><i class='fa fa-trash' aria-hidden='true'></i></button>";
                 break;
             case 1: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                 + "<button class='btn btn-sm btn-success' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" ><i class='fa fa-eye' aria-hidden='true'></i></button>"
-                + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                + "<button class='btn btn-sm btn-danger perform' data-market-id='"+row._id+"'  ><i class='fa fa-trash' aria-hidden='true'></i></button>";
                 break;
         }
 
@@ -304,13 +435,17 @@ async function getLayout3(array) {
             + "</tr>"
     });
     return match_row;
+} catch(error){
+    console.log("Error", error)
+}
 
 }
 
 function getMatchodds_all(match_id) {
+    try {
+    console.log("being called here 1")
     $.post('/admin_panel/api/getMatch_data_all', { match_id: match_id })
     .then(function (data) {
-
         let obj = JSON.parse(JSON.stringify(data));
         let matchlayoff = obj.match_layoff;
         let match_match_odds = obj.match_match_odds;
@@ -325,9 +460,27 @@ function getMatchodds_all(match_id) {
             layout_match_match_odds = data2;
             $("#matchodds").html(layout_matchlayoff + layout_match_match_odds);
             sortTable("match_odds_table");
+    document.querySelectorAll(".perform").forEach((element) => {
+              element.addEventListener("click", () => {
+                $("#deleteConfirmationModal").modal("show");
+                document
+                  .getElementById("confirmDelete")
+                  .addEventListener("click", function confirmDeleteHandler() {
+                    let marketId = element.dataset.marketId;
+                    console.log("market idsss: ", marketId);
+                    delete_market(marketId);
+                    window.location.reload();
+                    $("#deleteConfirmationModal").modal("hide");
+                    this.removeEventListener("click", confirmDeleteHandler);
+                  });
+              });
+            });
         });
         
     });
+}catch(error){
+    console.log("Error", error);
+}
 }
 
 function allot_list(array, alloted_user, market_id) {
@@ -352,6 +505,8 @@ function allot_selected_users(market_id, users) {
     });
 }
 async function getLayout_allot(array) {
+
+    try {
     var match_row = '';
     let users = await allotuser();
     array.forEach(row => {
@@ -382,11 +537,11 @@ async function getLayout_allot(array) {
         switch (row.hide_and_show_status) {
             case 0: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                 + "<button class='btn btn-sm btn-danger' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" title='Hide'><i class='fa fa-eye-slash' aria-hidden='true'></i></button>"
-                + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                + "<button data-market-id = "+row._id+" class='btn btn-sm btn-danger perform' ><i class='fa fa-trash' aria-hidden='true'></i></button>";
                 break;
             case 1: action_btn = "<button class='btn btn-sm btn-success' onclick=\"getModelInfo('" + row._id + "')\"> <i class='fa fa-pencil' aria-hidden='true'></i> </button>"
                 + "<button class='btn btn-sm btn-success' onclick=\"showhide('" + row._id + "'," + row.hide_and_show_status + ")\" ><i class='fa fa-eye' aria-hidden='true'></i></button>"
-                + "<button class='btn btn-sm btn-danger' onclick=\"delete_market('" + row._id + "')\"><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                + "<button data-market-id = "+row._id+" class='btn btn-sm btn-danger perform' ><i class='fa fa-trash' aria-hidden='true'></i></button>";
                 break;
         }
 
@@ -408,17 +563,31 @@ async function getLayout_allot(array) {
     });
 
     return match_row;
+}catch(error){
+    console.log("Error", error);
+}
 }
 
 async function allotuser() {
+
+    let allotedUsers = localStorage.getItem('alloted_users');
+
+    if(allotedUsers !== null){
+
+        return allotedUsers;
+    }else{
+
     let dt = '';
     await $.post('/admin_panel/api/getuserlist', function (data) {
         dt = JSON.stringify(data);
     });
+    localStorage.setItem('alloted_users', dt);
     return dt;
+     }
 }
 
 function incpressed(market_id, type) {
+    try {
     $.post('/admin_panel/api/incData', { market_id: market_id, type: type }, function (data) {
 
         let match_data_row = JSON.parse(JSON.stringify(data));
@@ -431,18 +600,21 @@ function incpressed(market_id, type) {
         $('.updateYes' + market_id).html(match_yes);
         $('.updateNo' + market_id).html(match_no);
     });
+} catch(error){
+    console.log("Error " , error);
+}
 }
 
 function delete_market(market_id) {
-    $.post('/admin_panel/api/delete_market', { market_id: market_id }, function (data) {
-        refresh();
-        getMarketLink(match_id, user_id);
-    });
+        $.post('/admin_panel/api/delete_market', { market_id: market_id }, function (data) {
+            refresh_status();
+            getMarketLink(match_id, user_id);
+            window.location.reload();
+        });
 }
 
 function delete_market2(market_id) {
     $.post('/admin_panel/api/delete_market', { market_id: market_id }, function (data) {
-
     });
 }
 
@@ -462,6 +634,8 @@ function descpressed(market_id, type) {
 }
 
 function updateStatus(market_id, type) {
+
+    try {
     $.post('/admin_panel/api/updateStatus', { market_id: market_id, type: type }, function (data) {
         let match_data_row = JSON.parse(JSON.stringify(data));
         let status_btn = "";
@@ -485,6 +659,12 @@ function updateStatus(market_id, type) {
         $('.btnChange' + market_id).html(status_btn);
         // $('.updateNo'+market_id).html(match_data_row.match_no);
     });
+
+}
+catch(error){
+    console.log("Error", error);
+}
+
 }
 
 function showhide(market_id, type) {
@@ -637,29 +817,55 @@ function updateLayOdds(form) {
 }
 
 function updateAllStatus(type) {
+    try{
+        console.log("uve called 2")
     let match_id_val = match_id;
     $.post('/admin_panel/api/updateStatusAll', { match_id: match_id_val, type: type }, function (data) {
-
         $.get('/admin_panel/api/refresh_status');
+        refresh_status()
+        refresh_showhide();
+        
     });
-
+    $.get('/admin_panel/api/refresh_status');
+    refresh_status()
+    refresh_showhide();
+  
+    }catch(error){
+        let match_id_val = match_id;
+        refresh_status()
+        refresh_showhide();
+    }
 }
 
 function updatehideshow(type) {
+    try {
+    console.log("called here hereh re")
     let match_id_val = match_id;
     $.post('/admin_panel/api/updatehideshowAll', { match_id: match_id_val, type: type })
     .then(function () {
         $.get('/admin_panel/api/refresh_showhide');
+        refresh_showhide();
     });
+    }catch(error){
+        $.get('/admin_panel/api/refresh_showhide');
+        refresh_showhide()
+    }
 }
 
 async function updateAllStatus_user(type, user_id) {
+    try {
     let match_id_val = match_id;
-    await $.post('/admin_panel/api/updateStatusAll_user', { match_id: match_id_val, type: type, user_id: user_id }, function (data) {});
-}
+    await $.post('/admin_panel/api/updateStatusAll_user', { match_id: match_id_val, type: type, user_id: user_id }, function (data) {
+        refresh_showhide();
+    });
+    }catch(error){
+        refresh_showhide();
+    }  
+    }
 
 async function updatehideshow_user(type, user_id) {
     let match_id_val = match_id;
+    console.log("claled jeererjerjjre")
     await $.post('/admin_panel/api/updatehideshowAll_user', { match_id: match_id_val, type: type, user_id: user_id }, function (data) {});
 }
 

@@ -29,13 +29,33 @@ common.getDataByValue = async function (model, value){
     return await model.find(value).exec();
 }
 
-common.getDataByMoreDate = async function (model, value ){
-    return await model.find({ updation_time : { $lte: value } ,$where : "this.updation_time > this.last_update_time"}).exec();
-}
+// common.getDataByMoreDate = async function (model, value ){
+//     return await model.find({ updation_time : { $lte: value } ,$where : "this.updation_time > this.last_update_time"}).exec();
+// }
 
-common.getDataByMoreDate_match_id = async function (model, value, match_id, market_type){
-    return await model.find({ updation_time : { $lte: value } ,$where : "this.updation_time > this.last_update_time", gen_id : match_id, market_type : market_type}).exec();
-}
+// common.getDataByMoreDate_match_id = async function (model, value, match_id, market_type){
+//     return await model.find({ updation_time : { $lte: value } ,$where : "this.updation_time > this.last_update_time", gen_id : match_id, market_type : market_type}).exec();
+// }
+
+
+common.getDataByMoreDate = async function (model, value) {
+    return await model.aggregate([
+        { $match: { updation_time: { $lte: value } } },
+        { $addFields: { comparison: { $gt: ["$updation_time", "$last_update_time"] } } },
+        { $match: { comparison: true } },
+        { $project: { comparison: 0 } } // Remove the comparison field from the final output
+    ]).exec();
+};
+
+common.getDataByMoreDate_match_id = async function (model, value, match_id, market_type) {
+    return await model.aggregate([
+        { $match: { updation_time: { $lte: value }, gen_id: match_id, market_type: market_type } },
+        { $addFields: { comparison: { $gt: ["$updation_time", "$last_update_time"] } } },
+        { $match: { comparison: true } },
+        { $project: { comparison: 0 } } // Remove the comparison field from the final output
+    ]).exec();
+};
+
 
 common.getDataByIDCallback = function(model, id){
     return model.findOne({'_id' : new ObjectID(id)});

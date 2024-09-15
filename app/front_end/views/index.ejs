@@ -1,526 +1,616 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="theme-color" content="#333">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <meta http-equiv="cache-control" content="max-age=0">
-      <meta http-equiv="cache-control" content="no-cache">
-      <meta http-equiv="expires" content="-1">
-      <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
-      <meta http-equiv="pragma" content="no-cache">
-      <title>Cricket247Online</title>
-      <link rel="preconnect" href="http://cricket247online.com:85/">
-      <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-      <!-- Bootstrap core CSS -->
-      <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      
-      <!-- Custom styles for this template -->
-      <link href="/css/blog-post.css" rel="stylesheet">
-      <link href="/css/reset.css" rel="stylesheet">
-      <link href="/css/style.css" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-      <style>
-         /* info (hed, dek, source, credit) */
-         .rg-container {
-         font-size: 16px;
-         line-height: 1.4;
-         margin: 0;
-         padding: 0px;
-         color: #222;
-         }
-         .rg-header {
-         margin-bottom: 1em;
-         text-align: left;
-         }
-         .rg-header > * {
-         display: block;
-         }
-         .rg-hed {
-         font-weight: bold;
-         font-size: 1.4em;
-         }
-         .rg-dek {
-         font-size: 1em;
-         }
-         .rg-source {
-         margin: 0;
-         font-size: 0.75em;
-         text-align: right;
-         }
-         .rg-source .pre-colon {
-         text-transform: uppercase;
-         }
-         .rg-source .post-colon {
-         font-weight: bold;
-         }
-         /* table */
-         table.rg-table {
-         width: 100%;
-         margin-bottom: 0.5em;
-         font-size: 1em;
-         border-collapse: collapse;
-         border-spacing: 0;
-         }
-         table.rg-table tr {
-         -moz-box-sizing: border-box;
-         box-sizing: border-box;
-         margin: 0;
-         padding: 0;
-         border: 0;
-         font-size: 100%;
-         font: inherit;
-         vertical-align: baseline;
-         text-align: left;
-         color: #333;
-         }
-         table.rg-table thead {
-         border-bottom: 3px solid #ddd;
-         }
-         table.rg-table tr {
-         border-bottom: 1px solid #ddd;
-         color: #222;
-         }
-         table.rg-table tr.highlight {
-         background-color: #dcf1f0 !important;
-         }
-         table.rg-table.zebra tr:nth-child(even) {
-         background-color: #f6f6f6;
-         }
-         table.rg-table th {
-         font-weight: bold;
-         padding: 0.35em;
-         font-size: 0.9em;
-         }
-         table.rg-table td {
-         padding: 0.35em;
-         font-size: 0.9em;
-         }
-         table.rg-table .highlight td {
-         font-weight: bold;
-         }
-         table.rg-table th.number,
-         td.number {
-         text-align: right;
-         }
-         /* media queries */
-         @media screen and (max-width: 0px) {
-         .rg-container {
-         max-width: 600px;
-         margin: 0 auto;
-         }
-         table.rg-table {
-         width: 100%;
-         }
-         table.rg-table tr.hide-mobile,
-         table.rg-table th.hide-mobile,
-         table.rg-table td.hide-mobile {
-         display: none;
-         }
-         table.rg-table thead {
-         display: none;
-         }
-         table.rg-table tbody {
-         width: 100%;
-         }
-         table.rg-table tr,
-         table.rg-table th,
-         table.rg-table td {
-         display: block;
-         padding: 0;
-         }
-         table.rg-table tr {
-         border-bottom: none;
-         margin: 0 0 1em 0;
-         padding: 0.5em;
-         }
-         table.rg-table tr.highlight {
-         background-color: inherit !important;
-         }
-         table.rg-table.zebra tr:nth-child(even) {
-         background-color: transparent;
-         }
-         table.rg-table.zebra td:nth-child(even) {
-         background-color: #f6f6f6;
-         }
-         table.rg-table tr:nth-child(even) {
-         background-color: transparent;
-         }
-         table.rg-table td {
-         padding: 0.5em 0 0.25em 0;
-         border-bottom: 1px dotted #ccc;
-         text-align: right;
-         }
-         table.rg-table td[data-title]:before {
-         content: attr(data-title);
-         font-weight: bold;
-         display: inline-block;
-         content: attr(data-title);
-         float: left;
-         margin-right: 0.5em;
-         font-size: 0.95em;
-         }
-         table.rg-table td:last-child {
-         padding-right: 0;
-         border-bottom: 2px solid #ccc;
-         }
-         table.rg-table td:empty {
-         display: none;
-         }
-         table.rg-table .highlight td {
-         background-color: inherit;
-         font-weight: normal;
-         }
-         }
-         .current_match {
-         font-weight: bold;
-         font-size:18px;
-         }
-         /*----------*/
-         .sespend-cell {
-         background:   #F44336; 
-         color: #fff; 
-         font-weight: bold; 
-         }
-         .active-cell {
-         background: #4DD0E1; 
-         color: #fff; 
-         font-weight: bold; 
-         }
-         .text-cell-sespend 
-         {
-         font-weight: bold; 
-         text-decoration:   line-through;  
-         text-decoration-style: solid; 
-         color:#e4e4e454; 
-         text-decoration-color: #000;
-         }
-         .yes-no-sespend
-         {
-         background: #ff4447;
-         }
-         .lay-common-bg 
-         {
-         background-color: #FF4081;
-         font-weight: bold;
-         }
-         .back-common-bg {
-         background-color: #0D47A1;
-         font-weight: bold;
-         }
-         .no-common-bg {
-         background-color: #1A237E;
-         font-weight: bold; 
-         }
-         .yes-common-bg {
-         background-color: #8BC34A;
-         font-weight: bold; 
-         }
-         .cell-text-color {
-         color: #fff;
-         font-weight: bold; 
-         }
-         .cell-name {
-         font-weight: bold;
-         }
-         .back-update {
-         background-color:  #aedea4;
-         font-weight: bold;
-         }
-         .lay-update {
-         background-color: #73a8a0;
-         font-weight: bold;
-         }
-         .no-update {
-         background-color:  #ffe200;
-         font-weight: bold;
-         }
-         .yes-update {
-         background-color: #002852;
-         font-weight: bold;
-         }
-         .blink {
-    animation: blinker 3s ease infinite
-}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="theme-color" content="#333" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Cricket247Online</title>
+    <link rel="preconnect" href="http://cricket247online.com:3025/" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <!-- Bootstrap core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-@keyframes blinker {
-    50% {
-        opacity: 0
-    }
-}
-.label {
-  padding : 5px;
-  font-size:15px;
-}
-.pull-right{
-  float:right;
-}
-.label.label-danger {
-    background: #dc3545;
-    border-radius: 5px;
-    color: #fff;
-}
-#currentBowl {
-    border: 2px solid #4cae4c;
-    font-size: 16px;
-    color: #fff !important;
-    background-color: #5cb85c;
-}
-.padding-no{
-  padding:0px;
-}
+    <!-- Custom styles for this template -->
+    <link href="/css/blog-post.css" rel="stylesheet" />
+    <link href="/css/reset.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+    <style>
+      /* info (hed, dek, source, credit) */
+      .rg-container {
+        font-size: 16px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0px;
+        color: #222;
+      }
+      .rg-header {
+        margin-bottom: 1em;
+        text-align: left;
+      }
+      .rg-header > * {
+        display: block;
+      }
+      .rg-hed {
+        font-weight: bold;
+        font-size: 1.4em;
+      }
+      .rg-dek {
+        font-size: 1em;
+      }
+      .rg-source {
+        margin: 0;
+        font-size: 0.75em;
+        text-align: right;
+      }
+      .rg-source .pre-colon {
+        text-transform: uppercase;
+      }
+      .rg-source .post-colon {
+        font-weight: bold;
+      }
+      /* table */
+      table.rg-table {
+        width: 100%;
+        margin-bottom: 0.5em;
+        font-size: 1em;
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      table.rg-table tr {
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        text-align: left;
+        color: #333;
+      }
+      table.rg-table thead {
+        border-bottom: 3px solid #ddd;
+      }
+      table.rg-table tr {
+        border-bottom: 1px solid #ddd;
+        color: #222;
+      }
+      table.rg-table tr.highlight {
+        background-color: #dcf1f0 !important;
+      }
+      table.rg-table.zebra tr:nth-child(even) {
+        background-color: #f6f6f6;
+      }
+      table.rg-table th {
+        font-weight: bold;
+        padding: 0.35em;
+        font-size: 0.9em;
+      }
+      table.rg-table td {
+        padding: 0.35em;
+        font-size: 0.9em;
+      }
+      table.rg-table .highlight td {
+        font-weight: bold;
+      }
+      table.rg-table th.number,
+      td.number {
+        text-align: right;
+      }
+      /* media queries */
+      @media screen and (max-width: 0px) {
+        .rg-container {
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        table.rg-table {
+          width: 100%;
+        }
+        table.rg-table tr.hide-mobile,
+        table.rg-table th.hide-mobile,
+        table.rg-table td.hide-mobile {
+          display: none;
+        }
+        table.rg-table thead {
+          display: none;
+        }
+        table.rg-table tbody {
+          width: 100%;
+        }
+        table.rg-table tr,
+        table.rg-table th,
+        table.rg-table td {
+          display: block;
+          padding: 0;
+        }
+        table.rg-table tr {
+          border-bottom: none;
+          margin: 0 0 1em 0;
+          padding: 0.5em;
+        }
+        table.rg-table tr.highlight {
+          background-color: inherit !important;
+        }
+        table.rg-table.zebra tr:nth-child(even) {
+          background-color: transparent;
+        }
+        table.rg-table.zebra td:nth-child(even) {
+          background-color: #f6f6f6;
+        }
+        table.rg-table tr:nth-child(even) {
+          background-color: transparent;
+        }
+        table.rg-table td {
+          padding: 0.5em 0 0.25em 0;
+          border-bottom: 1px dotted #ccc;
+          text-align: right;
+        }
+        table.rg-table td[data-title]:before {
+          content: attr(data-title);
+          font-weight: bold;
+          display: inline-block;
+          content: attr(data-title);
+          float: left;
+          margin-right: 0.5em;
+          font-size: 0.95em;
+        }
+        table.rg-table td:last-child {
+          padding-right: 0;
+          border-bottom: 2px solid #ccc;
+        }
+        table.rg-table td:empty {
+          display: none;
+        }
+        table.rg-table .highlight td {
+          background-color: inherit;
+          font-weight: normal;
+        }
+      }
+      .current_match {
+        font-weight: bold;
+        font-size: 18px;
+      }
+      /*----------*/
+      .sespend-cell {
+        background: #f44336;
+        color: #fff;
+        font-weight: bold;
+      }
+      .active-cell {
+        background: #4dd0e1;
+        color: #fff;
+        font-weight: bold;
+      }
+      .text-cell-sespend {
+        font-weight: bold;
+        text-decoration: line-through;
+        text-decoration-style: solid;
+        color: #e4e4e454;
+        text-decoration-color: #000;
+      }
+      .yes-no-sespend {
+        background: #ff4447;
+      }
+      .lay-common-bg {
+        background-color: #ff4081;
+        font-weight: bold;
+      }
+      .back-common-bg {
+        background-color: #0d47a1;
+        font-weight: bold;
+      }
+      .no-common-bg {
+        background-color: #1a237e;
+        font-weight: bold;
+      }
+      .yes-common-bg {
+        background-color: #8bc34a;
+        font-weight: bold;
+      }
+      .cell-text-color {
+        color: #fff;
+        font-weight: bold;
+      }
+      .cell-name {
+        font-weight: bold;
+      }
+      .back-update {
+        background-color: #aedea4;
+        font-weight: bold;
+      }
+      .lay-update {
+        background-color: #73a8a0;
+        font-weight: bold;
+      }
+      .no-update {
+        background-color: #ffe200;
+        font-weight: bold;
+      }
+      .yes-update {
+        background-color: #002852;
+        font-weight: bold;
+      }
+      .blink {
+        animation: blinker 3s ease infinite;
+      }
 
+      @keyframes blinker {
+        50% {
+          opacity: 0;
+        }
+      }
+      .label {
+        padding: 5px;
+        font-size: 15px;
+      }
+      .pull-right {
+        float: right;
+      }
+      .label.label-danger {
+        background: #dc3545;
+        border-radius: 5px;
+        color: #fff;
+      }
+      #currentBowl {
+        border: 2px solid #4cae4c;
+        font-size: 16px;
+        color: #fff !important;
+        background-color: #5cb85c;
+      }
+      .padding-no {
+        padding: 0px;
+      }
 
-.content-div {
-    padding-top: 51px;
-    min-height: 650px;
-}
-      </style>
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script type="text/JavaScript">
-let user_id = "<%=userdata._id;%>";
-function updateusertime(){
-  $.post("/api/update_user_log",{user_id : user_id},function(data){
-      
-  });
-};
-setInterval(function(){
-  updateusertime();
-},1000);
+      .content-div {
+        padding-top: 51px;
+        min-height: 650px;
+      }
+    </style>
+       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script type="text/JavaScript">
+      let user_id = "<%=userdata._id;%>";
+      function updateusertime(){
+        $.post("/api/update_user_log",{user_id : user_id},function(data){
 
-updateusertime();
+        });
+      };
+      setInterval(function(){
+        updateusertime();
+      },1000);
 
-</script>
-   </head>
-   <body>
-      <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-         <div class="container">
-            <a class="navbar-brand" href="#">Cricket247Online</a>
-            
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-               <ul class="navbar-nav ml-auto">
-                     <li>
-                     <a class="nav-link" href="#"><%-userdata.username%></a>
-                     </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </nav>
+      updateusertime();
 
-      <!-- Page Content -->
-      <div class="container-fluid content-div">
-      <div class="row mb-2">
-         <marquee class="col-md-12 bg-dark text-white p-2 marquee"> <p id="Main_Heading"></p> </marquee>
+    </script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Cricket247Online</a>
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#passwordModal">
+          Change Password
+      </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li>
+              <a class="nav-link" href="#"><%-userdata.username%></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid content-div">
+      <div class="row mb-2">
+        <marquee class="col-md-12 bg-dark text-white p-2 marquee">
+          <p id="Main_Heading"></p>
+        </marquee>
+      </div>
+      <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="oldPassword">Old Password</label>
+                            <input type="password" class="form-control" id="oldPassword" placeholder="Enter old password">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmNewPassword" placeholder="Confirm new password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" data-dismiss="modal" onclick="updatePassword()" class="btn btn-primary"> Update Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
       <% if(typeof match_id !== 'undefined'){ %>
       <div class="row">
-      <div class="col-md-12">
-        <p class="current_match">[Main Game - <%=match_title.gameData.game_name%>] / [<%=match_title.eventData.event_team_a%> vs <%=match_title.eventData.event_team_b%>] / [<%=moment(match_title.eventDateData.event_date).format("DD-MMM-YYYY")%>] / [<%=match_title.live_event.live_game_name%>]</p>
-        <hr>
+        <div class="col-md-12">
+          <p class="current_match">
+            [Main Game - <%=match_title.gameData.game_name%>] /
+            [<%=match_title.eventData.event_team_a%> vs
+            <%=match_title.eventData.event_team_b%>] /
+            [<%=moment(match_title.eventDateData.event_date).format("DD-MMM-YYYY")%>]
+            / [<%=match_title.live_event.live_game_name%>]
+          </p>
+          <hr />
+        </div>
       </div>
-      </div>
-      <!--row end-->   
+      <!--row end-->
       <% } %>
       <div class="row">
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-               <ul class="cd-accordion-menu animated">
-               <% navigator.forEach(row => { %>
-                  <li class="has-children">
-                     <input type="checkbox" name ="group-<%=row.game._id%>" id="group-<%=row.game._id%>" >
-                     <label for="group-<%=row.game._id%>"><%=row.game.game_name%></label>
-                     <ul>
-                     <% row.data.forEach(row2 => { %>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+          <ul class="cd-accordion-menu animated">
+            <% navigator.forEach(row => { %>
+            <li class="has-children">
+              <input
+                type="checkbox"
+                name="group-<%=row.game._id%>"
+                id="group-<%=row.game._id%>"
+              />
+              <label for="group-<%=row.game._id%>"
+                ><%=row.game.game_name%></label
+              >
+              <ul>
+                <% row.data.forEach(row2 => { %>
+                <li class="has-children">
+                  <input
+                    type="checkbox"
+                    name="sub-group-<%=row2.mevent._id%>"
+                    id="sub-group-<%=row2.mevent._id%>"
+                  />
+                  <label for="sub-group-<%=row2.mevent._id%>"
+                    >[<%=row2.mevent.event_team_a;%> vs
+                    <%=row2.mevent.event_team_b;%>]</label
+                  >
+                  <ul>
+                    <% row2.dt.forEach(row3 => { %>
+                    <li class="has-children">
+                      <input
+                        type="checkbox"
+                        name="sub-group-level-<%=row3.mdate._id%>"
+                        id="sub-group-level-<%=row3.mdate._id%>"
+                      />
+                      <label for="sub-group-level-<%=row3.mdate._id%>"
+                        >[<%=moment(row3.mdate.event_date).format("DD-MMM-YYYY")%>]</label
+                      >
+                      <ul>
+                        <% row3.dt2.forEach(row4 => { %>
                         <li class="has-children">
-                           <input type="checkbox" name ="sub-group-<%=row2.mevent._id%>" id="sub-group-<%=row2.mevent._id%>">
-                           <label for="sub-group-<%=row2.mevent._id%>">[<%=row2.mevent.event_team_a;%> vs <%=row2.mevent.event_team_b;%>]</label>
-                           <ul>
-                           <% row2.dt.forEach(row3 => { %>
-                              <li class="has-children">
-                                 <input type="checkbox" name ="sub-group-level-<%=row3.mdate._id%>" id="sub-group-level-<%=row3.mdate._id%>">
-                                 <label for="sub-group-level-<%=row3.mdate._id%>">[<%=moment(row3.mdate.event_date).format("DD-MMM-YYYY")%>]</label>
-                                 <ul>
-                                 <% row3.dt2.forEach(row4 => { %>
-                                    <li class="has-children">
-                                       <input type="checkbox" name ="sub-group-level-level-<%=row4.mlive._id%>" id="sub-group-level-level-<%=row4.mlive._id%>">
-                                       <label for="sub-group-level-level-<%=row4.mlive._id%>">[<%=row4.mlive.live_game_name%>]</label>
-                                       <ul>
-                                        <% row4.dt3.forEach(row5 => { %>
-                                          <li><a href="/user_dashboard/<%=row5.genMatch._id%>">Match_Analysis</a></li>
-                                        <% }); %>
-                                       </ul>
-                                    </li>
-                                    <% }); %>
-                                 </ul>
-                              </li>
-                              <% }); %>
-                           </ul>
+                          <input
+                            type="checkbox"
+                            name="sub-group-level-level-<%=row4.mlive._id%>"
+                            id="sub-group-level-level-<%=row4.mlive._id%>"
+                          />
+                          <label for="sub-group-level-level-<%=row4.mlive._id%>"
+                            >[<%=row4.mlive.live_game_name%>]</label
+                          >
+                          <ul>
+                            <% row4.dt3.forEach(row5 => { %>
+                            <li>
+                              <a href="/user_dashboard/<%=row5.genMatch._id%>"
+                                >Match_Analysis</a
+                              >
+                            </li>
+                            <% }); %>
+                          </ul>
                         </li>
                         <% }); %>
-                     </ul>
-                  </li>
-                  <% }); %>
-                </ul>
-               <!-- cd-accordion-menu -->
-            </div>
-            <% if(typeof match_id !== 'undefined'){ %>
-            <!-- Post Content Column -->
-            <div class="col-lg-6">
-               <!-- Date/Time -->
-               
-               <div class='rg-container'>
-                  <table class='rg-table' summary='Hed'>
-                     <thead>
-                        <tr>
-                           <th class='text '>Winning Percentage</th>
-                           <th style="width: 15%;" class=' '>*</th>
-                           <th style="width: 15%;" class=' '>*</th>
-                           <th style="width: 15%;" class=' '>[Status]</th>
-                        </tr>
-                     </thead>
-                     <tbody id="backlayoff">
-                        
-                     </tbody>
-                  </table>
-               </div>
-               <div class='rg-container'>
-                  <table class='rg-table' summary='Hed'>
-                     <thead>
-                        <tr>
-                           <th class='text '>Professional Analysis</th>
-                           <th style="width: 15%;" class=' '>[NO]</th>
-                           <th style="width: 15%;" class=' '>[YES]</th>
-                           <th style="width: 15%;" class=' '>[Status]</th>
-                        </tr>
-                     </thead>
-                     <tbody id="match_odds">
-                        <!-- Suspended -->
-                       
-                        <!-- Yes No Suspended -->
-                     </tbody>
-                  </table>
-               </div>
-            </div>
-            <!-- Sidebar Widgets Column -->
-            <div class="col-lg-3 col-lg-3">
-            <div class="row score">
-            <div class="col-md-12">
-              <table class="table table-dark">
-                  
+                      </ul>
+                    </li>
+                    <% }); %>
+                  </ul>
+                </li>
+                <% }); %>
+              </ul>
+            </li>
+            <% }); %>
+          </ul>
+          <!-- cd-accordion-menu -->
+        </div>
+        <% if(typeof match_id !== 'undefined'){ %>
+        <!-- Post Content Column -->
+        <div class="col-lg-6">
+          <!-- Date/Time -->
+
+          <div class="rg-container">
+            <table class="rg-table" summary="Hed">
               <thead>
                 <tr>
-                  <th><b>Team</b></th>
-                  <th><b>Total</b></th>
-                  <th><b>Wickets</b></th>
+                  <th class="text">Winning Percentage</th>
+                  <th style="width: 15%" class=" ">*</th>
+                  <th style="width: 15%" class=" ">*</th>
+                  <th style="width: 15%" class=" ">[Status]</th>
                 </tr>
               </thead>
-              <tbody id="scoreboard">
-              
+              <tbody id="backlayoff"></tbody>
+            </table>
+          </div>
+          <div class="rg-container">
+            <table class="rg-table" summary="Hed">
+              <thead>
+                <tr>
+                  <th class="text">Professional Analysis</th>
+                  <th style="width: 15%" class=" ">[NO]</th>
+                  <th style="width: 15%" class=" ">[YES]</th>
+                  <th style="width: 15%" class=" ">[Status]</th>
+                </tr>
+              </thead>
+              <tbody id="match_odds">
+                <!-- Suspended -->
+
+                <!-- Yes No Suspended -->
               </tbody>
             </table>
-      
-            <div class="clearfix"></div>
-            <hr>	
+          </div>
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-lg-3 col-lg-3">
+          <div class="row score">
+            <div class="col-md-12">
+              <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th><b>Team</b></th>
+                    <th><b>Total</b></th>
+                    <th><b>Wickets</b></th>
+                  </tr>
+                </thead>
+                <tbody id="scoreboard"></tbody>
+              </table>
+
+              <div class="clearfix"></div>
+              <hr />
             </div>
           </div>
-            <div class="card ">
+          <div class="card">
             <div class="card-body padding-no">
-            <div id="ballingSection2">
-            </div>
+              <div id="ballingSection2"></div>
             </div>
           </div>
-          <BR>
+          <BR />
 
-               <!-- Side Widget -->
-                <div class="card ">
-                  <div class="card-body font-style" id="news"></div>
-                </div> 
+          <!-- Side Widget -->
+          <div class="card">
+            <div class="card-body font-style" id="news"></div>
+          </div>
+        </div>
+
+        <!-- /.container -->
+        <!-- Footer -->
+
+        <!-- Bootstrap core JavaScript -->
+
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/plugins/socket.js"></script>
+        <script src="/plugins/moment.min.js"></script>
+        <!-- <script src="http://code.responsivevoice.org/responsivevoice.js"></script> -->
+        <script src="https://code.responsivevoice.org/responsivevoice.js?key=DBBZIixi"></script>
+        <script>
+          const match_id = "<%=match_id%>";
+        </script>
+        <script src="/js/index.js?v=3"></script>
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                  &times;
+                </button>
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">Modal body..</div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
-         
-      
-      
-      <!-- /.container -->
-      <!-- Footer -->
-      
-      <!-- Bootstrap core JavaScript -->
-      
-      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="/plugins/socket.js"></script>
-      <script src="/plugins/moment.min.js"></script>
-      <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
-      <script>
-      const match_id = '<%=match_id%>';
-      </script>
-      <script src="/js/index.js?v=3"></script>
-      <div class="modal fade" id="myModal">
-<div class="modal-dialog">
-  <div class="modal-content">
-
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <h4 class="modal-title">Modal Heading</h4>
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-    </div>
-
-    <!-- Modal body -->
-    <div class="modal-body">
-      Modal body..
-    </div>
-
-    <!-- Modal footer -->
-    <div class="modal-footer">
-      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    </div>
-
-  </div>
-</div>
-</div>
-      <% } %>
+          </div>
+        </div>
+        <% } %>
       </div>
-      </div>
-         <!-- /.row -->
-      <div class="container-fluid mt-2">
+    </div>
+    <!-- /.row -->
+    <div class="container-fluid mt-2">
       <div class="row">
-      <footer class="col-md-12 py-5 bg-dark">
-         <div class="container">
-            <p class="m-0 text-center text-white">© Copyright &copy; 2018-2020 Cricket247Online.com</p>
-         </div>
-         <!-- /.container -->
-      </footer>
+        <footer class="col-md-12 py-5 bg-dark">
+          <div class="container">
+            <p class="m-0 text-center text-white">
+              © Copyright &copy; 2018-2020 Cricket247Online.com
+            </p>
+          </div>
+          <!-- /.container -->
+        </footer>
       </div>
-      </div>
-      <script>
+    </div>
+    <script>
       var oldNews = "";
-      setInterval(
-         
-         function() {
-             getNewsMain();
-         }, 700
-      );
-      var getNewsMain = function(){
-        $.post('/api/getNewsMain', {}, function(data) {
-
-        let Jobj = JSON.parse(JSON.stringify(data));
-        let tr = Jobj.news_text;
-        if(tr != oldNews){
+      setInterval(function () {
+        getNewsMain();
+      }, 700);
+      var getNewsMain = function () {
+        $.post("/api/getNewsMain", {}, function (data) {
+          let Jobj = JSON.parse(JSON.stringify(data));
+          let tr = Jobj.news_text;
+          if (tr != oldNews) {
             oldNews = tr;
             $("#Main_Heading").html(tr);
-        }
-        
-    });
-    }
-      </script>
-      <!-- The Modal -->
+          }
+        });
+      };
 
-   </body>
+      function updatePassword() {
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+        let userId = "<%=userdata._id%>";
+        console.log("detailss", userId);
+        $.post('/update_user_password',{oldPassword , newPassword , confirmNewPassword , userId  } , function(data){
+            alert(data.message);
+            document.getElementById('oldPassword').value = ''
+            document.getElementById('newPassword').value = ''
+            document.getElementById('confirmNewPassword').value = ''
+        })
+      }
 
-   
+    </script>
+    <!-- The Modal -->
+  </body>
 </html>
